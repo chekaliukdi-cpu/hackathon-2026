@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=8">
-  <link rel="stylesheet" href="assets/css/task2.css?v=8">
-  <script src="assets/js/main.js?v=8"></script>
-  <script src="assets/js/task2.js?v=8" defer></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=9">
+  <link rel="stylesheet" href="assets/css/task2.css?v=9">
+  <script src="assets/js/main.js?v=9"></script>
+  <script src="assets/js/task2.js?v=9" defer></script>
 </head>
 <body data-page="task-2">
 <site-nav></site-nav>
@@ -492,15 +492,15 @@
     <div class="section-head reveal">
       <span class="kicker">Мізки бота</span>
       <h2>Де взяти ШІ для розпізнавання і змісту</h2>
-      <p>Боту потрібні дві здібності: <b>чути</b> (голос → текст) і <b>розуміти</b> (текст → зміст). Можна взяти один сервіс на обидві, а можна різні. Схема отримання ключа скрізь схожа: реєстрація → розділ <b>API Keys</b> → <b>Create key</b> → скопіювати в <code>.env</code>.</p>
+      <p>Боту потрібні дві здібності: <b>чути</b> (голос → текст) і <b>розуміти</b> (текст → зміст). Можна взяти один сервіс на обидві, а можна різні. <b>Найпростіше — Gemini API: один безкоштовний ключ і на розпізнавання, і на зміст.</b> Схема отримання ключа скрізь схожа: реєстрація → розділ <b>API Keys</b> → <b>Create key</b> → скопіювати в <code>.env</code>.</p>
     </div>
 
     <div class="keys-grid">
       <div class="keys-col reveal">
         <div class="keys-head" style="--c:#22d3ee"><span><svg class="i"><use href="#i-headphones"/></svg></span><div><h3>Голос → текст</h3><small>Speech-to-Text (STT)</small></div></div>
         <ul class="svc-list">
+          <li><div><b>Google Gemini</b> <span class="chip green">радимо</span> <span class="chip">безкоштовно</span></div><p>Розуміє аудіо напряму: може і розпізнати, і одразу зробити зміст.</p><a class="link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li>
           <li><div><b>Groq</b> <span class="chip green">безкоштовний ліміт</span></div><p>Дуже швидкий Whisper. Добре знає українську.</p><a class="link" href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com</a></li>
-          <li><div><b>Google Gemini</b> <span class="chip green">безкоштовний ліміт</span></div><p>Розуміє аудіо напряму: може і розпізнати, і одразу зробити зміст.</p><a class="link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li>
           <li><div><b>Deepgram / AssemblyAI</b> <span class="chip amber">стартові кредити</span></div><p>Вміють самі розділяти голоси різних людей (діаризація).</p></li>
           <li><div><b>OpenAI</b> <span class="chip red">платно</span></div><p>Whisper і новіші моделі транскрипції.</p><a class="link" href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a></li>
           <li><div><b>faster-whisper / whisper.cpp</b> <span class="chip violet">локально</span></div><p>Працює на твоєму комп’ютері, без ключів і лімітів. Потрібен нормальний ПК.</p></li>
@@ -509,7 +509,7 @@
       <div class="keys-col reveal" style="--i:1">
         <div class="keys-head" style="--c:#a3e635"><span><svg class="i"><use href="#i-cpu"/></svg></span><div><h3>Текст → зміст</h3><small>Велика мовна модель (LLM)</small></div></div>
         <ul class="svc-list">
-          <li><div><b>Google Gemini</b> <span class="chip green">безкоштовний ліміт</span></div><p>Довгий контекст — влізе навіть година розмови.</p><a class="link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li>
+          <li><div><b>Google Gemini</b> <span class="chip green">радимо</span> <span class="chip">безкоштовно</span></div><p>Довгий контекст — влізе навіть година розмови. Модель <code>gemini-3.5-flash-lite</code> дає найбільше безкоштовних запитів на день.</p><a class="link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li>
           <li><div><b>Groq</b> <span class="chip green">безкоштовний ліміт</span></div><p>Відкриті моделі (Llama, Qwen та інші), дуже швидкі відповіді.</p><a class="link" href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com</a></li>
           <li><div><b>Anthropic Claude</b> <span class="chip red">платно</span></div><p>Сильний у структурованих підсумках і точному дотриманні інструкцій.</p><a class="link" href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a></li>
           <li><div><b>OpenAI GPT</b> <span class="chip red">платно</span></div><p>Популярні моделі GPT, багато прикладів в інтернеті.</p><a class="link" href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a></li>
@@ -543,7 +543,7 @@
       <div class="tool"><span><svg class="i"><use href="#i-git"/></svg></span><b>Git</b><small>збереження версій</small></div>
       <div class="tool"><span><svg class="i"><use href="#i-film"/></svg></span><b>FFmpeg</b><small>робота з аудіо</small></div>
       <div class="tool"><span><svg class="i"><use href="#i-message"/></svg></span><b>Discord</b><small>+ тестовий сервер</small></div>
-      <div class="tool"><span><svg class="i"><use href="#i-bot"/></svg></span><b>ШІ-асистент</b><small>твій напарник</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-bot"/></svg></span><b>Claude Free</b><small>ШІ-напарник для коду</small></div>
     </div>
 
     <div class="tabs-ui lang-tabs reveal">
@@ -773,7 +773,7 @@
     <div class="section-head reveal">
       <span class="kicker">Вайбкодинг</span>
       <h2>Як працювати з ШІ над цією задачею</h2>
-      <p>ШІ — це напарник, а не чарівна кнопка. Чим краще пояснюєш, тим кращий код отримуєш.</p>
+      <p>Радимо робити задачу разом із <b>Claude</b> — його безкоштовного плану вистачить, є застосунок для ПК і телефона. ШІ — це напарник, а не чарівна кнопка: чим краще пояснюєш, тим кращий код отримуєш.</p>
     </div>
 
     <div class="prompt-vs reveal">

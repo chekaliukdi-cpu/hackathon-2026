@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=8">
-  <link rel="stylesheet" href="assets/css/home.css?v=8">
-  <script src="assets/js/main.js?v=8"></script>
-  <script src="assets/js/home.js?v=8" defer></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=9">
+  <link rel="stylesheet" href="assets/css/home.css?v=9">
+  <script src="assets/js/main.js?v=9"></script>
+  <script src="assets/js/home.js?v=9" defer></script>
 </head>
 <body data-page="home">
 <site-nav></site-nav>
@@ -25,9 +25,9 @@
     <div>
       <span class="eyebrow reveal"><span class="dot"></span> Гайд · Робота з ШІ</span>
       <h1 class="reveal">ШІ — твій напарник. <span class="mark-box" style="--mc:var(--lime);--mt:var(--ink)">Безкоштовно</span></h1>
-      <p class="lead reveal">Як «думає» штучний інтелект, які сервіси можна юзати без грошей, де взяти безкоштовні токени для коду і як запустити ШІ прямо на своєму ноутбуці. Коротко, а по кожному пункту можна дізнатися більше.</p>
+      <p class="lead reveal">Код пишемо разом із <b>Claude</b>, безкоштовні токени для своїх ботів беремо в <b>Gemini</b>. Обидва вже зараз можна поставити на телефон і комп’ютер і користуватися безкоштовно. Нижче — як саме, і ще купа корисного.</p>
       <div class="btn-row reveal">
-        <a class="btn btn-primary" href="#free">Що безкоштовно <span class="arr">→</span></a>
+        <a class="btn btn-primary" href="#start">З чого почати <span class="arr">→</span></a>
         <a class="btn btn-yellow" href="#llm">Як це працює</a>
       </div>
     </div>
@@ -43,8 +43,53 @@
 
   <div class="marquee" style="--mq-bg:var(--yellow);--mq-r:-1.5deg;margin-bottom:34px" aria-hidden="true"><div class="marquee-track"><span>токени ✦ промпти ✦ безкоштовні ліміти ✦ API-ключі ✦ локальні моделі ✦ ollama ✦ gemini ✦ chatgpt ✦ токени ✦ промпти ✦ безкоштовні ліміти ✦ API-ключі ✦ локальні моделі ✦ ollama ✦ gemini ✦ chatgpt ✦ </span><span>токени ✦ промпти ✦ безкоштовні ліміти ✦ API-ключі ✦ локальні моделі ✦ ollama ✦ gemini ✦ chatgpt ✦ токени ✦ промпти ✦ безкоштовні ліміти ✦ API-ключі ✦ локальні моделі ✦ ollama ✦ gemini ✦ chatgpt ✦ </span></div></div>
 
+  <!-- ============ З ЧОГО ПОЧАТИ ============ -->
+  <section class="section-tight container" id="start">
+    <div class="section-head reveal">
+      <span class="kicker">Головне за 30 секунд</span>
+      <h2>Два інструменти — і ти готовий</h2>
+    </div>
+    <div class="start-grid">
+      <article class="start-card claude reveal">
+        <span class="sticker start-tag" style="--c:var(--yellow);--r:-5deg">пишемо код</span>
+        <div class="start-top"><span class="svc-logo" style="--c:#d97757;--t:#fff">Cl</span><div><h3>Claude</h3><small>безкоштовний план · Sonnet 5.5</small></div></div>
+        <p>Твій напарник для коду: пояснює, пише й виправляє код, читає твої файли, показує готові сторінки прямо в чаті. Саме з ним будемо робити Задачу 2.</p>
+        <ul class="start-list">
+          <li><svg class="i"><use href="#i-code"/></svg> пише і пояснює код, шукає помилки</li>
+          <li><svg class="i"><use href="#i-file"/></svg> завантажуєш файли проєкту — він їх бачить</li>
+          <li><svg class="i"><use href="#i-panel"/></svg> артефакти: сторінка чи гра одразу працює в чаті</li>
+          <li><svg class="i"><use href="#i-folder"/></svg> до 5 проєктів, щоб не пояснювати все заново</li>
+        </ul>
+        <div class="dl-row">
+          <a class="dl" href="https://claude.ai" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Браузер</a>
+          <a class="dl" href="https://claude.ai/download" target="_blank" rel="noopener"><svg class="i"><use href="#i-laptop"/></svg> Windows · macOS</a>
+          <a class="dl" href="https://claude.ai/download" target="_blank" rel="noopener"><svg class="i"><use href="#i-phone"/></svg> iPhone · Android</a>
+        </div>
+        <button class="more" type="button" data-drawer="d-claude" data-title="Claude">Як почати + поради <svg class="i"><use href="#i-arrow"/></svg></button>
+      </article>
+      <article class="start-card gemini reveal" style="--i:1">
+        <span class="sticker start-tag" style="--c:var(--lime);--r:4deg">безкоштовні токени</span>
+        <div class="start-top"><span class="svc-logo" style="--c:var(--blue);--t:#fff">Gm</span><div><h3>Gemini</h3><small>застосунок + API від Google</small></div></div>
+        <p>Безкоштовний API-ключ для твого бота чи сайту — без картки. А ще сам застосунок Gemini: безкоштовний чат з картинками і Deep Research.</p>
+        <ul class="start-list">
+          <li><svg class="i"><use href="#i-key"/></svg> ключ за 2 хвилини в Google AI Studio</li>
+          <li><svg class="i"><use href="#i-zap"/></svg> модель <code>gemini-3.5-flash-lite</code>: ~500 запитів на день</li>
+          <li><svg class="i"><use href="#i-audio"/></svg> розуміє аудіо — для бота із Задачі 2 саме те</li>
+          <li><svg class="i"><use href="#i-message"/></svg> застосунок: чат, картинки, Deep Research</li>
+        </ul>
+        <div class="dl-row">
+          <a class="dl" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener"><svg class="i"><use href="#i-key"/></svg> Отримати ключ</a>
+          <a class="dl" href="https://gemini.google.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Браузер</a>
+          <span class="dl"><svg class="i"><use href="#i-phone"/></svg> Google Play · App Store</span>
+        </div>
+        <button class="more" type="button" data-drawer="d-aistudio" data-title="Ключ Gemini">Як отримати ключ <svg class="i"><use href="#i-arrow"/></svg></button>
+      </article>
+    </div>
+  </section>
+
   <nav class="toc-bar container" aria-label="Розділи гайду">
     <div class="toc-inner">
+      <a href="#start"><svg class="i"><use href="#i-rocket"/></svg> Старт</a>
       <a href="#llm"><svg class="i"><use href="#i-cpu"/></svg> Як думає ШІ</a>
       <a href="#free"><svg class="i"><use href="#i-message"/></svg> Безкоштовні чати</a>
       <a href="#api"><svg class="i"><use href="#i-key"/></svg> Токени для коду</a>
@@ -67,7 +112,7 @@
     <div class="stepper lessons reveal" data-stepper data-final-href="#free" data-final-label="До чатів">
       <div class="stepper-stage">
 
-        <article class="step lesson" data-title="Токени" data-drawer="d-tokens">
+        <article class="step lesson" data-title="Токени" data-more="d-tokens">
           <span class="lesson-num" style="--c:var(--yellow)"><svg class="i"><use href="#i-blocks"/></svg> 01 · токени</span>
           <h3>ШІ читає шматочками</h3>
           <p>Модель бачить не букви й не слова, а <b>токени</b> — шматки тексту. Від їх кількості залежать ліміти й ціна. Напиши щось:</p>
@@ -83,7 +128,7 @@
           </div>
         </article>
 
-        <article class="step lesson" id="nextTok" data-title="Наступне слово" data-drawer="d-predict">
+        <article class="step lesson" id="nextTok" data-title="Наступне слово" data-more="d-predict">
           <span class="lesson-num" style="--c:var(--pink)"><svg class="i"><use href="#i-sparkles"/></svg> 02 · передбачення</span>
           <h3>Вгадує наступне слово</h3>
           <p>LLM — це дуже-дуже розумне автодоповнення. Вона рахує ймовірність кожного наступного токена і вибирає один. Покрути «температуру»:</p>
@@ -98,7 +143,7 @@
           </div>
         </article>
 
-        <article class="step lesson" id="ctx" data-title="Пам’ять" data-drawer="d-context">
+        <article class="step lesson" id="ctx" data-title="Пам’ять" data-more="d-context">
           <span class="lesson-num" style="--c:var(--cyan)"><svg class="i"><use href="#i-clipboard"/></svg> 03 · пам’ять</span>
           <h3>Контекстне вікно</h3>
           <p>Модель «пам’ятає» лише те, що вміщається в її вікно. Коли розмова дуже довга — найстаріше випадає. Дивись, що станеться з ім’ям:</p>
@@ -108,7 +153,7 @@
           </div>
         </article>
 
-        <article class="step lesson" data-title="Галюцинації" data-drawer="d-halluc">
+        <article class="step lesson" data-title="Галюцинації" data-more="d-halluc">
           <span class="lesson-num" style="--c:var(--red)"><svg class="i"><use href="#i-alert"/></svg> 04 · галюцинації</span>
           <h3>Впевнено вигадує</h3>
           <p>ШІ не «знає» факти — він генерує правдоподібний текст. Тому іноді вигадує дати, імена, книжки й посилання. Звучить переконливо — але це може бути неправда.</p>
@@ -119,7 +164,7 @@
           </div>
         </article>
 
-        <article class="step lesson" data-title="Чат · API · ПК" data-drawer="d-kinds">
+        <article class="step lesson" data-title="Чат · API · ПК" data-more="d-kinds">
           <span class="lesson-num" style="--c:var(--lime)"><svg class="i"><use href="#i-plug"/></svg> 05 · три способи</span>
           <h3>Модель, чат і API</h3>
           <p>Одна й та сама модель може жити в трьох місцях:</p>
@@ -139,14 +184,14 @@
     <div class="section-head reveal">
       <span class="kicker">Розділ 2</span>
       <h2>Безкоштовні чати</h2>
-      <p>Для навчання вистачить безкоштовних версій. Ліміти майже ніхто не публікує точними цифрами: закінчилися — зачекай кілька годин або перейди в інший сервіс.</p>
+      <p>Для коду радимо <b>Claude</b>, для всього іншого чудово підходить <b>Gemini</b>. Решта — запасні варіанти: ліміт закінчився — зачекай кілька годин або перейди в інший сервіс.</p>
     </div>
 
     <div class="chooser reveal" id="chooser">
       <h3>Що тобі треба?</h3>
       <div class="need-row">
-        <button type="button" data-need="learn"><svg class="i"><use href="#i-school"/></svg> Розібратися в темі</button>
         <button type="button" data-need="code"><svg class="i"><use href="#i-code"/></svg> Написати код</button>
+        <button type="button" data-need="learn"><svg class="i"><use href="#i-school"/></svg> Розібратися в темі</button>
         <button type="button" data-need="sources"><svg class="i"><use href="#i-search"/></svg> Знайти джерела</button>
         <button type="button" data-need="notes"><svg class="i"><use href="#i-book"/></svg> Вчитися з конспекту</button>
         <button type="button" data-need="images"><svg class="i"><use href="#i-film"/></svg> Картинка</button>
@@ -157,9 +202,9 @@
 
     <div class="picker reveal" data-picker id="svcPicker">
       <div class="picker-list" role="tablist" aria-label="Сервіси">
+        <button type="button" role="tab" data-pick="svc-claude"><span class="pl-logo" style="--c:#d97757;--t:#fff">Cl</span>Claude</button>
         <button type="button" role="tab" data-pick="svc-gemini"><span class="pl-logo" style="--c:var(--blue);--t:#fff">Gm</span>Gemini</button>
         <button type="button" role="tab" data-pick="svc-chatgpt"><span class="pl-logo" style="--c:#10a37f;--t:#fff">GP</span>ChatGPT</button>
-        <button type="button" role="tab" data-pick="svc-claude"><span class="pl-logo" style="--c:#d97757;--t:#fff">Cl</span>Claude</button>
         <button type="button" role="tab" data-pick="svc-copilot"><span class="pl-logo" style="--c:var(--cyan)">Co</span>Copilot</button>
         <button type="button" role="tab" data-pick="svc-notebook"><span class="pl-logo" style="--c:var(--yellow)">Nb</span>Gemini Notebook</button>
         <button type="button" role="tab" data-pick="svc-perplexity"><span class="pl-logo" style="--c:var(--lilac)">Px</span>Perplexity</button>
@@ -168,11 +213,18 @@
         <button type="button" role="tab" data-pick="svc-grok"><span class="pl-logo" style="--c:var(--ink);--t:#fff">Gr</span>Grok</button>
       </div>
       <div class="picker-stage">
+        <article class="svc" id="svc-claude">
+          <div class="svc-top"><span class="svc-logo" style="--c:#d97757;--t:#fff">Cl</span><div><h3>Claude</h3><small>Anthropic · claude.ai</small></div></div>
+          <div class="svc-free"><b>Безкоштовно</b>Sonnet 5.5, пошук, файли й код, артефакти, 5 проєктів, голос</div>
+          <p>Наш головний помічник для коду. Є застосунок для Windows, macOS, iPhone і Android.</p>
+          <div class="chip-row"><span class="chip green">радимо для коду</span><span class="chip">тексти</span></div>
+          <button class="more" type="button" data-drawer="d-claude" data-title="Claude">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
+        </article>
         <article class="svc" id="svc-gemini">
           <div class="svc-top"><span class="svc-logo" style="--c:var(--blue);--t:#fff">Gm</span><div><h3>Gemini</h3><small>Google · gemini.google.com</small></div></div>
           <div class="svc-free"><b>Безкоштовно</b>Режим «Авто» (найчастіше Flash-Lite), картинки, Deep Research, Canvas, голос</div>
           <p>Найзручніший старт: вхід через Google-акаунт, є українська.</p>
-          <div class="chip-row"><span class="chip green">радимо для старту</span><span class="chip">українською</span></div>
+          <div class="chip-row"><span class="chip green">радимо: API-ключ</span><span class="chip">українською</span></div>
           <button class="more" type="button" data-drawer="d-gemini" data-title="Gemini">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
         <article class="svc" id="svc-chatgpt">
@@ -181,13 +233,6 @@
           <p>Універсал: тексти, пояснення, код.</p>
           <div class="chip-row"><span class="chip">універсал</span><span class="chip">картинки</span></div>
           <button class="more" type="button" data-drawer="d-chatgpt" data-title="ChatGPT">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
-        </article>
-        <article class="svc" id="svc-claude">
-          <div class="svc-top"><span class="svc-logo" style="--c:#d97757;--t:#fff">Cl</span><div><h3>Claude</h3><small>Anthropic · claude.ai</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Sonnet 5.5, пошук, файли, артефакти, 5 проєктів, голос</div>
-          <p>Дуже сильний у текстах і коді.</p>
-          <div class="chip-row"><span class="chip">тексти</span><span class="chip">код</span></div>
-          <button class="more" type="button" data-drawer="d-claude" data-title="Claude">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
         <article class="svc" id="svc-copilot">
           <div class="svc-top"><span class="svc-logo" style="--c:var(--cyan)">Co</span><div><h3>Copilot</h3><small>Microsoft · copilot.microsoft.com</small></div></div>
@@ -585,7 +630,7 @@
   /* «Що тобі треба?» */
   window.CHOOSER = {
     learn:   { why: "Для пояснень тем підійде будь-який чат. Проси «поясни як для 9 класу» і приклади.", picks: [
-      { name: "Gemini", note: "українською, є картинки", c: "var(--lime)", svc: "svc-gemini" }, { name: "Claude", note: "пояснює дуже зрозуміло", c: "var(--cyan)", svc: "svc-claude" }, { name: "ChatGPT", note: "універсал", c: "var(--white)", svc: "svc-chatgpt" } ] },
+      { name: "Claude", note: "пояснює дуже зрозуміло", c: "var(--lime)", svc: "svc-claude" }, { name: "Gemini", note: "українською, є картинки", c: "var(--cyan)", svc: "svc-gemini" }, { name: "ChatGPT", note: "універсал", c: "var(--white)", svc: "svc-chatgpt" } ] },
     code:    { why: "Для коду: сильний у програмуванні чат + Copilot у редакторі. Для бота — API-ключ або Ollama.", picks: [
       { name: "Claude", note: "один з найсильніших у коді", c: "var(--lime)", svc: "svc-claude" }, { name: "ChatGPT", note: "універсал, добре пише код", c: "var(--cyan)", svc: "svc-chatgpt" }, { name: "Gemini", note: "великий контекст", c: "var(--white)", svc: "svc-gemini" }, { name: "GitHub Copilot Free", note: "підказки у VS Code", c: "var(--white)" } ] },
     sources: { why: "Коли потрібні джерела — бери пошуковик з ШІ і завжди відкривай посилання.", picks: [
@@ -729,6 +774,12 @@
 
 <template id="d-claude">
   <h3>Claude (безкоштовний план)</h3>
+  <h4>Як почати</h4>
+  <ol>
+    <li>Відкрий <a class="link" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> або завантаж застосунок: <a class="link" href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> — для Windows і macOS; на телефоні шукай «Claude» у Google Play чи App Store.</li>
+    <li>Зареєструйся через пошту або Google-акаунт. Картка не потрібна.</li>
+    <li>Пиши завдання — і вперед. Акаунт один на всіх пристроях: почав на ПК, продовжив з телефона.</li>
+  </ol>
   <h4>Що є безкоштовно</h4>
   <ul>
     <li>Моделі Sonnet 5.5 (і Haiku). Opus і Fable — тільки в платних планах.</li>
@@ -737,6 +788,14 @@
   </ul>
   <h4>Ліміти</h4>
   <p>Без фіксованої кількості повідомлень: ліміт поновлюється у «вікні» 5 годин. Коли закінчився — чекаєш або переходиш на Pro.</p>
+  <h4>Як робити Задачу 2 з Claude Free</h4>
+  <ul>
+    <li><b>Створи проєкт</b> «Discord-бот» і завантаж туди свої файли (наприклад, <code>bot.py</code>) — Claude бачитиме їх у кожному чаті проєкту.</li>
+    <li><b>Один крок — один чат:</b> окремо <code>/ping</code>, окремо <code>/join</code>, окремо запис. Так менше плутанини і ліміт тримається довше.</li>
+    <li><b>Скажи свій стек:</b> мова, бібліотека, Windows/macOS — і встав повний текст помилки з терміналу.</li>
+    <li><b>Проси пояснення,</b> а не лише код: тобі ж показувати й захищати свій проєкт.</li>
+    <li>У безкоштовному плані немає Claude Code, тому код копіюєш у свій редактор (VS Code) сам — для хакатону цього достатньо.</li>
+  </ul>
   <h4>Як витрачати менше</h4>
   <ul>
     <li>Пиши все потрібне одним повідомленням.</li>

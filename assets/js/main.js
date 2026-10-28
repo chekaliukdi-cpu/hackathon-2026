@@ -102,6 +102,9 @@
     heart: '<path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/>',
     flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
     arrow: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    phone: '<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>',
+    download: '<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>',
+    globe: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/>',
     refresh: '<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>',
     discord: '<path fill="currentColor" stroke="none" d="M19.3 5.3A17 17 0 0 0 15 4l-.5 1.1a15.7 15.7 0 0 0-5 0L9 4a17 17 0 0 0-4.3 1.3C2 9.4 1.2 13.4 1.6 17.3A17.2 17.2 0 0 0 6.9 20l1.1-1.8a11 11 0 0 1-1.7-.8l.4-.3a12.3 12.3 0 0 0 10.6 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.8a17.1 17.1 0 0 0 5.3-2.7c.5-4.5-.8-8.5-3.1-12ZM8.7 14.9c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1Zm6.6 0c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1Z"/>',
   };
@@ -453,8 +456,9 @@
         });
         const tb = tabBtns[n];
         tabs.scrollTo({ left: tb.offsetLeft - tabs.clientWidth / 2 + tb.offsetWidth / 2, behavior: "smooth" });
-        more.hidden = !neu.dataset.drawer;
-        if (neu.dataset.drawer) { more.dataset.drawer = neu.dataset.drawer; more.dataset.title = neu.dataset.title || "Детальніше"; }
+        // id панелі береться з data-more кроку (не data-drawer — інакше будь-який клік по картці відкривав би панель)
+        more.hidden = !neu.dataset.more;
+        if (neu.dataset.more) { more.dataset.drawer = neu.dataset.more; more.dataset.title = neu.dataset.title || "Детальніше"; }
         count.textContent = `${n + 1} / ${steps.length}`;
         prev.disabled = n === 0;
         const last = n === steps.length - 1;

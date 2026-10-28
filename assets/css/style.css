@@ -878,7 +878,7 @@ dialog.drawer::backdrop { background: rgba(18, 18, 18, .45); animation: fade .3s
 /* ---------- Покроковий блок (одна картка за раз) ----------
    <div class="stepper" data-stepper data-final-href="#next" data-final-label="Далі">
      <div class="stepper-stage">
-       <article class="step" data-title="Токени" data-drawer="d-tokens">…</article>
+       <article class="step" data-title="Токени" data-more="d-tokens">…</article>
      </div>
    </div>
    Вкладки зверху і панель «Детальніше / Назад / Далі» знизу додає main.js. */
