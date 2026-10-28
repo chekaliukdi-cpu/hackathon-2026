@@ -101,9 +101,9 @@ body[data-page="task-2"] { --accent: var(--blurple); --on-accent: #fff; }
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=9">
+  <link rel="stylesheet" href="assets/css/style.css?v=10">
   <link rel="stylesheet" href="assets/css/task-3.css?v=1">   <!-- свій файл, якщо потрібен -->
-  <script src="assets/js/main.js?v=9"></script>            <!-- БЕЗ defer, саме в <head> -->
+  <script src="assets/js/main.js?v=10"></script>            <!-- БЕЗ defer, саме в <head> -->
   <script src="assets/js/task-3.js?v=1" defer></script>      <!-- свій JS, якщо потрібен -->
 </head>
 <body data-page="task-3">

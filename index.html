@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=9">
-  <link rel="stylesheet" href="assets/css/home.css?v=9">
-  <script src="assets/js/main.js?v=9"></script>
-  <script src="assets/js/home.js?v=9" defer></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=10">
+  <link rel="stylesheet" href="assets/css/home.css?v=10">
+  <script src="assets/js/main.js?v=10"></script>
+  <script src="assets/js/home.js?v=10" defer></script>
 </head>
 <body data-page="home">
 <site-nav></site-nav>
@@ -213,67 +213,94 @@
         <button type="button" role="tab" data-pick="svc-grok"><span class="pl-logo" style="--c:var(--ink);--t:#fff">Gr</span>Grok</button>
       </div>
       <div class="picker-stage">
-        <article class="svc" id="svc-claude">
-          <div class="svc-top"><span class="svc-logo" style="--c:#d97757;--t:#fff">Cl</span><div><h3>Claude</h3><small>Anthropic · claude.ai</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Sonnet 5.5, пошук, файли й код, артефакти, 5 проєктів, голос</div>
-          <p>Наш головний помічник для коду. Є застосунок для Windows, macOS, iPhone і Android.</p>
-          <div class="chip-row"><span class="chip green">радимо для коду</span><span class="chip">тексти</span></div>
+        <article class="svc svc-rich" id="svc-claude">
+          <div class="svc-top"><span class="svc-logo" style="--c:#d97757;--t:#fff">Cl</span><div><h3>Claude</h3><small>Anthropic · claude.ai</small></div><div class="chip-row svc-chips"><span class="chip green">радимо для коду</span><span class="chip">тексти</span></div></div>
+          <p class="svc-lead">Наш головний помічник для коду. Пояснює складне простими словами і пише акуратний, зрозумілий код.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Модель Sonnet 5.5 — сильна в коді й текстах</li><li><svg class="i"><use href="#i-check"/></svg>Завантаження файлів і виконання коду прямо в чаті</li><li><svg class="i"><use href="#i-check"/></svg>Артефакти: сайт, гра чи схема одразу працюють поруч із чатом</li><li><svg class="i"><use href="#i-check"/></svg>До 5 проєктів, вебпошук, пам’ять, голос</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>код, пояснення, тексти, розбір помилок</dd><dt>Ліміти</dt><dd>«вікно» 5 годин, точної кількості повідомлень немає</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://claude.ai" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити claude.ai</a><a class="dl" href="https://claude.ai/download" target="_blank" rel="noopener"><svg class="i"><use href="#i-download"/></svg> Застосунок <em>Windows · macOS · телефон</em></a></div>
           <button class="more" type="button" data-drawer="d-claude" data-title="Claude">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-gemini">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--blue);--t:#fff">Gm</span><div><h3>Gemini</h3><small>Google · gemini.google.com</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Режим «Авто» (найчастіше Flash-Lite), картинки, Deep Research, Canvas, голос</div>
-          <p>Найзручніший старт: вхід через Google-акаунт, є українська.</p>
-          <div class="chip-row"><span class="chip green">радимо: API-ключ</span><span class="chip">українською</span></div>
+        <article class="svc svc-rich" id="svc-gemini">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--blue);--t:#fff">Gm</span><div><h3>Gemini</h3><small>Google · gemini.google.com</small></div><div class="chip-row svc-chips"><span class="chip green">радимо: API-ключ</span><span class="chip">українською</span></div></div>
+          <p class="svc-lead">Найпростіший старт через Google-акаунт. І саме тут — безкоштовний API-ключ для твоїх ботів.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Режим «Авто»: швидкий Flash-Lite, складне — розумнішим моделям</li><li><svg class="i"><use href="#i-check"/></svg>Генерація і редагування картинок</li><li><svg class="i"><use href="#i-check"/></svg>Deep Research — довгий звіт з джерелами</li><li><svg class="i"><use href="#i-check"/></svg>Canvas, голосовий режим Gemini Live, Gems</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>навчання, картинки, дослідження, API для проєктів</dd><dt>Ліміти</dt><dd>поновлюються кожні 5 годин до тижневої межі</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://gemini.google.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити Gemini</a><a class="dl" href="https://gemini.google/" target="_blank" rel="noopener"><svg class="i"><use href="#i-download"/></svg> Застосунок <em>Android · iPhone</em></a><a class="dl" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener"><svg class="i"><use href="#i-key"/></svg> API-ключ <em>безкоштовно</em></a></div>
           <button class="more" type="button" data-drawer="d-gemini" data-title="Gemini">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-chatgpt">
-          <div class="svc-top"><span class="svc-logo" style="--c:#10a37f;--t:#fff">GP</span><div><h3>ChatGPT</h3><small>OpenAI · chatgpt.com</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Модель GPT-6 Luna, текстовий чат без жорсткого ліміту, пошук, файли, картинки — з окремими лімітами</div>
-          <p>Універсал: тексти, пояснення, код.</p>
-          <div class="chip-row"><span class="chip">універсал</span><span class="chip">картинки</span></div>
+        <article class="svc svc-rich" id="svc-chatgpt">
+          <div class="svc-top"><span class="svc-logo" style="--c:#10a37f;--t:#fff">GP</span><div><h3>ChatGPT</h3><small>OpenAI · chatgpt.com</small></div><div class="chip-row svc-chips"><span class="chip">універсал</span><span class="chip">картинки</span></div></div>
+          <p class="svc-lead">Найвідоміший чат-бот. Універсал: тексти, пояснення, код, картинки.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Модель GPT-6 Luna, текстовий чат без жорсткого ліміту</li><li><svg class="i"><use href="#i-check"/></svg>Вебпошук і завантаження файлів</li><li><svg class="i"><use href="#i-check"/></svg>Генерація картинок і голосовий режим</li><li><svg class="i"><use href="#i-check"/></svg>Canvas для роботи з текстом і кодом</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>щоденні питання, тексти, мозковий штурм</dd><dt>Ліміти</dt><dd>на файли, картинки й пошук — окремі ліміти</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://chatgpt.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити chatgpt.com</a><a class="dl" href="https://chatgpt.com/download" target="_blank" rel="noopener"><svg class="i"><use href="#i-download"/></svg> Застосунок <em>ПК · телефон</em></a><a class="dl" href="https://platform.openai.com/api-keys" target="_blank" rel="noopener"><svg class="i"><use href="#i-key"/></svg> API-ключ <em>платно</em></a></div>
           <button class="more" type="button" data-drawer="d-chatgpt" data-title="ChatGPT">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-copilot">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--cyan)">Co</span><div><h3>Copilot</h3><small>Microsoft · copilot.microsoft.com</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Чат, Think Deeper, картинки, голос, файли</div>
-          <p>Безкоштовні картинки і зручний голосовий режим.</p>
-          <div class="chip-row"><span class="chip">картинки</span><span class="chip">голос</span></div>
+        <article class="svc svc-rich" id="svc-copilot">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--cyan)">Co</span><div><h3>Copilot</h3><small>Microsoft · copilot.microsoft.com</small></div><div class="chip-row svc-chips"><span class="chip">картинки</span><span class="chip">голос</span></div></div>
+          <p class="svc-lead">Безкоштовний помічник від Microsoft. Вже вбудований у Windows.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Чат і режим Think Deeper для складних питань</li><li><svg class="i"><use href="#i-check"/></svg>Безкоштовне створення картинок</li><li><svg class="i"><use href="#i-check"/></svg>Голосовий режим і робота з файлами</li><li><svg class="i"><use href="#i-check"/></svg>Deep Research після входу в акаунт</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>картинки, швидкі питання на Windows</dd><dt>Ліміти</dt><dd>не публікуються, залежать від навантаження</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://copilot.microsoft.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити Copilot</a></div>
           <button class="more" type="button" data-drawer="d-copilot" data-title="Microsoft Copilot">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-notebook">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--yellow)">Nb</span><div><h3>Gemini Notebook</h3><small>Google · колишній NotebookLM</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>100 блокнотів, до 50 джерел у кожному, аудіоогляди</div>
-          <p>Завантаж конспект чи PDF — і питай тільки по ньому. Менше вигадок.</p>
-          <div class="chip-row"><span class="chip green">для навчання</span></div>
+        <article class="svc svc-rich" id="svc-notebook">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--yellow)">Nb</span><div><h3>Gemini Notebook</h3><small>Google · колишній NotebookLM</small></div><div class="chip-row svc-chips"><span class="chip green">для навчання</span></div></div>
+          <p class="svc-lead">Завантаж конспект, PDF чи посилання — і ШІ відповідає тільки з твоїх джерел. Менше вигадок.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>До 100 блокнотів, до 50 джерел у кожному</li><li><svg class="i"><use href="#i-check"/></svg>Відповіді з посиланнями на місце в документі</li><li><svg class="i"><use href="#i-check"/></svg>Аудіоогляди: подкаст про твій матеріал</li><li><svg class="i"><use href="#i-check"/></svg>Конспекти, картки, питання для самоперевірки</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>підготовка до контрольних, робота з підручником</dd><dt>Ліміти</dt><dd>щоденні ліміти на чат і аудіо</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://notebooklm.google.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити Notebook</a></div>
           <button class="more" type="button" data-drawer="d-notebook" data-title="Gemini Notebook">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-perplexity">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--lilac)">Px</span><div><h3>Perplexity</h3><small>perplexity.ai</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Пошук з джерелами без жорсткого ліміту, 3 Pro-пошуки на день</div>
-          <p>Пошуковик з ШІ: кожна відповідь — з посиланнями.</p>
-          <div class="chip-row"><span class="chip">джерела</span></div>
+        <article class="svc svc-rich" id="svc-perplexity">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--lilac)">Px</span><div><h3>Perplexity</h3><small>perplexity.ai</small></div><div class="chip-row svc-chips"><span class="chip">джерела</span></div></div>
+          <p class="svc-lead">Пошуковик із ШІ: замість списку посилань — відповідь, де видно джерело кожної думки.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Базові пошуки майже без обмежень</li><li><svg class="i"><use href="#i-check"/></svg>3 Pro-пошуки на день</li><li><svg class="i"><use href="#i-check"/></svg>1 глибоке дослідження на місяць</li><li><svg class="i"><use href="#i-check"/></svg>Посилання на джерела в кожній відповіді</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>реферати, перевірка фактів, пошук джерел</dd><dt>Ліміти</dt><dd>3 Pro-пошуки на день, без генерації картинок</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://www.perplexity.ai" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити Perplexity</a></div>
           <button class="more" type="button" data-drawer="d-perplexity" data-title="Perplexity">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-deepseek">
-          <div class="svc-top"><span class="svc-logo" style="--c:#4d6bfe;--t:#fff">DS</span><div><h3>DeepSeek</h3><small>chat.deepseek.com</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Модель V4.1 Flash, режим міркувань, пошук</div>
-          <p>Сильний у математиці й логіці. Але дані зберігаються в Китаї.</p>
-          <div class="chip-row"><span class="chip">математика</span><span class="chip red">дані в Китаї</span></div>
+        <article class="svc svc-rich" id="svc-deepseek">
+          <div class="svc-top"><span class="svc-logo" style="--c:#4d6bfe;--t:#fff">DS</span><div><h3>DeepSeek</h3><small>chat.deepseek.com</small></div><div class="chip-row svc-chips"><span class="chip">математика</span><span class="chip red">дані в Китаї</span></div></div>
+          <p class="svc-lead">Безкоштовна модель, сильна в математиці, логіці й коді. Але дані зберігаються в Китаї.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Модель DeepSeek-V4.1 Flash</li><li><svg class="i"><use href="#i-check"/></svg>Режим міркувань: показує хід думок</li><li><svg class="i"><use href="#i-check"/></svg>Вебпошук і розуміння картинок</li><li><svg class="i"><use href="#i-check"/></svg>Без підписок — усе безкоштовно</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>математика, логічні задачі</dd><dt>Ліміти</dt><dd>не публікуються, у пікові години гальмує</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://chat.deepseek.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити DeepSeek</a><a class="dl" href="https://platform.deepseek.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-key"/></svg> API-ключ <em>платно</em></a></div>
           <button class="more" type="button" data-drawer="d-deepseek" data-title="DeepSeek">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-mistral">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--orange)">Mv</span><div><h3>Mistral Vibe</h3><small>Mistral · колишній Le Chat</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Свіжі моделі з лімітом повідомлень, пошук, картинки</div>
-          <p>Європейський сервіс, швидкі чернетки.</p>
-          <div class="chip-row"><span class="chip">Європа</span></div>
+        <article class="svc svc-rich" id="svc-mistral">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--orange)">Mv</span><div><h3>Mistral Vibe</h3><small>Mistral · колишній Le Chat</small></div><div class="chip-row svc-chips"><span class="chip">Європа</span></div></div>
+          <p class="svc-lead">Французький ШІ, захищений європейськими законами про дані. Швидкий для чернеток.</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Свіжі моделі Mistral з лімітом повідомлень</li><li><svg class="i"><use href="#i-check"/></svg>Вебпошук</li><li><svg class="i"><use href="#i-check"/></svg>Прості картинки</li><li><svg class="i"><use href="#i-check"/></svg>Робота з документами</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>швидкі чернетки, європейська приватність</dd><dt>Ліміти</dt><dd>обмежена кількість повідомлень і пошуків</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://mistral.ai" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Сайт Mistral</a></div>
           <button class="more" type="button" data-drawer="d-mistral" data-title="Mistral Vibe">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-        <article class="svc" id="svc-grok">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--ink);--t:#fff">Gr</span><div><h3>Grok</h3><small>xAI · grok.com</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Обмежена модель, ліміти не публікуються</div>
-          <p>Бачить свіжі новини з X (Twitter).</p>
-          <div class="chip-row"><span class="chip">новини</span></div>
+        <article class="svc svc-rich" id="svc-grok">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--ink);--t:#fff">Gr</span><div><h3>Grok</h3><small>xAI · grok.com</small></div><div class="chip-row svc-chips"><span class="chip">новини</span></div></div>
+          <p class="svc-lead">ШІ від xAI, який бачить свіжі пости з X (Twitter).</p>
+          <div class="svc-cols">
+            <div class="svc-free"><b>Безкоштовно</b><ul class="svc-feats"><li><svg class="i"><use href="#i-check"/></svg>Обмежена безкоштовна модель</li><li><svg class="i"><use href="#i-check"/></svg>Свіжі новини й тренди з X</li><li><svg class="i"><use href="#i-check"/></svg>Найновіші моделі — тільки платно</li></ul></div>
+            <dl class="svc-facts"><dt>Найкраще для</dt><dd>новини, що відбувається просто зараз</dd><dt>Ліміти</dt><dd>не публікуються</dd></dl>
+          </div>
+          <div class="dl-row"><a class="dl" href="https://grok.com" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg> Відкрити Grok</a></div>
           <button class="more" type="button" data-drawer="d-grok" data-title="Grok">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
       </div>
