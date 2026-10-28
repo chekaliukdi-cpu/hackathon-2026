@@ -234,6 +234,9 @@ site-nav, site-footer { display: contents; }
   view-transition-name: nav-pill;
 }
 .nav-ico { display: grid; place-items: center; width: 22px; height: 22px; }
+/* текст вкладки має свій шар у переході — щоб підсвітка, яка «пливе», його не закривала */
+.nav-txt { display: inline-flex; align-items: center; gap: 8px; }
+.tab .nav-txt { flex-direction: column; gap: 3px; }
 .nav-ico svg { width: 19px; height: 19px; }
 .num-ico {
   display: grid; place-items: center;
@@ -289,18 +292,19 @@ site-nav, site-footer { display: contents; }
 /* ---------- Переходи між сторінками ---------- */
 @view-transition { navigation: auto; }
 
-::view-transition-group(*) { animation-duration: .55s; animation-timing-function: var(--snap); }
+::view-transition-group(*) { animation-duration: .5s; animation-timing-function: var(--ease-out); }
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
-/* нова сторінка «заїжджає» шторкою, стара відсувається */
-::view-transition-old(page) { animation: vt-push-left .5s var(--snap) both; }
-::view-transition-new(page) { animation: vt-wipe-right .6s var(--snap) both; }
-html:active-view-transition-type(back)::view-transition-old(page) { animation-name: vt-push-right; }
-html:active-view-transition-type(back)::view-transition-new(page) { animation-name: vt-wipe-left; }
+/* сторінка не «розтягується» між старою і новою висотою — тільки тане й зсувається */
+::view-transition-group(page) { animation: none; }
+::view-transition-old(page) { animation: vt-out-left .2s cubic-bezier(.4, 0, 1, 1) both; }
+::view-transition-new(page) { animation: vt-in-right .45s var(--ease-out) .2s both; }
+html:active-view-transition-type(back)::view-transition-old(page) { animation-name: vt-out-right; }
+html:active-view-transition-type(back)::view-transition-new(page) { animation-name: vt-in-left; }
 
-@keyframes vt-push-left  { to { transform: translateX(-12%) rotate(-1deg); opacity: .4; } }
-@keyframes vt-push-right { to { transform: translateX(12%) rotate(1deg); opacity: .4; } }
-@keyframes vt-wipe-right { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
-@keyframes vt-wipe-left  { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes vt-out-left  { to   { opacity: 0; transform: translateX(-32px); } }
+@keyframes vt-out-right { to   { opacity: 0; transform: translateX(32px); } }
+@keyframes vt-in-right  { from { opacity: 0; transform: translateX(44px); } }
+@keyframes vt-in-left   { from { opacity: 0; transform: translateX(-44px); } }
 
 /* Якщо браузер не вміє View Transitions — проста поява */
 .page { view-transition-name: page; animation: page-enter .6s var(--ease-out) backwards; }

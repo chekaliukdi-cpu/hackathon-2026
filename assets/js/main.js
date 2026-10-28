@@ -137,7 +137,7 @@
     const active = cur && p.id === cur.id;
     return `<a class="${cls}${active ? " active" : ""}" href="${p.href}"${active ? ' aria-current="page"' : ""}>` +
       (active ? `<span class="${pillCls}"></span>` : "") +
-      `${icon(p)}<span>${p[labelKey]}</span></a>`;
+      `<span class="nav-txt" style="view-transition-name:${cls}-${p.id}">${icon(p)}<span>${p[labelKey]}</span></span></a>`;
   }
 
   /* ---------- <site-nav> ---------- */
