@@ -101,9 +101,9 @@ body[data-page="task-2"] { --accent: var(--blurple); --on-accent: #fff; }
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=12">
+  <link rel="stylesheet" href="assets/css/style.css?v=14">
   <link rel="stylesheet" href="assets/css/task-3.css?v=1">   <!-- свій файл, якщо потрібен -->
-  <script src="assets/js/main.js?v=12"></script>            <!-- БЕЗ defer, саме в <head> -->
+  <script src="assets/js/main.js?v=14"></script>            <!-- БЕЗ defer, саме в <head> -->
   <script src="assets/js/task-3.js?v=1" defer></script>      <!-- свій JS, якщо потрібен -->
 </head>
 <body data-page="task-3">
@@ -131,7 +131,7 @@ body[data-page="task-2"] { --accent: var(--blurple); --on-accent: #fff; }
 - `<site-nav>` і `<site-footer>` не видаляй і нічого всередину не пиши.
 - Кожна секція — `section.section.container` з унікальним `id` (на нього посилається зміст).
 - Посилання між сторінками — відносні (`task-2.html`, `#quest`), бо сайт живе на GitHub Pages у підпапці.
-- **Кеш.** Після зміни CSS/JS збільш число `?v=…` у підключенні, інакше браузери показуватимуть стару версію.
+- **Кеш.** Перед комітом запусти `python tools/bump_version.py` — він сам оновить версію на всіх сторінках, і браузери відвідувачів підтягнуть нову версію автоматично.
 
 ---
 
@@ -392,7 +392,7 @@ moon hash slash discord refresh
 - зміни в `style.css` / `main.js` без домовленості з іншими авторами;
 - `position: fixed` поверх меню, горизонтальний скрол на телефоні;
 - абсолютні посилання на кшталт `/task-1.html` (зламається на GitHub Pages);
-- забути збільшити `?v=` після зміни CSS/JS.
+- забути запустити `python tools/bump_version.py` перед комітом.
 
 ---
 

@@ -204,6 +204,31 @@
     location.href = target.href;
   }
 
+  /* ---------- Автооновлення кешу ----------
+     GitHub Pages дозволяє браузеру тримати сторінки в кеші до 10 хв.
+     Кожна сторінка знає свою версію (<meta name="site-version">). Тут ми тихо
+     питаємо сервер про актуальну версію (version.json, повз кеш). Якщо сторінка
+     застаріла — оновлюємо в кеші всі сторінки сайту і один раз перезавантажуємо.
+     Версію піднімає скрипт: python tools/bump_version.py */
+  async function checkVersion() {
+    const meta = document.querySelector('meta[name="site-version"]');
+    if (!meta || !window.fetch) return;
+    const mine = parseInt(meta.content, 10) || 0;
+    let latest = 0;
+    try {
+      const r = await fetch("version.json?t=" + Date.now(), { cache: "no-store" });
+      if (!r.ok) return;
+      latest = (await r.json()).v || 0;
+    } catch (e) { return; }
+    if (latest <= mine) return;
+    const key = "hk26-updated-" + latest;
+    try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, "1"); } catch (e) { return; }
+    const pages = PAGES.map((p) => p.href).concat(["components.html", "./", location.href.split("#")[0]]);
+    await Promise.allSettled(pages.map((u) => fetch(u, { cache: "reload" })));
+    location.reload();
+  }
+  window.addEventListener("load", () => setTimeout(checkVersion, 300));
+
   /* ---------- Після завантаження сторінки ---------- */
   document.addEventListener("DOMContentLoaded", () => {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
