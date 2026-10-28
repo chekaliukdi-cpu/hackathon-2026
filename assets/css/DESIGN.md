@@ -101,9 +101,9 @@ body[data-page="task-2"] { --accent: var(--blurple); --on-accent: #fff; }
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
   <link rel="stylesheet" href="assets/css/task-3.css?v=1">   <!-- свій файл, якщо потрібен -->
-  <script src="assets/js/main.js?v=5"></script>            <!-- БЕЗ defer, саме в <head> -->
+  <script src="assets/js/main.js?v=6"></script>            <!-- БЕЗ defer, саме в <head> -->
   <script src="assets/js/task-3.js?v=1" defer></script>      <!-- свій JS, якщо потрібен -->
 </head>
 <body data-page="task-3">
@@ -262,6 +262,33 @@ body[data-page="task-2"] { --accent: var(--blurple); --on-accent: #fff; }
 ### Заглушка «в розробці»
 `<div class="placeholder">…</div>` — смуга «В РОЗРОБЦІ» додається сама. Прибери, коли сторінка готова.
 
+### Каруселька (гортання вбік)
+Щоб сторінку не доводилось довго гортати вниз: картки стоять у ряд і гортаються вбік (свайп, кнопки ←/→, точки, перетягування мишкою — додаються самі).
+```html
+<div class="carousel" data-carousel style="--slide-w:min(340px,84%)">
+  <div class="carousel-track">
+    <article class="card">…</article>
+    <article class="card">…</article>
+  </div>
+</div>
+```
+`--slide-w` — ширина однієї картки.
+
+### «Детальніше» — бокова панель
+Коротко на сторінці, а повна інформація — у панелі, яка виїжджає справа (на телефоні — знизу).
+```html
+<button class="more" type="button" data-drawer="d-ollama" data-title="Ollama">
+  Детальніше <svg class="i"><use href="#i-arrow"/></svg>
+</button>
+
+<!-- десь унизу сторінки, перед </main> чи після -->
+<template id="d-ollama">
+  <h3>Заголовок</h3>
+  <p>Будь-який HTML: списки, підказки, термінали, навіть вкладки.</p>
+</template>
+```
+`id` шаблону має бути унікальним. Панель закривається хрестиком, клавішею Esc або кліком повз неї. Великий приклад — `index.html`.
+
 ### Більші приклади з Задачі 2
 У `assets/css/task2.css` є складніші блоки, які можна скопіювати у свій `task-N.css` і переробити під себе: кольорові картки з великими цифрами (`.mcard`), схема етапів зі стрілками (`.flow`), квест із XP (`.xp`, `.levels`, `.quests`), «погано/добре» (`.prompt-vs`), картки, що перевертаються (`.flips`), макети інтерфейсів (`.mock`), симуляція (`.sim`). Логіка до них — у `assets/js/task2.js`.
 
@@ -287,7 +314,7 @@ pin panel cpu sparkles wand bot code terminal git github laptop key lock shield
 shield-alert plug signal zap cog wrench blocks package search eye target info alert
 bulb check x arrow swipe mail send message user users video film clapper clock
 school book lifebuoy trophy crown star rocket sprout flame heart coins scale pencil
-moon hash slash discord
+moon hash slash discord refresh
 ```
 
 ---

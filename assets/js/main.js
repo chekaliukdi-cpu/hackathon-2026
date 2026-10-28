@@ -102,6 +102,7 @@
     heart: '<path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/>',
     flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
     arrow: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    refresh: '<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>',
     discord: '<path fill="currentColor" stroke="none" d="M19.3 5.3A17 17 0 0 0 15 4l-.5 1.1a15.7 15.7 0 0 0-5 0L9 4a17 17 0 0 0-4.3 1.3C2 9.4 1.2 13.4 1.6 17.3A17.2 17.2 0 0 0 6.9 20l1.1-1.8a11 11 0 0 1-1.7-.8l.4-.3a12.3 12.3 0 0 0 10.6 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.8a17.1 17.1 0 0 0 5.3-2.7c.5-4.5-.8-8.5-3.1-12ZM8.7 14.9c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1Zm6.6 0c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1Z"/>',
   };
 
@@ -219,6 +220,8 @@
     initTabs();
     initCopy();
     initToc();
+    initCarousels();
+    initDrawers();
     initSwipe();
   });
 
@@ -248,6 +251,8 @@
      і панелі <div role="tabpanel" id="id">. Індикатор додається сам. */
   function initTabs() {
     document.querySelectorAll(".tabs-ui").forEach((ui) => {
+      if (ui.dataset.ready) return;
+      ui.dataset.ready = "1";
       const list = ui.querySelector(".tab-list");
       const tabs = [...list.querySelectorAll('[role="tab"]')];
       const ind = document.createElement("span");
@@ -341,11 +346,101 @@
     });
   }
 
+  /* Каруселька: кнопки ←/→, точки, лічильник, перетягування мишкою */
+  function initCarousels() {
+    document.querySelectorAll("[data-carousel]").forEach((car) => {
+      const track = car.querySelector(".carousel-track");
+      if (!track || car.querySelector(".carousel-ui")) return;
+      const slides = [...track.children];
+      const ui = document.createElement("div");
+      ui.className = "carousel-ui";
+      ui.innerHTML =
+        `<div class="carousel-dots">${slides.map((_, i) => `<button type="button" aria-label="Картка ${i + 1}"></button>`).join("")}</div>` +
+        `<span class="carousel-count"></span>` +
+        `<div class="carousel-btns"><button type="button" data-dir="-1" aria-label="Назад"><svg class="i thick" style="rotate:180deg"><use href="#i-arrow"/></svg></button>` +
+        `<button type="button" data-dir="1" aria-label="Далі"><svg class="i thick"><use href="#i-arrow"/></svg></button></div>`;
+      car.appendChild(ui);
+      const dots = [...ui.querySelectorAll(".carousel-dots button")];
+      const [prev, next] = ui.querySelectorAll(".carousel-btns button");
+      const count = ui.querySelector(".carousel-count");
+
+      const step = () => (slides[1] ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth);
+      function current() { return Math.round(track.scrollLeft / step()); }
+      function update() {
+        const i = Math.min(slides.length - 1, current());
+        dots.forEach((d, k) => d.classList.toggle("on", k === i));
+        count.textContent = `${i + 1} / ${slides.length}`;
+        prev.disabled = track.scrollLeft < 4;
+        next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      }
+      const go = (i) => track.scrollTo({ left: slides[Math.max(0, Math.min(slides.length - 1, i))].offsetLeft - slides[0].offsetLeft, behavior: "smooth" });
+      dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
+      ui.querySelectorAll("[data-dir]").forEach((b) => b.addEventListener("click", () => go(current() + +b.dataset.dir)));
+      track.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+      addEventListener("resize", update);
+      update();
+
+      // перетягування мишкою (на телефоні працює звичайний свайп)
+      let down = false, sx = 0, sl = 0, moved = false;
+      track.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse" || e.button !== 0 || e.target.closest("button, a, input, select, textarea, label")) return;
+        down = true; moved = false; sx = e.clientX; sl = track.scrollLeft;
+      });
+      addEventListener("pointermove", (e) => {
+        if (!down) return;
+        const dx = e.clientX - sx;
+        if (Math.abs(dx) > 5) { moved = true; track.classList.add("dragging"); }
+        if (moved) track.scrollLeft = sl - dx;
+      });
+      addEventListener("pointerup", () => {
+        if (!down) return;
+        down = false;
+        if (moved) { track.classList.remove("dragging"); go(current()); }
+      });
+      track.addEventListener("click", (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    });
+  }
+
+  /* Бокова панель «Детальніше»: <button data-drawer="id"> + <template id="id"> */
+  function initDrawers() {
+    if (!document.querySelector("[data-drawer]")) return;
+    const dlg = document.createElement("dialog");
+    dlg.className = "drawer";
+    dlg.innerHTML = `<div class="drawer-head"><b></b><button class="drawer-close" type="button" aria-label="Закрити">${svgIcon("x", "thick")}</button></div><div class="drawer-body"></div>`;
+    document.body.appendChild(dlg);
+    const title = dlg.querySelector(".drawer-head b");
+    const body = dlg.querySelector(".drawer-body");
+    let opener = null;
+
+    function close() {
+      if (!dlg.open || dlg.classList.contains("closing")) return;
+      dlg.classList.add("closing");
+      setTimeout(() => { dlg.classList.remove("closing"); dlg.close(); if (opener) opener.focus({ preventScroll: true }); }, 280);
+    }
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-drawer]");
+      if (!btn) return;
+      const tpl = document.getElementById(btn.dataset.drawer);
+      if (!tpl) return;
+      opener = btn;
+      title.textContent = btn.dataset.title || tpl.dataset.title || "Детальніше";
+      body.innerHTML = "";
+      body.appendChild(tpl.content.cloneNode(true));
+      body.scrollTop = 0;
+      dlg.showModal();
+      // нові терміналі/вкладки всередині панелі теж мають працювати
+      initCopy(); initTabs();
+    });
+    dlg.querySelector(".drawer-close").addEventListener("click", close);
+    dlg.addEventListener("cancel", (e) => { e.preventDefault(); close(); });
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) close(); });
+  }
+
   /* Свайп на телефоні: ← наступна сторінка, → попередня */
   function initSwipe() {
     if (curIdx < 0 || !matchMedia("(pointer: coarse)").matches) return;
     let sx = 0, sy = 0, st = 0, ok = false;
-    const blocked = "[data-no-swipe], pre, .tab-list, .toc-inner, input, textarea, select, .scroll-x";
+    const blocked = "[data-no-swipe], pre, .tab-list, .toc-inner, .carousel-track, dialog, input, textarea, select, .scroll-x";
     document.addEventListener("touchstart", (e) => {
       const t = e.touches[0];
       ok = e.touches.length === 1 && t.clientX > 28 && t.clientX < innerWidth - 28 && !e.target.closest(blocked);

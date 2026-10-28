@@ -754,3 +754,123 @@ html.has-vt .page { animation: none; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- Каруселька (горизонтальне гортання) ----------
+   <div class="carousel" data-carousel>
+     <div class="carousel-track"> <article class="slide">…</article> … </div>
+   </div>
+   Кнопки, точки й перетягування мишкою додає main.js. */
+.carousel { position: relative; }
+.carousel-track {
+  display: grid; grid-auto-flow: column;
+  grid-auto-columns: var(--slide-w, min(340px, 84%));
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 4px;
+  padding: 6px 14px 18px 4px;
+  margin-inline: -4px;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.carousel-track > * { scroll-snap-align: start; min-width: 0; }
+.carousel-ui { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+.carousel-dots { display: flex; gap: 6px; flex-wrap: wrap; }
+.carousel-dots button {
+  width: 12px; height: 12px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  transition: width .35s var(--spring), background-color .2s;
+}
+.carousel-dots button.on { width: 30px; background: var(--accent); }
+.carousel-count { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--muted); }
+.carousel-btns { display: flex; gap: 8px; margin-left: auto; }
+.carousel-btns button {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: 12px;
+  box-shadow: var(--sh-sm);
+  transition: transform .1s, box-shadow .1s, opacity .2s;
+}
+.carousel-btns button:active { transform: translate(3px, 3px); box-shadow: none; }
+.carousel-btns button:disabled { opacity: .35; pointer-events: none; }
+.carousel-btns svg { width: 20px; height: 20px; }
+.slide { height: 100%; }
+
+/* ---------- Кнопка «Детальніше» + бокова панель ----------
+   <button class="more" data-drawer="d-claude">Детальніше</button>
+   <template id="d-claude"><h3>Заголовок</h3> … будь-який HTML … </template> */
+.more {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px;
+  background: var(--white);
+  border: 2.5px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: var(--sh-sm);
+  font-weight: 800; font-size: 14px;
+  transition: transform .12s, box-shadow .12s, background-color .2s;
+}
+.more:hover { background: var(--yellow); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.more:active { transform: translate(3px, 3px); box-shadow: none; }
+.more .i { transition: transform .3s var(--spring); }
+.more:hover .i { transform: translateX(4px); }
+
+dialog.drawer {
+  position: fixed; inset: 0 0 0 auto;
+  width: min(560px, 100vw); height: 100dvh; max-height: none; max-width: none;
+  margin: 0; padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  border: 0; border-left: var(--border);
+  box-shadow: -10px 0 0 rgba(18, 18, 18, .12);
+  overflow: hidden;
+}
+dialog.drawer[open] { display: flex; flex-direction: column; animation: drawer-in .45s var(--snap); }
+dialog.drawer.closing { animation: drawer-out .3s ease-in forwards; }
+dialog.drawer::backdrop { background: rgba(18, 18, 18, .45); animation: fade .3s; }
+@keyframes drawer-in { from { transform: translateX(100%); } }
+@keyframes drawer-out { to { transform: translateX(100%); } }
+@keyframes fade { from { opacity: 0; } }
+.drawer-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  background: var(--accent); color: var(--on-accent);
+  border-bottom: var(--border);
+}
+.drawer-head b { font-family: var(--font-display); font-weight: 900; font-size: 1.15rem; text-transform: uppercase; line-height: 1.1; }
+.drawer-close {
+  margin-left: auto; flex: none;
+  display: grid; place-items: center;
+  width: 42px; height: 42px;
+  background: var(--white); color: var(--ink);
+  border: var(--border);
+  border-radius: 11px;
+  box-shadow: var(--sh-sm);
+}
+.drawer-close:active { transform: translate(3px, 3px); box-shadow: none; }
+.drawer-close svg { width: 20px; height: 20px; }
+.drawer-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 22px 22px 40px; }
+.drawer-body > * { animation: chat-pop .5s var(--spring) backwards; }
+.drawer-body > *:nth-child(2) { animation-delay: .05s; }
+.drawer-body > *:nth-child(3) { animation-delay: .1s; }
+.drawer-body > *:nth-child(4) { animation-delay: .15s; }
+.drawer-body > *:nth-child(n+5) { animation-delay: .2s; }
+@keyframes chat-pop { from { opacity: 0; transform: translateY(16px); } }
+.drawer-body h3 { font-size: 1.35rem; }
+.drawer-body h4 { margin: 22px 0 8px; font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.drawer-body p, .drawer-body li { color: var(--muted); font-size: 15.5px; }
+.drawer-body .terminal, .drawer-body .callout { margin: 14px 0; }
+.drawer-body ul { padding-left: 1.1em; }
+@media (max-width: 640px) {
+  dialog.drawer { inset: auto 0 0 0; width: 100vw; height: 88dvh; border-left: 0; border-top: var(--border); border-radius: 22px 22px 0 0; }
+  @keyframes drawer-in { from { transform: translateY(100%); } }
+  @keyframes drawer-out { to { transform: translateY(100%); } }
+  .drawer-head::before { content: ""; position: absolute; left: 50%; top: 6px; width: 44px; height: 5px; translate: -50% 0; background: var(--ink); border-radius: 9px; opacity: .5; }
+  .drawer-head { position: relative; padding-top: 18px; }
+}
