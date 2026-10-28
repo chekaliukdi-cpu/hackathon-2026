@@ -523,6 +523,7 @@ html.has-vt .page { animation: none; }
 }
 .tab-list::-webkit-scrollbar { display: none; }
 .tab-btn {
+  flex: none;
   position: relative; z-index: 1;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 9px 18px;
@@ -593,6 +594,8 @@ html.has-vt .page { animation: none; }
 }
 .toc-inner::-webkit-scrollbar { display: none; }
 .toc-inner a {
+  flex: none; /* не стискати пункти — інакше текст вилазить за фон */
+  display: inline-flex; align-items: center; gap: 6px;
   padding: 6px 13px;
   border-radius: 9px;
   font-size: 14px; font-weight: 700;
