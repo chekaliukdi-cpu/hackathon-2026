@@ -221,6 +221,8 @@
     initCopy();
     initToc();
     initCarousels();
+    initSteppers();
+    initPickers();
     initDrawers();
     initSwipe();
   });
@@ -398,6 +400,101 @@
         if (moved) { track.classList.remove("dragging"); go(current()); }
       });
       track.addEventListener("click", (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    });
+  }
+
+  /* Покроковий блок: одна картка за раз, вкладки зверху, «Детальніше / Назад / Далі» знизу */
+  function initSteppers() {
+    document.querySelectorAll("[data-stepper]").forEach((box) => {
+      if (box.dataset.ready) return;
+      box.dataset.ready = "1";
+      const stage = box.querySelector(".stepper-stage");
+      const steps = [...stage.children];
+      const tabs = document.createElement("div");
+      tabs.className = "stepper-tabs";
+      tabs.setAttribute("role", "tablist");
+      tabs.innerHTML = steps.map((st, i) =>
+        `<button type="button" role="tab"><b>${String(i + 1).padStart(2, "0")}</b><span>${st.dataset.title || "Крок " + (i + 1)}</span></button>`).join("");
+      box.prepend(tabs);
+      const bar = document.createElement("div");
+      bar.className = "stepper-bar";
+      bar.innerHTML =
+        `<button class="more stepper-more" type="button">Детальніше ${svgIcon("arrow")}</button>` +
+        `<span class="stepper-count"></span>` +
+        `<button class="stepper-prev" type="button" aria-label="Назад">${svgIcon("arrow", "thick")}</button>` +
+        `<a class="btn btn-primary stepper-next" href="#"></a>`;
+      box.appendChild(bar);
+      const tabBtns = [...tabs.children];
+      const more = bar.querySelector(".stepper-more");
+      const prev = bar.querySelector(".stepper-prev");
+      const next = bar.querySelector(".stepper-next");
+      const count = bar.querySelector(".stepper-count");
+      let cur = -1;
+
+      function go(n, user) {
+        if (n === cur || n < 0 || n >= steps.length) return;
+        const dir = n > cur ? 1 : -1;
+        const old = steps[cur];
+        const neu = steps[n];
+        if (old) {
+          old.classList.remove("active");
+          old.classList.toggle("out-left", dir > 0);
+          setTimeout(() => old.classList.remove("out-left"), 560);
+        }
+        neu.classList.add("no-anim");
+        neu.classList.toggle("from-left", dir < 0 && cur >= 0);
+        void neu.offsetWidth;
+        neu.classList.remove("no-anim", "from-left");
+        neu.classList.add("active");
+        steps.forEach((st, i) => st.setAttribute("aria-hidden", i !== n));
+        tabBtns.forEach((t, i) => {
+          t.setAttribute("aria-selected", i === n);
+          if (i === n) t.classList.add("seen");
+        });
+        const tb = tabBtns[n];
+        tabs.scrollTo({ left: tb.offsetLeft - tabs.clientWidth / 2 + tb.offsetWidth / 2, behavior: "smooth" });
+        more.hidden = !neu.dataset.drawer;
+        if (neu.dataset.drawer) { more.dataset.drawer = neu.dataset.drawer; more.dataset.title = neu.dataset.title || "Детальніше"; }
+        count.textContent = `${n + 1} / ${steps.length}`;
+        prev.disabled = n === 0;
+        const last = n === steps.length - 1;
+        next.innerHTML = (last ? (box.dataset.finalLabel || "Готово") : "Далі") + ' <span class="arr">→</span>';
+        next.setAttribute("href", last ? (box.dataset.finalHref || "#") : "#");
+        cur = n;
+        if (user) neu.dispatchEvent(new CustomEvent("stepshow", { bubbles: true }));
+      }
+      tabBtns.forEach((t, i) => t.addEventListener("click", () => go(i, true)));
+      prev.addEventListener("click", () => go(cur - 1, true));
+      next.addEventListener("click", (e) => {
+        if (cur < steps.length - 1) { e.preventDefault(); go(cur + 1, true); }
+      });
+      box.addEventListener("keydown", (e) => {
+        if (e.target.closest("input, textarea")) return;
+        if (e.key === "ArrowRight") go(cur + 1, true);
+        if (e.key === "ArrowLeft") go(cur - 1, true);
+      });
+      go(0);
+    });
+  }
+
+  /* Вибір зі списку: кнопки [data-pick="id"] показують відповідну картку */
+  function initPickers() {
+    document.querySelectorAll("[data-picker]").forEach((box) => {
+      if (box.dataset.ready) return;
+      box.dataset.ready = "1";
+      const btns = [...box.querySelectorAll("[data-pick]")];
+      const panels = btns.map((b) => document.getElementById(b.dataset.pick)).filter(Boolean);
+      function pick(id, anim) {
+        btns.forEach((b) => b.setAttribute("aria-selected", b.dataset.pick === id));
+        panels.forEach((pn) => {
+          const on = pn.id === id;
+          pn.hidden = !on;
+          if (on && anim) { pn.classList.remove("entering"); void pn.offsetWidth; pn.classList.add("entering"); }
+        });
+      }
+      btns.forEach((b) => b.addEventListener("click", () => pick(b.dataset.pick, true)));
+      box.pickById = (id) => pick(id, true);
+      pick(btns[0].dataset.pick, false);
     });
   }
 

@@ -380,9 +380,18 @@
     function show(k) {
       btns.forEach((b) => b.setAttribute("aria-pressed", b.dataset.need === k));
       const c = window.CHOOSER[k];
-      out.innerHTML = `<p class="ch-why">${c.why}</p><div class="ch-picks">${c.picks.map((p, i) =>
-        `<span class="ch-pick" style="--d:${i * 80}ms;--c:${p.c}"><b>${p.name}</b><small>${p.note}</small></span>`).join("")}</div>`;
+      out.innerHTML = `<p class="ch-why">${c.why}</p><div class="ch-picks">${c.picks.map((p, i) => p.svc
+        ? `<button type="button" class="ch-pick" data-svc="${p.svc}" style="--d:${i * 80}ms;--c:${p.c}"><b>${p.name}</b><small>${p.note}</small></button>`
+        : `<span class="ch-pick" style="--d:${i * 80}ms;--c:${p.c}"><b>${p.name}</b><small>${p.note}</small></span>`).join("")}</div>`;
     }
+    // клік по підказці — відкриває картку сервісу в списку нижче
+    out.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-svc]");
+      const picker = $("#svcPicker");
+      if (!b || !picker || !picker.pickById) return;
+      picker.pickById(b.dataset.svc);
+      picker.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    });
     btns.forEach((b) => b.addEventListener("click", () => show(b.dataset.need)));
     show(btns[0].dataset.need);
   }

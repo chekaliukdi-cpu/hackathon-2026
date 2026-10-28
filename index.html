@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=6">
-  <link rel="stylesheet" href="assets/css/home.css?v=6">
-  <script src="assets/js/main.js?v=6"></script>
-  <script src="assets/js/home.js?v=6" defer></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
+  <link rel="stylesheet" href="assets/css/home.css?v=8">
+  <script src="assets/js/main.js?v=8"></script>
+  <script src="assets/js/home.js?v=8" defer></script>
 </head>
 <body data-page="home">
 <site-nav></site-nav>
@@ -64,10 +64,10 @@
       <p>ChatGPT, Gemini, Claude — це великі мовні моделі (LLM). Гортай картки вбік: у кожній — жива демка, яку можна покрутити.</p>
     </div>
 
-    <div class="carousel lessons reveal" data-carousel>
-      <div class="carousel-track">
+    <div class="stepper lessons reveal" data-stepper data-final-href="#free" data-final-label="До чатів">
+      <div class="stepper-stage">
 
-        <article class="lesson">
+        <article class="step lesson" data-title="Токени" data-drawer="d-tokens">
           <span class="lesson-num" style="--c:var(--yellow)"><svg class="i"><use href="#i-blocks"/></svg> 01 · токени</span>
           <h3>ШІ читає шматочками</h3>
           <p>Модель бачить не букви й не слова, а <b>токени</b> — шматки тексту. Від їх кількості залежать ліміти й ціна. Напиши щось:</p>
@@ -81,10 +81,9 @@
             <div class="tok-out" id="tokOut"></div>
             <div class="tok-stats"><span>токенів: <b id="tokCount">0</b></span><span>символів: <b id="tokChars">0</b></span></div>
           </div>
-          <button class="more" type="button" data-drawer="d-tokens" data-title="Токени">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
 
-        <article class="lesson" id="nextTok">
+        <article class="step lesson" id="nextTok" data-title="Наступне слово" data-drawer="d-predict">
           <span class="lesson-num" style="--c:var(--pink)"><svg class="i"><use href="#i-sparkles"/></svg> 02 · передбачення</span>
           <h3>Вгадує наступне слово</h3>
           <p>LLM — це дуже-дуже розумне автодоповнення. Вона рахує ймовірність кожного наступного токена і вибирає один. Покрути «температуру»:</p>
@@ -97,10 +96,9 @@
               <span class="nt-mood" id="ntMood"></span>
             </div>
           </div>
-          <button class="more" type="button" data-drawer="d-predict" data-title="Як модель вибирає слова">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
 
-        <article class="lesson" id="ctx">
+        <article class="step lesson" id="ctx" data-title="Пам’ять" data-drawer="d-context">
           <span class="lesson-num" style="--c:var(--cyan)"><svg class="i"><use href="#i-clipboard"/></svg> 03 · пам’ять</span>
           <h3>Контекстне вікно</h3>
           <p>Модель «пам’ятає» лише те, що вміщається в її вікно. Коли розмова дуже довга — найстаріше випадає. Дивись, що станеться з ім’ям:</p>
@@ -108,10 +106,9 @@
             <div class="ctx-meter"><span>пам’ять</span><div class="ctx-bar"><i id="ctxFill"></i></div><span><b id="ctxNum">0</b>/100</span></div>
             <div class="ctx-strip" id="ctxStrip"></div>
           </div>
-          <button class="more" type="button" data-drawer="d-context" data-title="Контекстне вікно">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
 
-        <article class="lesson">
+        <article class="step lesson" data-title="Галюцинації" data-drawer="d-halluc">
           <span class="lesson-num" style="--c:var(--red)"><svg class="i"><use href="#i-alert"/></svg> 04 · галюцинації</span>
           <h3>Впевнено вигадує</h3>
           <p>ШІ не «знає» факти — він генерує правдоподібний текст. Тому іноді вигадує дати, імена, книжки й посилання. Звучить переконливо — але це може бути неправда.</p>
@@ -120,10 +117,9 @@
             <span class="hl-answer" data-text="Першим борщ на Місяці приготував космонавт Олексій Борщенко у 1979 році під час місії «Луна-Смак». Рецепт досі зберігається в музеї Києва."></span>
             <span class="hl-stamp">вигадка</span>
           </div>
-          <button class="more" type="button" data-drawer="d-halluc" data-title="Галюцинації">Як себе захистити <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
 
-        <article class="lesson">
+        <article class="step lesson" data-title="Чат · API · ПК" data-drawer="d-kinds">
           <span class="lesson-num" style="--c:var(--lime)"><svg class="i"><use href="#i-plug"/></svg> 05 · три способи</span>
           <h3>Модель, чат і API</h3>
           <p>Одна й та сама модель може жити в трьох місцях:</p>
@@ -132,7 +128,6 @@
             <div class="callout warn" style="margin-top:10px"><span class="callout-ico"><svg class="i"><use href="#i-key"/></svg></span><p><b>API.</b> Твій код сам «питає» модель через ключ. Для ботів і застосунків.</p></div>
             <div class="callout tip" style="margin-top:10px"><span class="callout-ico"><svg class="i"><use href="#i-laptop"/></svg></span><p><b>Локально.</b> Модель скачана на твій ПК і працює без інтернету.</p></div>
           </div>
-          <button class="more" type="button" data-drawer="d-kinds" data-title="Чат, API чи локально?">Що мені обрати <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
 
       </div>
@@ -160,81 +155,82 @@
       <div id="chooserOut"></div>
     </div>
 
-    <div class="carousel reveal" data-carousel>
-      <div class="carousel-track">
-
-        <article class="svc">
+    <div class="picker reveal" data-picker id="svcPicker">
+      <div class="picker-list" role="tablist" aria-label="Сервіси">
+        <button type="button" role="tab" data-pick="svc-gemini"><span class="pl-logo" style="--c:var(--blue);--t:#fff">Gm</span>Gemini</button>
+        <button type="button" role="tab" data-pick="svc-chatgpt"><span class="pl-logo" style="--c:#10a37f;--t:#fff">GP</span>ChatGPT</button>
+        <button type="button" role="tab" data-pick="svc-claude"><span class="pl-logo" style="--c:#d97757;--t:#fff">Cl</span>Claude</button>
+        <button type="button" role="tab" data-pick="svc-copilot"><span class="pl-logo" style="--c:var(--cyan)">Co</span>Copilot</button>
+        <button type="button" role="tab" data-pick="svc-notebook"><span class="pl-logo" style="--c:var(--yellow)">Nb</span>Gemini Notebook</button>
+        <button type="button" role="tab" data-pick="svc-perplexity"><span class="pl-logo" style="--c:var(--lilac)">Px</span>Perplexity</button>
+        <button type="button" role="tab" data-pick="svc-deepseek"><span class="pl-logo" style="--c:#4d6bfe;--t:#fff">DS</span>DeepSeek</button>
+        <button type="button" role="tab" data-pick="svc-mistral"><span class="pl-logo" style="--c:var(--orange)">Mv</span>Mistral Vibe</button>
+        <button type="button" role="tab" data-pick="svc-grok"><span class="pl-logo" style="--c:var(--ink);--t:#fff">Gr</span>Grok</button>
+      </div>
+      <div class="picker-stage">
+        <article class="svc" id="svc-gemini">
           <div class="svc-top"><span class="svc-logo" style="--c:var(--blue);--t:#fff">Gm</span><div><h3>Gemini</h3><small>Google · gemini.google.com</small></div></div>
           <div class="svc-free"><b>Безкоштовно</b>Режим «Авто» (найчастіше Flash-Lite), картинки, Deep Research, Canvas, голос</div>
           <p>Найзручніший старт: вхід через Google-акаунт, є українська.</p>
           <div class="chip-row"><span class="chip green">радимо для старту</span><span class="chip">українською</span></div>
           <button class="more" type="button" data-drawer="d-gemini" data-title="Gemini">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-
-        <article class="svc">
+        <article class="svc" id="svc-chatgpt">
           <div class="svc-top"><span class="svc-logo" style="--c:#10a37f;--t:#fff">GP</span><div><h3>ChatGPT</h3><small>OpenAI · chatgpt.com</small></div></div>
           <div class="svc-free"><b>Безкоштовно</b>Модель GPT-6 Luna, текстовий чат без жорсткого ліміту, пошук, файли, картинки — з окремими лімітами</div>
           <p>Універсал: тексти, пояснення, код.</p>
           <div class="chip-row"><span class="chip">універсал</span><span class="chip">картинки</span></div>
           <button class="more" type="button" data-drawer="d-chatgpt" data-title="ChatGPT">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-
-        <article class="svc">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--cyan)">Co</span><div><h3>Copilot</h3><small>Microsoft · copilot.microsoft.com</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Чат, Think Deeper, картинки, голос, файли</div>
-          <p>Безкоштовні картинки і зручний голосовий режим.</p>
-          <div class="chip-row"><span class="chip">картинки</span><span class="chip">голос</span></div>
-          <button class="more" type="button" data-drawer="d-copilot" data-title="Microsoft Copilot">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
-        </article>
-
-        <article class="svc">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--yellow)">Nb</span><div><h3>Gemini Notebook</h3><small>Google · колишній NotebookLM</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>100 блокнотів, до 50 джерел у кожному, аудіоогляди</div>
-          <p>Завантаж конспект чи PDF — і питай тільки по ньому. Менше вигадок.</p>
-          <div class="chip-row"><span class="chip green">для навчання</span></div>
-          <button class="more" type="button" data-drawer="d-notebook" data-title="Gemini Notebook">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
-        </article>
-
-        <article class="svc">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--lilac)">Px</span><div><h3>Perplexity</h3><small>perplexity.ai</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Пошук з джерелами без жорсткого ліміту, 3 Pro-пошуки на день</div>
-          <p>Пошуковик з ШІ: кожна відповідь — з посиланнями.</p>
-          <div class="chip-row"><span class="chip">джерела</span></div>
-          <button class="more" type="button" data-drawer="d-perplexity" data-title="Perplexity">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
-        </article>
-
-        <article class="svc">
-          <div class="svc-top"><span class="svc-logo" style="--c:var(--orange)">Mv</span><div><h3>Mistral Vibe</h3><small>Mistral · колишній Le Chat</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Свіжі моделі з лімітом повідомлень, пошук, картинки</div>
-          <p>Європейський сервіс, швидкі чернетки.</p>
-          <div class="chip-row"><span class="chip">Європа</span></div>
-          <button class="more" type="button" data-drawer="d-mistral" data-title="Mistral Vibe">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
-        </article>
-
-        <article class="svc">
-          <div class="svc-top"><span class="svc-logo" style="--c:#4d6bfe;--t:#fff">DS</span><div><h3>DeepSeek</h3><small>chat.deepseek.com</small></div></div>
-          <div class="svc-free"><b>Безкоштовно</b>Модель V4.1 Flash, режим міркувань, пошук</div>
-          <p>Сильний у математиці й логіці. Але дані зберігаються в Китаї.</p>
-          <div class="chip-row"><span class="chip">математика</span><span class="chip red">дані в Китаї</span></div>
-          <button class="more" type="button" data-drawer="d-deepseek" data-title="DeepSeek">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
-        </article>
-
-        <article class="svc">
+        <article class="svc" id="svc-claude">
           <div class="svc-top"><span class="svc-logo" style="--c:#d97757;--t:#fff">Cl</span><div><h3>Claude</h3><small>Anthropic · claude.ai</small></div></div>
           <div class="svc-free"><b>Безкоштовно</b>Sonnet 5.5, пошук, файли, артефакти, 5 проєктів, голос</div>
           <p>Дуже сильний у текстах і коді.</p>
           <div class="chip-row"><span class="chip">тексти</span><span class="chip">код</span></div>
           <button class="more" type="button" data-drawer="d-claude" data-title="Claude">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-
-        <article class="svc">
+        <article class="svc" id="svc-copilot">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--cyan)">Co</span><div><h3>Copilot</h3><small>Microsoft · copilot.microsoft.com</small></div></div>
+          <div class="svc-free"><b>Безкоштовно</b>Чат, Think Deeper, картинки, голос, файли</div>
+          <p>Безкоштовні картинки і зручний голосовий режим.</p>
+          <div class="chip-row"><span class="chip">картинки</span><span class="chip">голос</span></div>
+          <button class="more" type="button" data-drawer="d-copilot" data-title="Microsoft Copilot">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
+        </article>
+        <article class="svc" id="svc-notebook">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--yellow)">Nb</span><div><h3>Gemini Notebook</h3><small>Google · колишній NotebookLM</small></div></div>
+          <div class="svc-free"><b>Безкоштовно</b>100 блокнотів, до 50 джерел у кожному, аудіоогляди</div>
+          <p>Завантаж конспект чи PDF — і питай тільки по ньому. Менше вигадок.</p>
+          <div class="chip-row"><span class="chip green">для навчання</span></div>
+          <button class="more" type="button" data-drawer="d-notebook" data-title="Gemini Notebook">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
+        </article>
+        <article class="svc" id="svc-perplexity">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--lilac)">Px</span><div><h3>Perplexity</h3><small>perplexity.ai</small></div></div>
+          <div class="svc-free"><b>Безкоштовно</b>Пошук з джерелами без жорсткого ліміту, 3 Pro-пошуки на день</div>
+          <p>Пошуковик з ШІ: кожна відповідь — з посиланнями.</p>
+          <div class="chip-row"><span class="chip">джерела</span></div>
+          <button class="more" type="button" data-drawer="d-perplexity" data-title="Perplexity">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
+        </article>
+        <article class="svc" id="svc-deepseek">
+          <div class="svc-top"><span class="svc-logo" style="--c:#4d6bfe;--t:#fff">DS</span><div><h3>DeepSeek</h3><small>chat.deepseek.com</small></div></div>
+          <div class="svc-free"><b>Безкоштовно</b>Модель V4.1 Flash, режим міркувань, пошук</div>
+          <p>Сильний у математиці й логіці. Але дані зберігаються в Китаї.</p>
+          <div class="chip-row"><span class="chip">математика</span><span class="chip red">дані в Китаї</span></div>
+          <button class="more" type="button" data-drawer="d-deepseek" data-title="DeepSeek">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
+        </article>
+        <article class="svc" id="svc-mistral">
+          <div class="svc-top"><span class="svc-logo" style="--c:var(--orange)">Mv</span><div><h3>Mistral Vibe</h3><small>Mistral · колишній Le Chat</small></div></div>
+          <div class="svc-free"><b>Безкоштовно</b>Свіжі моделі з лімітом повідомлень, пошук, картинки</div>
+          <p>Європейський сервіс, швидкі чернетки.</p>
+          <div class="chip-row"><span class="chip">Європа</span></div>
+          <button class="more" type="button" data-drawer="d-mistral" data-title="Mistral Vibe">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
+        </article>
+        <article class="svc" id="svc-grok">
           <div class="svc-top"><span class="svc-logo" style="--c:var(--ink);--t:#fff">Gr</span><div><h3>Grok</h3><small>xAI · grok.com</small></div></div>
           <div class="svc-free"><b>Безкоштовно</b>Обмежена модель, ліміти не публікуються</div>
           <p>Бачить свіжі новини з X (Twitter).</p>
           <div class="chip-row"><span class="chip">новини</span></div>
           <button class="more" type="button" data-drawer="d-grok" data-title="Grok">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
         </article>
-
       </div>
     </div>
 
@@ -323,8 +319,7 @@
     </div>
 
     <h3 class="reveal" style="margin:56px 0 18px">Інші безкоштовні API</h3>
-    <div class="carousel reveal" data-carousel>
-      <div class="carousel-track">
+    <div class="grid grid-3 api-grid reveal">
         <article class="svc">
           <div class="svc-top"><span class="svc-logo" style="--c:var(--orange)">Gq</span><div><h3>Groq</h3><small>console.groq.com</small></div></div>
           <div class="svc-free"><b>Безкоштовно</b>~30 запитів/хв, ~1000 на день, дуже швидкі відповіді</div>
@@ -362,16 +357,21 @@
             <li><b>Cerebras</b> — тільки пробні $5 після прив’язки картки</li>
           </ul>
         </article>
-      </div>
     </div>
 
     <h3 class="reveal" style="margin:56px 0 18px">ШІ-помічники для коду</h3>
-    <div class="grid grid-3" data-stagger>
+    <div class="grid grid-2" data-stagger>
       <article class="card reveal" style="--c:var(--lime)">
         <div class="card-ico"><svg class="i"><use href="#i-github"/></svg></div>
         <h3>GitHub Copilot Free</h3>
-        <p>2000 автодоповнень на місяць + трохи чату прямо у VS Code. Для учнів є GitHub Education — школярі теж можуть подати заявку.</p>
-        <button class="more" type="button" data-drawer="d-copilot-code" data-title="GitHub Copilot">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button>
+        <p>2000 автодоповнень на місяць + трохи чату прямо у VS Code. Учні можуть отримати більше через GitHub Education.</p>
+        <button class="more" type="button" data-drawer="d-copilot-code" data-title="GitHub Copilot">Як отримати — покроково <svg class="i"><use href="#i-arrow"/></svg></button>
+      </article>
+      <article class="card reveal" style="--c:#d97757;background:#fff1ea">
+        <div class="card-ico" style="color:#fff"><svg class="i"><use href="#i-terminal"/></svg></div>
+        <h3>Claude Code · у Claude Pro</h3>
+        <p>Не просто чат, а агент: сам читає твій проєкт, правит файли, запускає тести й виправляє помилки. Один із найсильніших інструментів для коду.</p>
+        <button class="more" type="button" data-drawer="d-claude-code" data-title="Claude Pro для коду">Чому він крутий + лайфхаки <svg class="i"><use href="#i-arrow"/></svg></button>
       </article>
       <article class="card reveal" style="--c:var(--cyan)">
         <div class="card-ico"><svg class="i"><use href="#i-code"/></svg></div>
@@ -447,15 +447,13 @@
     </div>
 
     <h3 class="reveal" style="margin:48px 0 18px">Поради, щоб не гальмувало</h3>
-    <div class="carousel reveal" data-carousel style="--slide-w:min(300px,80%)">
-      <div class="carousel-track">
+    <div class="grid grid-3 tips-grid reveal">
         <article class="card"><div class="card-ico" style="--c:var(--yellow)"><svg class="i"><use href="#i-package"/></svg></div><h3>Бери Q4</h3><p>Стиснена версія (Q4) удвічі легша за Q8, а якість майже та сама. Ollama за замовчуванням і так дає Q4.</p></article>
         <article class="card"><div class="card-ico" style="--c:var(--pink)"><svg class="i"><use href="#i-cpu"/></svg></div><h3>Рахуй пам’ять</h3><p>Потрібно приблизно: розмір моделі + 1–2 ГБ, плюс ще 2–4 ГБ займає сама система.</p></article>
         <article class="card"><div class="card-ico" style="--c:var(--cyan)"><svg class="i"><use href="#i-x"/></svg></div><h3>Закрий браузер</h3><p>Вкладки Chrome їдять купу RAM. Закрий зайве перед запуском моделі.</p></article>
         <article class="card"><div class="card-ico" style="--c:var(--lime)"><svg class="i"><use href="#i-clipboard"/></svg></div><h3>Не роздувай контекст</h3><p>Довший контекст = більше пам’яті. На 8 ГБ тримай 4–8 тисяч токенів.</p></article>
         <article class="card"><div class="card-ico" style="--c:var(--lilac)"><svg class="i"><use href="#i-clock"/></svg></div><h3>Без відеокарти — повільніше</h3><p>Маленькі моделі (1–4B) на процесорі пишуть нормально, 7–9B — помітно повільніше, 20B+ — боляче.</p></article>
         <article class="card"><div class="card-ico" style="--c:var(--orange)"><svg class="i"><use href="#i-folder"/></svg></div><h3>Звільняй диск</h3><p><code>ollama rm назва</code> видаляє модель, <code>ollama stop назва</code> звільняє пам’ять.</p></article>
-      </div>
     </div>
   </section>
 
@@ -491,9 +489,11 @@
       <span class="kicker">Розділ 6</span>
       <h2>Правила гри</h2>
     </div>
-    <div class="carousel reveal" data-carousel style="--slide-w:min(320px,82%)">
-      <div class="carousel-track">
-      </div>
+    <div class="grid grid-2 rules-grid reveal">
+      <article class="card"><div class="card-ico" style="--c:var(--yellow)"><svg class="i"><use href="#i-lock"/></svg></div><h3>Нічого особистого</h3><p>Не вводь адресу, телефон, паролі, фото документів і чужі дані. Чати можуть читати люди й використовувати для навчання моделей.</p></article>
+      <article class="card"><div class="card-ico" style="--c:var(--cyan)"><svg class="i"><use href="#i-search"/></svg></div><h3>Перевіряй факти</h3><p>Дати, цифри, цитати й посилання звіряй з надійними джерелами. ШІ помиляється впевнено.</p></article>
+      <article class="card"><div class="card-ico" style="--c:var(--lime)"><svg class="i"><use href="#i-scale"/></svg></div><h3>Чесно</h3><p>Не видавай текст ШІ за свій. Використовуй ШІ, щоб зрозуміти, а не щоб списати.</p></article>
+      <article class="card"><div class="card-ico" style="--c:var(--lilac)"><svg class="i"><use href="#i-eye"/></svg></div><h3>Вимкни навчання на чатах</h3><p>У налаштуваннях ChatGPT, Perplexity, Grok, Mistral можна заборонити використовувати твої чати для навчання.</p><button class="more" type="button" data-drawer="d-privacy" data-title="Приватність">Де це вимкнути <svg class="i"><use href="#i-arrow"/></svg></button></article>
     </div>
   </section>
 
@@ -504,18 +504,16 @@
       <h2>А якщо платити?</h2>
       <p>Для навчання і хакатону <b>платити не потрібно</b>. Але якщо дуже багато користуєшся одним сервісом — ось що дають підписки.</p>
     </div>
-    <div class="carousel reveal" data-carousel>
-      <div class="carousel-track">
-        <article class="card plan" style="background:#e8fbd0"><h3>Google AI Plus</h3><div class="price"><b>$4.99</b><small>/міс · в Україні ₴224.99</small></div><ul><li>Gemini Flash з удвічі більшими лімітами</li><li>400 ГБ сховища</li></ul></article>
-        <article class="card plan"><h3>ChatGPT Go</h3><div class="price"><b>$8</b><small>/міс (ціна залежить від країни)</small></div><ul><li>Більше лімітів на файли, картинки і пошук</li></ul></article>
-        <article class="card plan"><h3>Microsoft 365 Personal</h3><div class="price"><b>$9.99</b><small>/міс</small></div><ul><li>Copilot усередині Word, Excel, PowerPoint</li><li>Окремого Copilot Pro більше немає</li></ul></article>
-        <article class="card plan"><h3>Mistral Vibe Pro</h3><div class="price"><b>$14.99</b><small>/міс</small></div><ul><li>Більше повідомлень і документів</li></ul></article>
-        <article class="card plan"><h3>Google AI Pro</h3><div class="price"><b>$19.99</b><small>/міс · ₴909.99</small></div><ul><li>Pro-моделі Gemini, учетверо більші ліміти</li><li>5 ТБ сховища</li></ul></article>
-        <article class="card plan" style="background:#ffe6dc"><h3>Claude Pro</h3><div class="price"><b>$20</b><small>/міс · $17 при оплаті за рік</small></div><ul><li>Opus, Claude Code, Research</li><li>Мінімум у 5 разів більше використання, ніж Free</li></ul><button class="more" type="button" data-drawer="d-claude-paid" data-title="Claude Pro і Max">Детальніше <svg class="i"><use href="#i-arrow"/></svg></button></article>
-        <article class="card plan"><h3>ChatGPT Plus</h3><div class="price"><b>$20</b><small>/міс</small></div><ul><li>Великі моделі GPT-6 (Sol)</li><li>Більше лімітів на все</li></ul></article>
-        <article class="card plan"><h3>Perplexity Pro</h3><div class="price"><b>$20</b><small>/міс</small></div><ul><li>Безліч Pro-пошуків і досліджень</li></ul></article>
-        <article class="card plan" style="background:var(--ink);color:var(--paper)"><h3>Claude Max</h3><div class="price"><b style="color:var(--yellow)">$100–200</b><small style="color:#cfc7bb">/міс</small></div><ul style="color:#cfc7bb"><li>У 5 або 20 разів більше, ніж Pro</li><li>Для професіоналів — школяреві не треба</li></ul></article>
-      </div>
+    <div class="price-list reveal">
+      <div class="pl-row hl"><b>Google AI Plus</b><span class="pl-price">$4.99<small>/міс · в Україні ₴224.99</small></span><span class="pl-note">Gemini Flash з удвічі більшими лімітами · 400 ГБ сховища</span></div>
+      <div class="pl-row"><b>ChatGPT Go</b><span class="pl-price">$8<small>/міс (ціна залежить від країни)</small></span><span class="pl-note">Більше лімітів на файли, картинки і пошук</span></div>
+      <div class="pl-row"><b>Microsoft 365 Personal</b><span class="pl-price">$9.99<small>/міс</small></span><span class="pl-note">Copilot усередині Word, Excel, PowerPoint · Окремого Copilot Pro більше немає</span></div>
+      <div class="pl-row"><b>Mistral Vibe Pro</b><span class="pl-price">$14.99<small>/міс</small></span><span class="pl-note">Більше повідомлень і документів</span></div>
+      <div class="pl-row"><b>Google AI Pro</b><span class="pl-price">$19.99<small>/міс · ₴909.99</small></span><span class="pl-note">Pro-моделі Gemini, учетверо більші ліміти · 5 ТБ сховища</span></div>
+      <div class="pl-row"><b>Claude Pro</b><span class="pl-price">$20<small>/міс · $17 при оплаті за рік</small></span><span class="pl-note">Opus, Claude Code, Research · Мінімум у 5 разів більше використання, ніж Free <button class="more" type="button" data-drawer="d-claude-code" data-title="Claude Pro для коду">Чому для коду <svg class="i"><use href="#i-arrow"/></svg></button></span></div>
+      <div class="pl-row"><b>ChatGPT Plus</b><span class="pl-price">$20<small>/міс</small></span><span class="pl-note">Великі моделі GPT-6 (Sol) · Більше лімітів на все</span></div>
+      <div class="pl-row"><b>Perplexity Pro</b><span class="pl-price">$20<small>/міс</small></span><span class="pl-note">Безліч Pro-пошуків і досліджень</span></div>
+      <div class="pl-row dark"><b>Claude Max</b><span class="pl-price">$100–200<small>/міс</small></span><span class="pl-note">У 5 або 20 разів більше, ніж Pro · Для професіоналів — школяреві не треба</span></div>
     </div>
     <div class="callout tip reveal" style="margin-top:22px">
       <span class="callout-ico"><svg class="i"><use href="#i-school"/></svg></span>
@@ -587,15 +585,15 @@
   /* «Що тобі треба?» */
   window.CHOOSER = {
     learn:   { why: "Для пояснень тем підійде будь-який чат. Проси «поясни як для 9 класу» і приклади.", picks: [
-      { name: "Gemini", note: "українською, є картинки", c: "var(--lime)" }, { name: "Copilot", note: "простий і безкоштовний", c: "var(--cyan)" }, { name: "ChatGPT", note: "універсал", c: "var(--white)" } ] },
-    code:    { why: "Для коду: чат, який добре пише код, + Copilot у редакторі. Для бота — API-ключ або Ollama.", picks: [
-      { name: "ChatGPT / Gemini", note: "пишемо код у чаті", c: "var(--lime)" }, { name: "GitHub Copilot Free", note: "підказки у VS Code", c: "var(--cyan)" }, { name: "Ollama", note: "локальний API без лімітів", c: "var(--white)" } ] },
+      { name: "Gemini", note: "українською, є картинки", c: "var(--lime)", svc: "svc-gemini" }, { name: "Claude", note: "пояснює дуже зрозуміло", c: "var(--cyan)", svc: "svc-claude" }, { name: "ChatGPT", note: "універсал", c: "var(--white)", svc: "svc-chatgpt" } ] },
+    code:    { why: "Для коду: сильний у програмуванні чат + Copilot у редакторі. Для бота — API-ключ або Ollama.", picks: [
+      { name: "Claude", note: "один з найсильніших у коді", c: "var(--lime)", svc: "svc-claude" }, { name: "ChatGPT", note: "універсал, добре пише код", c: "var(--cyan)", svc: "svc-chatgpt" }, { name: "Gemini", note: "великий контекст", c: "var(--white)", svc: "svc-gemini" }, { name: "GitHub Copilot Free", note: "підказки у VS Code", c: "var(--white)" } ] },
     sources: { why: "Коли потрібні джерела — бери пошуковик з ШІ і завжди відкривай посилання.", picks: [
-      { name: "Perplexity", note: "кожна відповідь з посиланнями", c: "var(--lime)" }, { name: "Gemini Deep Research", note: "довгий звіт з джерелами", c: "var(--cyan)" } ] },
+      { name: "Perplexity", note: "кожна відповідь з посиланнями", c: "var(--lime)", svc: "svc-perplexity" }, { name: "Gemini Deep Research", note: "довгий звіт з джерелами", c: "var(--cyan)" } ] },
     notes:   { why: "Завантаж свій конспект, підручник чи PDF — ШІ відповідатиме тільки по ньому. Менше вигадок!", picks: [
-      { name: "Gemini Notebook", note: "відповідає з твоїх джерел", c: "var(--lime)" }, { name: "Gemini / ChatGPT", note: "завантаж файл у чат", c: "var(--white)" } ] },
+      { name: "Gemini Notebook", note: "відповідає з твоїх джерел", c: "var(--lime)", svc: "svc-notebook" }, { name: "Gemini / ChatGPT", note: "завантаж файл у чат", c: "var(--white)" } ] },
     images:  { why: "Картинки вміють генерувати безкоштовно кілька сервісів (з лімітами на день).", picks: [
-      { name: "Gemini", note: "генерація і редагування", c: "var(--lime)" }, { name: "Copilot", note: "безкоштовні картинки", c: "var(--cyan)" }, { name: "ChatGPT", note: "з окремим лімітом", c: "var(--white)" } ] },
+      { name: "Gemini", note: "генерація і редагування", c: "var(--lime)", svc: "svc-gemini" }, { name: "Copilot", note: "безкоштовні картинки", c: "var(--cyan)", svc: "svc-copilot" }, { name: "ChatGPT", note: "з окремим лімітом", c: "var(--white)", svc: "svc-chatgpt" } ] },
     offline: { why: "Без інтернету і без лімітів — тільки локальні моделі на твоєму комп’ютері.", picks: [
       { name: "Ollama", note: "найпростіше, є вікно чату", c: "var(--lime)" }, { name: "LM Studio", note: "зручний пошук моделей", c: "var(--cyan)" }, { name: "Jan", note: "відкритий код", c: "var(--white)" } ] },
   };
@@ -871,12 +869,32 @@
 </template>
 
 <template id="d-copilot-code">
-  <h3>GitHub Copilot для учнів</h3>
-  <ul>
-    <li><b>Copilot Free</b>: 2000 автодоповнень коду на місяць і невеликий ліміт на чат — прямо у VS Code.</li>
-    <li><b>GitHub Education</b>: для тих, хто навчається, <b>включно зі школярами</b>. Підтвердження — учнівський квиток з датою, розклад або довідка зі школи.</li>
-    <li>Студентам дають окремий план <b>Copilot Student</b>. З 20 квітня 2026 року реєстрацію нових учасників призупинили — перевір на сайті, чи її вже відновили.</li>
-  </ul>
+  <h3>Як отримати GitHub Copilot</h3>
+  <p>Copilot — ШІ-помічник прямо в редакторі коду: дописує рядки, пояснює код, відповідає в чаті. Є два безкоштовні шляхи.</p>
+
+  <h4>Шлях 1 · Copilot Free — за 5 хвилин</h4>
+  <ol>
+    <li>Зареєструйся на <a class="link" href="https://github.com/signup" target="_blank" rel="noopener">github.com</a> (особиста пошта, справжнє ім’я — знадобиться для шляху 2).</li>
+    <li>Відкрий <a class="link" href="https://github.com/settings/copilot" target="_blank" rel="noopener">github.com/settings/copilot</a> і увімкни <b>Copilot Free</b>.</li>
+    <li>Встанови <b>VS Code</b>, у розділі розширень знайди <b>GitHub Copilot</b> і встанови.</li>
+    <li>Натисни іконку Copilot унизу VS Code → <b>Sign in to GitHub</b> → підтверди вхід у браузері.</li>
+    <li>Готово: починай писати код — сірим з’являться підказки, <kbd>Tab</kbd> приймає їх. Чат — значок Copilot збоку.</li>
+  </ol>
+  <p>Ліміт: 2000 автодоповнень на місяць і трохи запитів у чат.</p>
+
+  <h4>Шлях 2 · GitHub Education — для учнів</h4>
+  <p>Учні шкіл теж можуть отримати статус студента GitHub і безкоштовний Copilot з більшими лімітами, плюс десятки інших інструментів (Student Developer Pack).</p>
+  <ol>
+    <li><b>Підготуй доказ навчання.</b> Підійде одне з: фото учнівського квитка з датою поточного навчального року, розклад уроків, табель/виписка з оцінками або довідка зі школи на бланку з печаткою.</li>
+    <li>Увійди в GitHub і відкрий <a class="link" href="https://github.com/settings/education/benefits" target="_blank" rel="noopener">github.com/settings/education/benefits</a>.</li>
+    <li>Натисни <b>Start an application</b> і обери, що ти <b>Student</b>.</li>
+    <li>Знайди свою школу в списку. Якщо просять навчальну пошту, а в школі її немає — додай документ, що школа таку пошту не видає (лист від школи або сторінка сайту школи).</li>
+    <li>Завантаж фото документа і натисни <b>Submit application</b>.</li>
+    <li>Чекай листа: перевірка триває від кількох годин до кількох днів.</li>
+    <li>Після схвалення знову відкрий <a class="link" href="https://github.com/settings/education/benefits" target="_blank" rel="noopener">сторінку бенефітів</a> → у блоці про безкоштовні ресурси натисни <b>Learn more</b> → активуй <b>Copilot Student</b>.</li>
+  </ol>
+  <div class="callout tip"><span class="callout-ico"><svg class="i"><use href="#i-bulb"/></svg></span><p><b>Щоб заявку не відхилили:</b> документ має бути чітким, з твоїм ім’ям, назвою школи і поточною датою. Ім’я в профілі GitHub краще вказати так само, як у документі. Якщо документ українською — підійде, але можна додати переклад.</p></div>
+  <div class="callout warn"><span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span><p><b>Пропонують тільки платне?</b> Нічого не купуй. Статус студента інколи застосовується кілька днів — спробуй ще раз пізніше через <a class="link" href="https://github.com/settings/copilot" target="_blank" rel="noopener">settings/copilot</a>. GitHub також інколи тимчасово призупиняє нові підключення студентського плану — тоді користуйся Copilot Free. Статус перевіряють щомісяця.</p></div>
 </template>
 
 <template id="d-ollama-cmds">
@@ -938,12 +956,36 @@
   <p>Вимкнення діє тільки на нові чати. Найнадійніший захист — просто не писати особисте.</p>
 </template>
 
-<template id="d-claude-paid">
-  <h3>Claude Pro і Max</h3>
+<template id="d-claude-code">
+  <h3>Чому Claude Pro так люблять для коду</h3>
+  <p>Багато розробників обирають Claude саме для програмування. Головна причина — <b>Claude Code</b>, який входить у Pro (у безкоштовному плані його немає).</p>
+  <h4>Чат проти Claude Code</h4>
   <ul>
-    <li><b>Pro — $20/міс</b> ($200 за рік): більше використання, моделі Opus, Claude Code, Research, необмежені проєкти.</li>
-    <li><b>Max 5x — $100/міс</b> і <b>Max 20x — $200/міс</b>: у 5 або 20 разів більше, ніж Pro, пріоритет у години пік, ранній доступ до нових функцій.</li>
-    <li>Ліміти теж рахуються у 5-годинних вікнах, а в платних планах є ще й тижневі.</li>
+    <li><b>Звичайний чат:</b> ти копіюєш код у чат, отримуєш шматок відповіді, сам вставляєш, сам шукаєш, що зламалося.</li>
+    <li><b>Claude Code:</b> працює прямо в папці проєкту (у терміналі або у VS Code). Сам читає потрібні файли, розуміє структуру, змінює кілька файлів одразу, запускає команди й тести, бачить помилку — і виправляє. Ти лише описуєш задачу і перевіряєш зміни.</li>
+  </ul>
+  <h4>Що ще дає Pro</h4>
+  <ul>
+    <li><b>Opus 5.5</b> — найсильніша модель для складних задач; <b>Sonnet 5.5</b> — швидка для щоденних.</li>
+    <li><b>Артефакти:</b> вебсторінка, гра чи схема одразу показуються поруч із чатом — можна клацати й ділитися посиланням.</li>
+    <li><b>Проєкти:</b> завантаж документацію чи код один раз — усі чати проєкту його бачать.</li>
+    <li>Мінімум у 5 разів більше використання, ніж у Free. Ліміт спільний для чату і Claude Code: «вікна» по 5 годин плюс тижневий.</li>
+  </ul>
+  <h4>Лайфхаки</h4>
+  <ol>
+    <li><b>Спершу план, потім код.</b> «Не пиши код. Запропонуй план і постав мені питання, якщо щось незрозуміло». У Claude Code є режим планування — <kbd>Shift</kbd>+<kbd>Tab</kbd>.</li>
+    <li><b>Файл CLAUDE.md.</b> Правила проєкту (мова, бібліотеки, як запускати) у файлі в корені — Claude Code читає його щоразу. Команда <code>/init</code> створить його сама.</li>
+    <li><b>Маленькі кроки + git.</b> Запрацювало — <code>git commit</code>. Щось зламалось — відкотився за секунду.</li>
+    <li><b>Дай йому перевіряти себе.</b> Дозволь запускати програму й тести: він сам побачить помилку і виправить.</li>
+    <li><b><code>/clear</code> між задачами.</b> Новий контекст — менше плутанини і менше витрат ліміту. Довга розмова? <code>/compact</code> її стисне.</li>
+    <li><b>Sonnet для більшості, Opus для складного.</b> Opus швидше з’їдає ліміт.</li>
+    <li><b>Скріншоти теж працюють.</b> Встав картинку помилки чи макет сторінки — «зроби так само».</li>
+    <li><b>Вимагай пояснень.</b> «Поясни, що ти змінив і чому» — ти маєш розуміти свій код.</li>
+  </ol>
+  <h4>Ціни</h4>
+  <ul>
+    <li><b>Pro — $20/міс</b> ($17/міс при оплаті за рік) — Claude Code, Opus, Research, необмежені проєкти.</li>
+    <li><b>Max — $100 або $200/міс</b> — у 5 чи 20 разів більше, ніж Pro, пріоритет у години пік. Для навчання не потрібен.</li>
   </ul>
 </template>
 
