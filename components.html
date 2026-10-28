@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Компоненти для авторів — Хакатон 2026</title>
   <meta name="description" content="Готові блоки дизайну сайту хакатону: копіюй і вставляй.">
-  <meta name="theme-color" content="#06060f">
+  <meta name="theme-color" content="#fff4e0">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
     .demo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; margin-bottom: 40px; }
@@ -52,13 +52,13 @@
     <div class="demo">
       <h3>Картки в сітці</h3>
       <div class="grid grid-2">
-        <div class="card" style="--c:#22d3ee"><div class="card-ico">⚡</div><h3>Картка</h3><p>Колір іконки задається через <code>--c</code>.</p></div>
-        <div class="card lift" style="--c:#f472b6"><div class="card-ico">🎯</div><h3>Ще картка</h3><p>Клас <code>lift</code> — підстрибує при наведенні.</p></div>
+        <div class="card" style="--c:#22d3ee"><div class="card-ico"><svg class="i"><use href="#i-zap"/></svg></div><h3>Картка</h3><p>Колір іконки задається через <code>--c</code>.</p></div>
+        <div class="card lift" style="--c:#f472b6"><div class="card-ico"><svg class="i"><use href="#i-target"/></svg></div><h3>Ще картка</h3><p>Клас <code>lift</code> — підстрибує при наведенні.</p></div>
       </div>
 <div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;!-- grid-2 / grid-3 / grid-4 / grid-auto --&gt;
 &lt;div class="grid grid-3" data-stagger&gt;
   &lt;div class="card lift reveal" style="--c:#22d3ee"&gt;
-    &lt;div class="card-ico"&gt;⚡&lt;/div&gt;
+    &lt;div class="card-ico"&gt;<svg class="i"><use href="#i-zap"/></svg>&lt;/div&gt;
     &lt;h3&gt;Картка&lt;/h3&gt;
     &lt;p&gt;Текст картки.&lt;/p&gt;
   &lt;/div&gt;
@@ -69,14 +69,14 @@
     <div class="demo">
       <h3>Підказки (callout)</h3>
       <div style="display:grid;gap:10px">
-        <div class="callout info"><span class="callout-ico">💡</span><p><b>info</b> — корисна інформація.</p></div>
-        <div class="callout tip"><span class="callout-ico">✅</span><p><b>tip</b> — порада.</p></div>
-        <div class="callout warn"><span class="callout-ico">⚠️</span><p><b>warn</b> — обережно.</p></div>
-        <div class="callout danger"><span class="callout-ico">🚨</span><p><b>danger</b> — небезпечно!</p></div>
+        <div class="callout info"><span class="callout-ico"><svg class="i"><use href="#i-bulb"/></svg></span><p><b>info</b> — корисна інформація.</p></div>
+        <div class="callout tip"><span class="callout-ico"><svg class="i"><use href="#i-check"/></svg></span><p><b>tip</b> — порада.</p></div>
+        <div class="callout warn"><span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span><p><b>warn</b> — обережно.</p></div>
+        <div class="callout danger"><span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span><p><b>danger</b> — небезпечно!</p></div>
       </div>
 <div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;!-- info / tip / warn / danger --&gt;
 &lt;div class="callout tip"&gt;
-  &lt;span class="callout-ico"&gt;✅&lt;/span&gt;
+  &lt;span class="callout-ico"&gt;<svg class="i"><use href="#i-check"/></svg>&lt;/span&gt;
   &lt;p&gt;&lt;b&gt;Порада.&lt;/b&gt; Текст підказки.&lt;/p&gt;
 &lt;/div&gt;</pre></div>
     </div>
@@ -136,7 +136,7 @@
       <h3>Питання-відповідь (FAQ)</h3>
       <div class="faq">
         <details><summary>Як це працює?</summary><div class="faq-body">Ось так.</div></details>
-        <details><summary>А якщо не працює?</summary><div class="faq-body">Спитай ШІ 🙂</div></details>
+        <details><summary>А якщо не працює?</summary><div class="faq-body">Спитай ШІ.</div></details>
       </div>
 <div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;div class="faq"&gt;
   &lt;details&gt;

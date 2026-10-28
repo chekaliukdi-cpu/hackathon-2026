@@ -13,14 +13,46 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ico = (name) => (window.Site && Site.icon ? Site.icon(name) : "");
 
   document.addEventListener("DOMContentLoaded", () => {
+    initEyes();
     initFlow();
     initSim();
     initSteps();
     initQuest();
     initFlips();
   });
+
+  /* ------------------------------------------- ОЧІ БОТА стежать за курсором */
+  function initEyes() {
+    const bot = $("#bigbot");
+    if (!bot) return;
+    const pupils = $$(".eye i", bot);
+    function look(x, y) {
+      pupils.forEach((p) => {
+        const eye = p.parentElement.getBoundingClientRect();
+        const cx = eye.left + eye.width / 2, cy = eye.top + eye.height / 2;
+        const a = Math.atan2(y - cy, x - cx);
+        const d = Math.min(eye.width * 0.2, Math.hypot(x - cx, y - cy) / 12);
+        p.style.setProperty("--ex", Math.cos(a) * d + "px");
+        p.style.setProperty("--ey", Math.sin(a) * d + "px");
+      });
+    }
+    if (matchMedia("(pointer: fine)").matches) {
+      let raf = 0, mx = 0, my = 0;
+      document.addEventListener("pointermove", (e) => {
+        mx = e.clientX; my = e.clientY;
+        if (!raf) raf = requestAnimationFrame(() => { raf = 0; look(mx, my); });
+      }, { passive: true });
+    } else if (!reduced) {
+      // на телефоні бот сам роздивляється навколо
+      setInterval(() => {
+        const r = bot.getBoundingClientRect();
+        look(r.left + Math.random() * r.width * 2 - r.width / 2, r.top + Math.random() * r.height * 2 - r.height / 2);
+      }, 1600);
+    }
+  }
 
   /* ---------------------------------------------------------------- FLOW */
   function initFlow() {
@@ -55,7 +87,7 @@
     { u: "dan",  name: "Даня", t: "00:15", text: "Тексти на мені, скину до середи." },
     { u: "olya", name: "Оля",  t: "00:22", text: "Тоді я готую демо бота і репетирую виступ." },
     { u: "max",  name: "Макс", t: "00:30", text: "Збираємось ще раз у четвер о 18:00?" },
-    { u: "dan",  name: "Даня", t: "00:34", text: "Го, домовились! 🔥" },
+    { u: "dan",  name: "Даня", t: "00:34", text: "Го, домовились!" },
   ];
   const COLORS = { olya: "#f472b6", max: "#22d3ee", dan: "#a3e635", bot: "#5865f2" };
   const PROMPT = "Ось транскрипт зустрічі. Зроби короткий підсумок, список рішень і задач: хто, що, до коли.";
@@ -190,14 +222,14 @@
         title: "Бот підключився",
         text: "Бот заходить у голосовий канал і чесно попереджає в чаті, що йде запис.",
         focus: "voice", est: 2600,
-        apply() { sim.classList.add("has-bot"); chat("🔴 <b>FollowUp</b> записує цю зустріч. Підсумок прийде після /stop", "sys"); },
+        apply() { sim.classList.add("has-bot"); chat('<span class="rec-dot"></span> <b>FollowUp</b> записує цю зустріч. Підсумок прийде після /stop', "sys"); },
         async play(c) {
           await sleep(c, 200);
           sim.classList.add("has-bot");
           await sleep(c, 450);
           burst(ava("bot"), COLORS.bot);
           await sleep(c, 500);
-          chat("🔴 <b>FollowUp</b> записує цю зустріч. Підсумок прийде після /stop", "sys");
+          chat('<span class="rec-dot"></span> <b>FollowUp</b> записує цю зустріч. Підсумок прийде після /stop', "sys");
           await sleep(c, 900);
         },
       },
@@ -252,7 +284,7 @@
           chat("<b>Оля</b> використала <span class='cmd'>/stop</span>");
           sim.classList.add("stopped");
           setNode("stt", "active");
-          await fly(node("rec").querySelector(".node-ico"), node("stt").querySelector(".node-ico"), { cls: "file", html: "🎧 meeting.wav", dur: 900, bend: 0.5 });
+          await fly(node("rec").querySelector(".node-ico"), node("stt").querySelector(".node-ico"), { cls: "file", html: ico("file-audio") + " meeting.wav", dur: 900, bend: 0.5 });
           for (const l of TALK) {
             const span = addTranscriptLine(l);
             await type(c, span, l.text, 14);
@@ -269,7 +301,7 @@
         apply() { ui.prompt.textContent = PROMPT; sim.classList.add("has-llm"); setNode("llm", "done"); },
         async play(c) {
           setNode("llm", "active");
-          await fly(node("stt").querySelector(".node-ico"), $(".llm-orb", sim), { cls: "file", html: "📄 transcript.txt", dur: 900, bend: 0.5 });
+          await fly(node("stt").querySelector(".node-ico"), $(".llm-orb", sim), { cls: "file", html: ico("file-text") + " transcript.txt", dur: 900, bend: 0.5 });
           await type(c, ui.prompt, PROMPT, 16);
           sim.classList.add("thinking");
           await sleep(c, 1500);
@@ -293,12 +325,12 @@
           await fly($(".llm-orb", sim), node("send").querySelector(".node-ico"), { color: "#a3e635", dur: 700 });
           const targets = $$(".send-targets span", sim);
           targets[0].classList.add("on");
-          await fly(node("send").querySelector(".node-ico"), $(".col-out .col-head", sim), { cls: "file", html: "📋 embed", dur: 800, bend: 0.3 });
+          await fly(node("send").querySelector(".node-ico"), $(".col-out .col-head", sim), { cls: "file", html: ico("clipboard") + " embed", dur: 800, bend: 0.3 });
           sim.classList.add("has-msg", "msg-anim");
           await sleep(c, 700);
           const dms = ["olya", "max", "dan"].map((u, k) => {
             targets[k + 1].classList.add("on");
-            return fly(node("send").querySelector(".node-ico"), ava(u), { cls: "file", html: "📩", color: COLORS[u], dur: 900, bend: -0.3 });
+            return fly(node("send").querySelector(".node-ico"), ava(u), { cls: "file", html: ico("mail"), color: COLORS[u], dur: 900, bend: -0.3 });
           });
           await Promise.all(dms);
           sim.classList.add("has-dm");
@@ -418,11 +450,11 @@
 
   /* --------------------------------------------------------------- QUEST */
   const RANKS = [
-    { xp: 0,   name: "Глядач",  emoji: "🥚" },
-    { xp: 10,  name: "Новачок", emoji: "🐣" },
-    { xp: 100, name: "Джун",    emoji: "🚀" },
-    { xp: 160, name: "Профі",   emoji: "⚡" },
-    { xp: 250, name: "Бос",     emoji: "👑" },
+    { xp: 0,   name: "Глядач",  icon: "eye" },
+    { xp: 10,  name: "Новачок", icon: "sprout" },
+    { xp: 100, name: "Джун",    icon: "rocket" },
+    { xp: 160, name: "Профі",   icon: "zap" },
+    { xp: 250, name: "Бос",     icon: "crown" },
   ];
   const KEY = "hk26-task2-quest";
 
@@ -446,7 +478,7 @@
       if (rank !== lastRank) {
         $("#xpRank").textContent = rank.name;
         const em = $("#xpEmoji");
-        em.textContent = rank.emoji;
+        em.innerHTML = ico(rank.icon);
         if (fromUser) { em.classList.remove("pop"); void em.offsetWidth; em.classList.add("pop"); }
         lastRank = rank;
       }

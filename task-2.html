@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Задача 2 · Discord-бот для зустрічей — Хакатон 2026</title>
   <meta name="description" content="Створи Discord-бота, який слухає зустріч у голосовому каналі і надсилає учасникам follow-up зі змістом, рішеннями та задачами.">
-  <meta name="theme-color" content="#06060f">
+  <meta name="theme-color" content="#fff4e0">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/task2.css">
   <script src="assets/js/main.js"></script>
@@ -23,52 +23,66 @@
   <!-- ============ HERO ============ -->
   <section class="t2-hero container">
     <div class="t2-hero-copy">
-      <span class="eyebrow reveal"><span class="dot"></span> Задача 2 · Discord + ШІ</span>
-      <h1 class="reveal">Бот, який <span class="grad-text">слухає зустріч</span> і пише follow-up</h1>
+      <span class="eyebrow reveal"><span class="dot"></span> Задача 02 · Discord + ШІ</span>
+      <h1 class="reveal">Бот, що <span class="mark-box" style="--mc:var(--pink);--mt:var(--ink)">слухає</span> зустріч і&nbsp;пише <span class="squiggle">follow-up</span></h1>
       <p class="lead reveal">Ви з командою говорите в голосовому каналі Discord. Бот записує розмову, перетворює голос на текст, а ШІ робить короткий зміст: що вирішили, хто що робить і до коли. Твоя місія — створити такого бота.</p>
       <div class="btn-row reveal">
-        <a class="btn btn-primary" href="#how">▶ Подивитися, як працює</a>
-        <a class="btn btn-ghost" href="#quest">Що треба зробити</a>
+        <a class="btn btn-primary" href="#how">Як це працює <span class="arr">→</span></a>
+        <a class="btn btn-yellow" href="#quest">Квест</a>
       </div>
       <ul class="t2-stats reveal">
-        <li><b>3</b><span>рівні складності</span></li>
-        <li><b>4+</b><span>мови на вибір</span></li>
-        <li><b>1</b><span>справжній бот у портфоліо</span></li>
+        <li style="--c:var(--yellow);--r:-3deg"><b>3</b><span>рівні складності</span></li>
+        <li style="--c:var(--lime);--r:2deg"><b>4+</b><span>мови на вибір</span></li>
+        <li style="--c:var(--cyan);--r:-1.5deg"><b>1</b><span>бот у портфоліо</span></li>
       </ul>
     </div>
 
-    <div class="orb reveal" aria-hidden="true">
-      <div class="orb-ring r1"></div>
-      <div class="orb-ring r2"></div>
-      <div class="orb-ring r3"></div>
-      <div class="orb-glow"></div>
-      <div class="orb-bot">
-        <div class="bot-face">
-          <div class="bot-eyes"><i></i><i></i></div>
-          <div class="bot-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        </div>
-        <span class="bot-rec">● REC</span>
+    <div class="bot-stage reveal" aria-hidden="true">
+      <div class="spin-badge t2-badge" style="--sb:116px;--sb-bg:var(--lime)">
+        <svg viewBox="0 0 100 100"><defs><path id="badgeCircle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#badgeCircle">слухає • розуміє • нагадує • </textPath></text></svg>
+        <span><svg class="i"><use href="#i-headphones"/></svg></span>
       </div>
-      <div class="orbit" style="--d:0s"><span class="orbit-chip">🎙️ голос</span></div>
-      <div class="orbit" style="--d:-4s"><span class="orbit-chip">📝 текст</span></div>
-      <div class="orbit" style="--d:-8s"><span class="orbit-chip">🧠 ШІ</span></div>
-      <div class="orbit" style="--d:-12s"><span class="orbit-chip">📬 follow-up</span></div>
+      <div class="voice-bubbles">
+        <span style="--d:0s">хто робить слайди?</span>
+        <span style="--d:2.4s">тексти на мені!</span>
+        <span style="--d:4.8s">зустріч у четвер!</span>
+      </div>
+      <div class="bigbot" id="bigbot">
+        <div class="bb-antenna"><i></i></div>
+        <div class="bb-phones"><i class="l"></i><i class="r"></i></div>
+        <div class="bb-head">
+          <div class="bb-screen">
+            <div class="bb-eyes"><span class="eye"><i></i></span><span class="eye"><i></i></span></div>
+            <div class="bb-mouth"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="bb-body"><span class="bb-rec">● REC</span></div>
+      </div>
+      <span class="sticker st1" style="--c:var(--yellow);--r:-8deg"><svg class="i"><use href="#i-mic"/></svg> голос</span>
+      <span class="sticker st2" style="--c:var(--pink);--r:6deg"><svg class="i"><use href="#i-file-text"/></svg> текст</span>
+      <span class="sticker st3" style="--c:var(--cyan);--r:-5deg"><svg class="i"><use href="#i-sparkles"/></svg> зміст</span>
+      <span class="sticker st4" style="--c:var(--white);--r:4deg"><svg class="i"><use href="#i-mail"/></svg> follow-up</span>
     </div>
   </section>
+
+  <div class="marquee-x" aria-hidden="true">
+    <div class="marquee" style="--mq-bg:var(--yellow);--mq-r:-2.5deg"><div class="marquee-track"><span>голос → текст → зміст → follow-up ✦ discord ✦ штучний інтелект ✦ вайбкодинг ✦ голос → текст → зміст → follow-up ✦ discord ✦ штучний інтелект ✦ вайбкодинг ✦ </span><span>голос → текст → зміст → follow-up ✦ discord ✦ штучний інтелект ✦ вайбкодинг ✦ голос → текст → зміст → follow-up ✦ discord ✦ штучний інтелект ✦ вайбкодинг ✦ </span></div></div>
+    <div class="marquee reverse" style="--mq-bg:var(--blurple);--mq-r:2deg;--mq-speed:34s;color:#fff"><div class="marquee-track"><span>/join ✦ /stop ✦ opus ✦ whisper ✦ llm ✦ embed ✦ dm ✦ .env ✦ /join ✦ /stop ✦ opus ✦ whisper ✦ llm ✦ embed ✦ dm ✦ .env ✦ /join ✦ /stop ✦ opus ✦ whisper ✦ llm ✦ embed ✦ dm ✦ .env ✦ </span><span>/join ✦ /stop ✦ opus ✦ whisper ✦ llm ✦ embed ✦ dm ✦ .env ✦ /join ✦ /stop ✦ opus ✦ whisper ✦ llm ✦ embed ✦ dm ✦ .env ✦ /join ✦ /stop ✦ opus ✦ whisper ✦ llm ✦ embed ✦ dm ✦ .env ✦ </span></div></div>
+  </div>
 
   <!-- ============ ЗМІСТ СТОРІНКИ ============ -->
   <nav class="toc-bar container" aria-label="Розділи задачі">
     <div class="toc-inner">
-      <a href="#mission">🎯 Суть</a>
-      <a href="#how">⚙️ Як працює</a>
-      <a href="#discord">🔌 Discord API</a>
-      <a href="#token">🔑 Токен</a>
-      <a href="#ai-keys">🧠 Ключі ШІ</a>
-      <a href="#langs">💻 Мови</a>
-      <a href="#quest">🏆 Квест</a>
-      <a href="#vibe">✨ Вайбкодинг</a>
-      <a href="#glossary">📖 Словник</a>
-      <a href="#faq">🆘 Допомога</a>
+      <a href="#mission"><svg class="i"><use href="#i-target"/></svg> Суть</a>
+      <a href="#how"><svg class="i"><use href="#i-cog"/></svg> Як працює</a>
+      <a href="#discord"><svg class="i"><use href="#i-plug"/></svg> Discord API</a>
+      <a href="#token"><svg class="i"><use href="#i-key"/></svg> Токен</a>
+      <a href="#ai-keys"><svg class="i"><use href="#i-cpu"/></svg> Ключі ШІ</a>
+      <a href="#langs"><svg class="i"><use href="#i-code"/></svg> Мови</a>
+      <a href="#quest"><svg class="i"><use href="#i-trophy"/></svg> Квест</a>
+      <a href="#vibe"><svg class="i"><use href="#i-wand"/></svg> Вайбкодинг</a>
+      <a href="#glossary"><svg class="i"><use href="#i-book"/></svg> Словник</a>
+      <a href="#faq"><svg class="i"><use href="#i-lifebuoy"/></svg> Допомога</a>
     </div>
   </nav>
 
@@ -80,26 +94,26 @@
       <p>Після дзвінка всі розходяться — і за день ніхто не пам’ятає, хто що мав зробити. Твій бот вирішує цю проблему: він «сидить» на зустрічі й після неї надсилає кожному чіткий follow-up.</p>
     </div>
 
-    <div class="grid grid-3" data-stagger>
-      <article class="card lift reveal" style="--c:#5865f2">
-        <div class="card-ico">🎧</div>
-        <h3>1. Слухає</h3>
+    <div class="mission-grid" data-stagger>
+      <article class="mcard reveal" style="--c:var(--blurple);--t:#fff;--r:-1.5deg">
+        <span class="mnum">01</span><span class="memoji"><svg class="i"><use href="#i-headphones"/></svg></span>
+        <h3>Слухає</h3>
         <p>За командою заходить у голосовий канал, попереджає всіх, що йде запис, і записує голос кожного учасника.</p>
       </article>
-      <article class="card lift reveal" style="--c:#22d3ee">
-        <div class="card-ico">🧠</div>
-        <h3>2. Розуміє</h3>
+      <article class="mcard reveal" style="--c:var(--yellow);--r:1deg">
+        <span class="mnum">02</span><span class="memoji"><svg class="i"><use href="#i-cpu"/></svg></span>
+        <h3>Розуміє</h3>
         <p>Після зустрічі перетворює аудіо на текст і просить мовну модель виділити головне: підсумок, рішення, задачі.</p>
       </article>
-      <article class="card lift reveal" style="--c:#f472b6">
-        <div class="card-ico">📬</div>
-        <h3>3. Нагадує</h3>
-        <p>Надсилає гарний follow-up у текстовий канал, а кожному учаснику — його особисті задачі в приватні повідомлення.</p>
+      <article class="mcard reveal" style="--c:var(--pink);--r:-.8deg">
+        <span class="mnum">03</span><span class="memoji"><svg class="i"><use href="#i-mail"/></svg></span>
+        <h3>Нагадує</h3>
+        <p>Надсилає follow-up у текстовий канал, а кожному учаснику — його особисті задачі в приватні повідомлення.</p>
       </article>
     </div>
 
-    <div class="callout info reveal" style="margin-top:22px">
-      <span class="callout-ico">💡</span>
+    <div class="callout warn reveal" style="margin-top:30px">
+      <span class="callout-ico"><svg class="i"><use href="#i-bulb"/></svg></span>
       <p><b>Тут немає готового коду — і це спеціально.</b> На цій сторінці є все, щоб розібратися: як працює бот, де взяти ключі, що встановити. А сам код ти напишеш разом із ШІ-асистентом. Це і є вайбкодинг.</p>
     </div>
   </section>
@@ -114,47 +128,47 @@
 
     <div class="flow reveal" id="flow">
       <div class="flow-track" role="tablist" aria-label="Етапи роботи бота">
-        <button class="flow-node" role="tab" data-i="0" style="--c:#f472b6"><span class="fn-ico">🎙️</span><b>Голос</b><small>учасники говорять</small></button>
+        <button class="flow-node" role="tab" data-i="0" style="--c:#f472b6"><span class="fn-ico"><svg class="i"><use href="#i-mic"/></svg></span><b>Голос</b><small>учасники говорять</small></button>
         <span class="flow-link" style="--i:0"></span>
-        <button class="flow-node" role="tab" data-i="1" style="--c:#8b5cf6"><span class="fn-ico">🤖</span><b>Бот у каналі</b><small>отримує звук</small></button>
+        <button class="flow-node" role="tab" data-i="1" style="--c:#8b5cf6"><span class="fn-ico"><svg class="i"><use href="#i-bot"/></svg></span><b>Бот у каналі</b><small>отримує звук</small></button>
         <span class="flow-link" style="--i:1"></span>
-        <button class="flow-node" role="tab" data-i="2" style="--c:#5865f2"><span class="fn-ico">🎚️</span><b>Аудіо</b><small>Opus → WAV</small></button>
+        <button class="flow-node" role="tab" data-i="2" style="--c:#5865f2"><span class="fn-ico"><svg class="i"><use href="#i-audio"/></svg></span><b>Аудіо</b><small>Opus → WAV</small></button>
         <span class="flow-link" style="--i:2"></span>
-        <button class="flow-node" role="tab" data-i="3" style="--c:#22d3ee"><span class="fn-ico">📝</span><b>Текст</b><small>розпізнавання</small></button>
+        <button class="flow-node" role="tab" data-i="3" style="--c:#22d3ee"><span class="fn-ico"><svg class="i"><use href="#i-file-text"/></svg></span><b>Текст</b><small>розпізнавання</small></button>
         <span class="flow-link" style="--i:3"></span>
-        <button class="flow-node" role="tab" data-i="4" style="--c:#a3e635"><span class="fn-ico">🧠</span><b>Зміст</b><small>мовна модель</small></button>
+        <button class="flow-node" role="tab" data-i="4" style="--c:#a3e635"><span class="fn-ico"><svg class="i"><use href="#i-cpu"/></svg></span><b>Зміст</b><small>мовна модель</small></button>
         <span class="flow-link" style="--i:4"></span>
-        <button class="flow-node" role="tab" data-i="5" style="--c:#fbbf24"><span class="fn-ico">📬</span><b>Follow-up</b><small>канал + DM</small></button>
+        <button class="flow-node" role="tab" data-i="5" style="--c:#fbbf24"><span class="fn-ico"><svg class="i"><use href="#i-mail"/></svg></span><b>Follow-up</b><small>канал + DM</small></button>
       </div>
 
       <div class="flow-details">
         <div class="flow-detail" data-for="0">
-          <h3>🎙️ Люди говорять у голосовому каналі</h3>
+          <h3><svg class="i"><use href="#i-mic"/></svg> Люди говорять у голосовому каналі</h3>
           <p>Discord надсилає звук <b>окремо від кожного учасника</b>. Це суперсила: можна точно знати, хто що сказав, і не плутати голоси.</p>
           <div class="chip-row"><span class="chip">Voice channel</span><span class="chip">Voice State</span><span class="chip">SSRC / user id</span></div>
         </div>
         <div class="flow-detail" data-for="1" hidden>
-          <h3>🤖 Бот підключається до каналу</h3>
+          <h3><svg class="i"><use href="#i-bot"/></svg> Бот підключається до каналу</h3>
           <p>Хтось пише slash-команду (наприклад, <code>/join</code>) — бот заходить у той голосовий канал, де сидить автор команди. Боту потрібне право <b>Connect</b>, а в коді — інтент голосових станів. І обов’язково: бот має написати в чат, що почався запис.</p>
           <div class="chip-row"><span class="chip">Slash commands</span><span class="chip">Voice connection</span><span class="chip">GUILD_VOICE_STATES</span></div>
         </div>
         <div class="flow-detail" data-for="2" hidden>
-          <h3>🎚️ Пакети звуку → аудіофайл</h3>
+          <h3><svg class="i"><use href="#i-audio"/></svg> Пакети звуку → аудіофайл</h3>
           <p>Звук приходить маленькими пакетами у форматі <b>Opus</b>: 48 000 Гц, стерео, по 20 мс (≈50 пакетів на секунду від кожного, хто говорить). Їх треба розкодувати в «сирий» звук <b>PCM</b> і зберегти у файл — WAV, MP3 чи OGG. Коли людина мовчить, пакети не приходять — врахуй це.</p>
           <div class="chip-row"><span class="chip">Opus</span><span class="chip">PCM</span><span class="chip">WAV</span><span class="chip">FFmpeg</span><span class="chip">Voice receive</span></div>
         </div>
         <div class="flow-detail" data-for="3" hidden>
-          <h3>📝 Голос → текст (STT)</h3>
+          <h3><svg class="i"><use href="#i-file-text"/></svg> Голос → текст (STT)</h3>
           <p>Аудіофайл відправляється в сервіс розпізнавання мови (Speech-to-Text). Назад приходить текст. Якщо записувати кожного окремо, транскрипт вийде з іменами: <i>«Оля: …», «Макс: …»</i>. Українську добре розуміють моделі сімейства Whisper і Gemini.</p>
           <div class="chip-row"><span class="chip">Speech-to-Text</span><span class="chip">Whisper</span><span class="chip">Діаризація</span><span class="chip">Тайм-коди</span></div>
         </div>
         <div class="flow-detail" data-for="4" hidden>
-          <h3>🧠 Мовна модель робить зміст</h3>
+          <h3><svg class="i"><use href="#i-cpu"/></svg> Мовна модель робить зміст</h3>
           <p>Транскрипт + твоя інструкція (промпт) відправляються у велику мовну модель (LLM). Від якості промпту залежить усе: попроси структуру — підсумок, рішення, задачі з відповідальними і дедлайнами. Можна попросити відповідь у форматі JSON, щоб бот легко її розібрав.</p>
           <div class="chip-row"><span class="chip">LLM</span><span class="chip">Prompt</span><span class="chip">System prompt</span><span class="chip">JSON output</span></div>
         </div>
         <div class="flow-detail" data-for="5" hidden>
-          <h3>📬 Follow-up для всіх</h3>
+          <h3><svg class="i"><use href="#i-mail"/></svg> Follow-up для всіх</h3>
           <p>Бот публікує красиве повідомлення-<b>embed</b> у текстовий канал і надсилає кожному учаснику приватне повідомлення (DM) з його задачами. Бонус: прикріпити файл із повним транскриптом.</p>
           <div class="chip-row"><span class="chip">Embed</span><span class="chip">Direct Message</span><span class="chip">Mentions</span><span class="chip">Attachments</span></div>
         </div>
@@ -163,11 +177,12 @@
 
     <!-- ===== Симуляція ===== -->
     <div class="sim-intro reveal">
-      <h3>🎬 Симуляція: одна зустріч від початку до кінця</h3>
+      <h3><svg class="i"><use href="#i-clapper"/></svg> Симуляція: одна зустріч від початку до кінця</h3>
       <p class="muted">Так виглядатиме робота твого бота. Можна ставити на паузу та гортати кроки.</p>
     </div>
 
     <div class="sim reveal" id="sim" data-no-swipe>
+      <div class="sim-titlebar"><i></i><i></i><i></i><span>meeting-simulation.exe</span><em>● LIVE</em></div>
       <div class="sim-bar">
         <div class="sim-cap" aria-live="polite">
           <span class="sim-count"><b id="simNum">1</b><span>/6</span></span>
@@ -215,7 +230,7 @@
             <span>Всередині бота</span>
           </header>
           <div class="node" data-node="rec" style="--c:#5865f2">
-            <div class="node-top"><span class="node-ico">🎚️</span><div><b>Запис голосу</b><small>Opus → PCM → WAV</small></div><span class="node-state"></span></div>
+            <div class="node-top"><span class="node-ico"><svg class="i"><use href="#i-audio"/></svg></span><div><b>Запис голосу</b><small>Opus → PCM → WAV</small></div><span class="node-state"></span></div>
             <div class="node-body">
               <div class="tracks" id="simTracks">
                 <div class="track" data-u="olya" style="--c:#f472b6"><span>Оля</span><div class="track-bar"></div></div>
@@ -225,23 +240,23 @@
             </div>
           </div>
           <div class="node" data-node="stt" style="--c:#22d3ee">
-            <div class="node-top"><span class="node-ico">📝</span><div><b>Розпізнавання мови</b><small>STT · голос → текст</small></div><span class="node-state"></span></div>
+            <div class="node-top"><span class="node-ico"><svg class="i"><use href="#i-file-text"/></svg></span><div><b>Розпізнавання мови</b><small>STT · голос → текст</small></div><span class="node-state"></span></div>
             <div class="node-body"><div class="transcript" id="simTranscript"></div></div>
           </div>
           <div class="node" data-node="llm" style="--c:#a3e635">
-            <div class="node-top"><span class="node-ico">🧠</span><div><b>ШІ робить зміст</b><small>LLM · текст → суть</small></div><span class="node-state"></span></div>
+            <div class="node-top"><span class="node-ico"><svg class="i"><use href="#i-cpu"/></svg></span><div><b>ШІ робить зміст</b><small>LLM · текст → суть</small></div><span class="node-state"></span></div>
             <div class="node-body">
               <div class="llm-box">
                 <div class="llm-orb"><i></i><i></i><i></i><span>LLM</span></div>
                 <div class="llm-side">
                   <div class="llm-prompt" id="simPrompt"></div>
-                  <div class="llm-out"><span>📋 підсумок</span><span>✅ рішення</span><span>📌 задачі</span></div>
+                  <div class="llm-out"><span><svg class="i"><use href="#i-clipboard"/></svg> підсумок</span><span><svg class="i"><use href="#i-check"/></svg> рішення</span><span><svg class="i"><use href="#i-pin"/></svg> задачі</span></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="node" data-node="send" style="--c:#fbbf24">
-            <div class="node-top"><span class="node-ico">📬</span><div><b>Відправка</b><small>канал + особисті повідомлення</small></div><span class="node-state"></span></div>
+            <div class="node-top"><span class="node-ico"><svg class="i"><use href="#i-mail"/></svg></span><div><b>Відправка</b><small>канал + особисті повідомлення</small></div><span class="node-state"></span></div>
             <div class="node-body"><div class="send-targets"><span># follow-up</span><span>DM → Оля</span><span>DM → Макс</span><span>DM → Даня</span></div></div>
           </div>
         </section>
@@ -252,17 +267,17 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/></svg>
             <span>Текстовий канал</span><b>follow-up</b>
           </header>
-          <div class="dc-empty" id="simEmpty"><span>💤</span>Тут з’явиться follow-up після зустрічі…</div>
+          <div class="dc-empty" id="simEmpty"><span><svg class="i"><use href="#i-moon"/></svg></span>Тут з’явиться follow-up після зустрічі…</div>
           <div class="dc-msg" id="simMsg">
             <div class="dc-ava"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="4" fill="currentColor"/><circle cx="9.5" cy="13" r="1.6" fill="#5865f2"/><circle cx="14.5" cy="13" r="1.6" fill="#5865f2"/><path d="M12 7V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
             <div class="dc-body">
               <div class="dc-meta"><b>FollowUp</b><em>БОТ</em><time>сьогодні о 18:42</time></div>
               <div class="dc-embed">
-                <h5>📋 Підсумок: командна зустріч</h5>
-                <p class="e-sub">⏱ 4 хв · 👥 Оля, Макс, Даня</p>
+                <h5><svg class="i"><use href="#i-clipboard"/></svg> Підсумок: командна зустріч</h5>
+                <p class="e-sub"><svg class="i"><use href="#i-clock"/></svg> 4 хв · <svg class="i"><use href="#i-users"/></svg> Оля, Макс, Даня</p>
                 <div class="e-field"><b>Коротко</b><p>Розподілили роботу над презентацією проєкту до п’ятниці.</p></div>
-                <div class="e-field"><b>✅ Рішення</b><p>Наступна зустріч — четвер, 18:00</p></div>
-                <div class="e-field"><b>📌 Задачі</b>
+                <div class="e-field"><b><svg class="i"><use href="#i-check"/></svg> Рішення</b><p>Наступна зустріч — четвер, 18:00</p></div>
+                <div class="e-field"><b><svg class="i"><use href="#i-pin"/></svg> Задачі</b>
                   <ul>
                     <li><span class="mention">@Макс</span> слайди — до пт</li>
                     <li><span class="mention">@Даня</span> тексти — до ср</li>
@@ -272,7 +287,7 @@
               </div>
             </div>
           </div>
-          <div class="dm-toast" id="simToast">📬 Оля, Макс і Даня отримали особисті задачі</div>
+          <div class="dm-toast" id="simToast"><svg class="i"><use href="#i-mail"/></svg> Оля, Макс і Даня отримали особисті задачі</div>
         </section>
 
         <div class="sim-fx" id="simFx" aria-hidden="true"></div>
@@ -290,26 +305,26 @@
 
     <div class="lanes reveal">
       <div class="lane-end me">
-        <div class="lane-ico">💻</div>
+        <div class="lane-ico"><svg class="i"><use href="#i-laptop"/></svg></div>
         <b>Твій бот</b>
-        <span>код + токен 🔑</span>
+        <span>код + токен</span>
       </div>
 
       <div class="lane-mid">
         <div class="lane" style="--c:#22d3ee">
           <div class="lane-head"><b>Gateway</b><span>WebSocket · постійне з’єднання</span></div>
           <div class="lane-rail">
-            <span class="pkt in" style="--dur:5s;--del:0s">⚡ /join</span>
-            <span class="pkt in" style="--dur:5s;--del:-2.5s">👤 Оля зайшла</span>
-            <span class="pkt out small" style="--dur:3.2s;--del:-1s">💓</span>
+            <span class="pkt in" style="--dur:5s;--del:0s"><svg class="i"><use href="#i-zap"/></svg> /join</span>
+            <span class="pkt in" style="--dur:5s;--del:-2.5s"><svg class="i"><use href="#i-user"/></svg> Оля зайшла</span>
+            <span class="pkt out small" style="--dur:3.2s;--del:-1s"><svg class="i"><use href="#i-heart"/></svg></span>
           </div>
           <p>← Discord повідомляє про <b>події</b>: хтось ввів команду, хтось зайшов у канал. Бот надсилає «серцебиття», щоб показати, що живий.</p>
         </div>
         <div class="lane" style="--c:#f472b6">
           <div class="lane-head"><b>REST API</b><span>HTTPS · запит → відповідь</span></div>
           <div class="lane-rail">
-            <span class="pkt out" style="--dur:5.5s;--del:-.5s">✉️ надіслати embed</span>
-            <span class="pkt out" style="--dur:5.5s;--del:-3.3s">📩 DM Максу</span>
+            <span class="pkt out" style="--dur:5.5s;--del:-.5s"><svg class="i"><use href="#i-send"/></svg> надіслати embed</span>
+            <span class="pkt out" style="--dur:5.5s;--del:-3.3s"><svg class="i"><use href="#i-mail"/></svg> DM Максу</span>
           </div>
           <p>→ Бот <b>просить</b> Discord щось зробити: надіслати повідомлення, зареєструвати команди, написати в особисті.</p>
         </div>
@@ -335,7 +350,7 @@
     </div>
 
     <div class="callout tip reveal" style="margin-top:22px">
-      <span class="callout-ico">🧰</span>
+      <span class="callout-ico"><svg class="i"><use href="#i-wrench"/></svg></span>
       <p><b>Добра новина:</b> руками з цими «трубами» працювати не треба. Бібліотека (discord.js, py-cord, JDA…) робить це за тебе. Але розуміти схему корисно — так легше читати помилки й пояснювати ШІ, що зламалось.</p>
     </div>
   </section>
@@ -437,9 +452,9 @@
           <p class="muted" style="font-size:15px">Порада: увімкни в Discord <b>Налаштування → Розширені → Режим розробника</b>. Тоді можна копіювати ID сервера, каналів і людей — знадобиться для тестів.</p>
         </div>
         <div class="mock mock-invite">
-          <div class="mock-srv"><span class="srv-ico">🏫</span><b>Мій тестовий сервер</b><span class="chev">▾</span></div>
+          <div class="mock-srv"><span class="srv-ico"><svg class="i"><use href="#i-school"/></svg></span><b>Мій тестовий сервер</b><span class="chev">▾</span></div>
           <span class="mock-btn">Authorize</span>
-          <div class="mock-member"><span class="m-ava">🤖<i></i></span><b>FollowUp Bot</b><em>БОТ</em></div>
+          <div class="mock-member"><span class="m-ava"><svg class="i"><use href="#i-bot"/></svg><i></i></span><b>FollowUp Bot</b><em>БОТ</em></div>
         </div>
       </li>
 
@@ -449,16 +464,16 @@
           <h3>Сховай токен у <code>.env</code></h3>
           <p>Ніколи не пиши токен прямо в коді. Поклади його у файл <code>.env</code> поруч із кодом, а сам <code>.env</code> додай у <code>.gitignore</code>, щоб він не потрапив на GitHub.</p>
           <div class="callout danger" style="margin-top:14px">
-            <span class="callout-ico">🚨</span>
+            <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
             <p><b>Токен засвітився?</b> Одразу натисни Reset Token. Хто має токен — той керує ботом. Discord і GitHub сканують публічні репозиторії й можуть автоматично анулювати знайдений токен.</p>
           </div>
         </div>
         <div class="mock mock-files">
           <div class="file-tree">
-            <span>📁 my-meeting-bot</span>
-            <span class="f-env">🔒 .env</span>
-            <span>📄 .gitignore</span>
-            <span>📄 bot.py <small>або</small> index.js</span>
+            <span><svg class="i"><use href="#i-folder"/></svg> my-meeting-bot</span>
+            <span class="f-env"><svg class="i"><use href="#i-lock"/></svg> .env</span>
+            <span><svg class="i"><use href="#i-file"/></svg> .gitignore</span>
+            <span><svg class="i"><use href="#i-file"/></svg> bot.py <small>або</small> index.js</span>
           </div>
           <div class="file-code">
             <div><small># .env</small></div>
@@ -482,7 +497,7 @@
 
     <div class="keys-grid">
       <div class="keys-col reveal">
-        <div class="keys-head" style="--c:#22d3ee"><span>🎧</span><div><h3>Голос → текст</h3><small>Speech-to-Text (STT)</small></div></div>
+        <div class="keys-head" style="--c:#22d3ee"><span><svg class="i"><use href="#i-headphones"/></svg></span><div><h3>Голос → текст</h3><small>Speech-to-Text (STT)</small></div></div>
         <ul class="svc-list">
           <li><div><b>Groq</b> <span class="chip green">безкоштовний ліміт</span></div><p>Дуже швидкий Whisper. Добре знає українську.</p><a class="link" href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com</a></li>
           <li><div><b>Google Gemini</b> <span class="chip green">безкоштовний ліміт</span></div><p>Розуміє аудіо напряму: може і розпізнати, і одразу зробити зміст.</p><a class="link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li>
@@ -492,7 +507,7 @@
         </ul>
       </div>
       <div class="keys-col reveal" style="--i:1">
-        <div class="keys-head" style="--c:#a3e635"><span>🧠</span><div><h3>Текст → зміст</h3><small>Велика мовна модель (LLM)</small></div></div>
+        <div class="keys-head" style="--c:#a3e635"><span><svg class="i"><use href="#i-cpu"/></svg></span><div><h3>Текст → зміст</h3><small>Велика мовна модель (LLM)</small></div></div>
         <ul class="svc-list">
           <li><div><b>Google Gemini</b> <span class="chip green">безкоштовний ліміт</span></div><p>Довгий контекст — влізе навіть година розмови.</p><a class="link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li>
           <li><div><b>Groq</b> <span class="chip green">безкоштовний ліміт</span></div><p>Відкриті моделі (Llama, Qwen та інші), дуже швидкі відповіді.</p><a class="link" href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com</a></li>
@@ -505,11 +520,11 @@
 
     <div class="grid grid-2" style="margin-top:20px">
       <div class="callout warn reveal">
-        <span class="callout-ico">🔞</span>
+        <span class="callout-ico"><svg class="i"><use href="#i-shield-alert"/></svg></span>
         <p><b>Вік.</b> Багато API-сервісів дозволяють реєстрацію з 18 років (або з дозволу батьків). Попроси вчителя чи організаторів видати ключ або використай локальні моделі.</p>
       </div>
       <div class="callout info reveal" style="--i:1">
-        <span class="callout-ico">💸</span>
+        <span class="callout-ico"><svg class="i"><use href="#i-coins"/></svg></span>
         <p><b>Ліміти.</b> Безкоштовні тарифи мають обмеження на кількість запитів і розмір файлу. Тестуй на коротких записах (30–60 секунд), а не на годинній розмові.</p>
       </div>
     </div>
@@ -524,11 +539,11 @@
     </div>
 
     <div class="tools-row reveal" data-stagger>
-      <div class="tool"><span>🧑‍💻</span><b>VS Code / Cursor</b><small>редактор коду</small></div>
-      <div class="tool"><span>🌳</span><b>Git</b><small>збереження версій</small></div>
-      <div class="tool"><span>🎞️</span><b>FFmpeg</b><small>робота з аудіо</small></div>
-      <div class="tool"><span>💬</span><b>Discord</b><small>+ тестовий сервер</small></div>
-      <div class="tool"><span>🤖</span><b>ШІ-асистент</b><small>твій напарник</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-code"/></svg></span><b>VS Code / Cursor</b><small>редактор коду</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-git"/></svg></span><b>Git</b><small>збереження версій</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-film"/></svg></span><b>FFmpeg</b><small>робота з аудіо</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-message"/></svg></span><b>Discord</b><small>+ тестовий сервер</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-bot"/></svg></span><b>ШІ-асистент</b><small>твій напарник</small></div>
     </div>
 
     <div class="tabs-ui lang-tabs reveal">
@@ -581,7 +596,7 @@
 <span class="p">$ </span>ffmpeg -version</pre>
             </div>
             <div class="callout warn" style="margin-top:14px">
-              <span class="callout-ico">⚠️</span>
+              <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
               <p><b>py-cord і discord.py не можна ставити разом</b> — обидві займають ім’я <code>discord</code>. Обери одну. І не забудь активувати <code>.venv</code> перед встановленням.</p>
             </div>
           </div>
@@ -631,7 +646,7 @@
 <span class="p">$ </span>ffmpeg -version</pre>
             </div>
             <div class="callout warn" style="margin-top:14px">
-              <span class="callout-ico">⚠️</span>
+              <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
               <p><b>@discordjs/opus</b> іноді не встановлюється без інструментів збірки — тоді спробуй <code>opusscript</code>. Функція <code>generateDependencyReport()</code> з @discordjs/voice покаже, чого бракує.</p>
             </div>
           </div>
@@ -675,7 +690,7 @@
 <pre><span class="p">$ </span>java -version</pre>
             </div>
             <div class="callout warn" style="margin-top:14px">
-              <span class="callout-ico">⚠️</span>
+              <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
               <p><b>Порядок байтів.</b> JDA віддає PCM 48 кГц, 16 біт, стерео у форматі big-endian, а WAV зазвичай little-endian. Якщо файл звучить як шум — копай у цьому напрямку.</p>
             </div>
           </div>
@@ -695,7 +710,7 @@
     </div>
 
     <div class="callout info reveal" style="margin-top:24px">
-      <span class="callout-ico">🔐</span>
+      <span class="callout-ico"><svg class="i"><use href="#i-shield"/></svg></span>
       <p><b>Шифрування голосу (DAVE).</b> Discord поступово вмикає наскрізне шифрування голосових дзвінків. Бери <b>найсвіжішу версію</b> бібліотеки. Якщо бот сидить у каналі, але записує тишу чи шум — перевір версію бібліотеки та її issues на GitHub.</p>
     </div>
   </section>
@@ -709,7 +724,7 @@
     </div>
 
     <div class="xp reveal" id="xp">
-      <div class="xp-rank"><span class="xp-emoji" id="xpEmoji">🥚</span><div><small>Твій ранг</small><b id="xpRank">Глядач</b></div></div>
+      <div class="xp-rank"><span class="xp-emoji" id="xpEmoji"><svg class="i"><use href="#i-eye"/></svg></span><div><small>Твій ранг</small><b id="xpRank">Глядач</b></div></div>
       <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
       <div class="xp-num"><b id="xpNum">0</b> / <span id="xpMax">250</span> XP</div>
     </div>
@@ -720,7 +735,7 @@
         <ul class="quests">
           <li><label><input type="checkbox" data-xp="10" data-id="l1-1"><span class="q-box"></span><span class="q-text">Бот онлайн на тестовому сервері й відповідає на <code>/ping</code></span><span class="q-xp">+10</span></label></li>
           <li><label><input type="checkbox" data-xp="15" data-id="l1-2"><span class="q-box"></span><span class="q-text"><code>/join</code> — бот заходить у голосовий канал того, хто викликав команду</span><span class="q-xp">+15</span></label></li>
-          <li><label><input type="checkbox" data-xp="10" data-id="l1-3"><span class="q-box"></span><span class="q-text">Бот пише в чат «🔴 Йде запис» — усі мають знати</span><span class="q-xp">+10</span></label></li>
+          <li><label><input type="checkbox" data-xp="10" data-id="l1-3"><span class="q-box"></span><span class="q-text">Бот пише в чат «● Йде запис» — усі мають знати</span><span class="q-xp">+10</span></label></li>
           <li><label><input type="checkbox" data-xp="20" data-id="l1-4"><span class="q-box"></span><span class="q-text"><code>/stop</code> — бот виходить і зберігає аудіо у файл</span><span class="q-xp">+20</span></label></li>
           <li><label><input type="checkbox" data-xp="20" data-id="l1-5"><span class="q-box"></span><span class="q-text">Аудіо перетворюється на текст через STT</span><span class="q-xp">+20</span></label></li>
           <li><label><input type="checkbox" data-xp="25" data-id="l1-6"><span class="q-box"></span><span class="q-text">ШІ робить зміст (підсумок, рішення, задачі), і бот надсилає його в канал</span><span class="q-xp">+25</span></label></li>
@@ -747,9 +762,9 @@
     </div>
 
     <div class="grid grid-3" style="margin-top:24px" data-stagger>
-      <div class="card reveal" style="--c:#fbbf24"><div class="card-ico">🎥</div><h3>Що здати</h3><p>Коротке відео (1–2 хв), де бот записує зустріч і надсилає follow-up.</p></div>
-      <div class="card reveal" style="--c:#8b5cf6"><div class="card-ico">🐙</div><h3>Код на GitHub</h3><p>Репозиторій з README: що вміє бот і як його запустити. <b>Без токенів і ключів!</b></p></div>
-      <div class="card reveal" style="--c:#fb7185"><div class="card-ico">🗣️</div><h3>Етика</h3><p>Записувати людей можна лише з їхньої згоди. Бот завжди попереджає про запис, а файли не зберігаються вічно.</p></div>
+      <div class="card reveal" style="--c:#fbbf24"><div class="card-ico"><svg class="i"><use href="#i-video"/></svg></div><h3>Що здати</h3><p>Коротке відео (1–2 хв), де бот записує зустріч і надсилає follow-up.</p></div>
+      <div class="card reveal" style="--c:#8b5cf6"><div class="card-ico"><svg class="i"><use href="#i-github"/></svg></div><h3>Код на GitHub</h3><p>Репозиторій з README: що вміє бот і як його запустити. <b>Без токенів і ключів!</b></p></div>
+      <div class="card reveal" style="--c:#fb7185"><div class="card-ico"><svg class="i"><use href="#i-scale"/></svg></div><h3>Етика</h3><p>Записувати людей можна лише з їхньої згоди. Бот завжди попереджає про запис, а файли не зберігаються вічно.</p></div>
     </div>
   </section>
 
@@ -763,13 +778,13 @@
 
     <div class="prompt-vs reveal">
       <div class="pv bad">
-        <span class="pv-tag">❌ Так собі</span>
+        <span class="pv-tag"><svg class="i"><use href="#i-x"/></svg> Так собі</span>
         <p>«Зроби мені бота для дискорда який записує»</p>
         <small>ШІ не знає мову, бібліотеку, твою ОС і що саме ти хочеш. Вийде щось випадкове.</small>
       </div>
       <div class="pv-arrow">→</div>
       <div class="pv good">
-        <span class="pv-tag">✅ Набагато краще</span>
+        <span class="pv-tag"><svg class="i"><use href="#i-check"/></svg> Набагато краще</span>
         <p>«Я пишу Discord-бота на Python з py-cord, Windows 11. Зараз бот уже відповідає на /ping. Наступний крок — команда /join, щоб бот заходив у мій голосовий канал. Поясни, як це працює, і напиши лише цю частину з коментарями.»</p>
         <small>Є контекст, поточний стан і один маленький крок.</small>
       </div>
@@ -785,7 +800,7 @@
     </div>
 
     <div class="kw reveal">
-      <h4>🔎 Слова, які варто гуглити або питати в ШІ</h4>
+      <h4><svg class="i"><use href="#i-search"/></svg> Слова, які варто гуглити або питати в ШІ</h4>
       <div class="chip-row">
         <span class="chip">Discord Developer Portal</span><span class="chip">Gateway Intents</span><span class="chip">Slash commands</span><span class="chip">Voice receive</span><span class="chip">Opus decode</span><span class="chip">PCM to WAV</span><span class="chip">Speech-to-Text API</span><span class="chip">Whisper</span><span class="chip">Speaker diarization</span><span class="chip">System prompt</span><span class="chip">Structured output JSON</span><span class="chip">Discord embed</span><span class="chip">Send DM to user</span><span class="chip">.env / dotenv</span>
       </div>
@@ -800,18 +815,18 @@
       <p>Натисни на картку, щоб перевернути.</p>
     </div>
     <div class="flips" data-stagger>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>🔑 Токен</b><small>натисни</small></span><span class="f-back">Пароль бота. З ним код входить у Discord як бот. Секрет!</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>📡 Інтенти</b><small>натисни</small></span><span class="f-back">Підписки на події: про що Discord має повідомляти бота.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>⚡ Gateway</b><small>натисни</small></span><span class="f-back">Постійне з’єднання, через яке Discord у реальному часі шле події.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-key"/></svg> Токен</b><small>натисни</small></span><span class="f-back">Пароль бота. З ним код входить у Discord як бот. Секрет!</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-signal"/></svg> Інтенти</b><small>натисни</small></span><span class="f-back">Підписки на події: про що Discord має повідомляти бота.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-zap"/></svg> Gateway</b><small>натисни</small></span><span class="f-back">Постійне з’єднання, через яке Discord у реальному часі шле події.</span></span></button>
       <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>/ Slash-команда</b><small>натисни</small></span><span class="f-back">Команда, яка починається з «/» і має підказки прямо в Discord.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>🎵 Opus</b><small>натисни</small></span><span class="f-back">Формат стиснення звуку, яким Discord передає голос.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>🌊 PCM / WAV</b><small>натисни</small></span><span class="f-back">PCM — «сирий» звук без стиснення. WAV — файл, у якому він зберігається.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>📝 STT</b><small>натисни</small></span><span class="f-back">Speech-to-Text: технологія, що перетворює мову на текст.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>🧠 LLM</b><small>натисни</small></span><span class="f-back">Велика мовна модель: Gemini, Claude, GPT, Llama…</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>💬 Промпт</b><small>натисни</small></span><span class="f-back">Інструкція для ШІ. Що точніше промпт, то кращий результат.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>🧾 Embed</b><small>натисни</small></span><span class="f-back">Гарне повідомлення-картка в Discord: заголовок, поля, колір.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>👥 Діаризація</b><small>натисни</small></span><span class="f-back">Визначення, хто з людей говорить у кожен момент запису.</span></span></button>
-      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b>🔒 .env</b><small>натисни</small></span><span class="f-back">Файл із секретами (токени, ключі). Ніколи не потрапляє на GitHub.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-music"/></svg> Opus</b><small>натисни</small></span><span class="f-back">Формат стиснення звуку, яким Discord передає голос.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-audio"/></svg> PCM / WAV</b><small>натисни</small></span><span class="f-back">PCM — «сирий» звук без стиснення. WAV — файл, у якому він зберігається.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-file-text"/></svg> STT</b><small>натисни</small></span><span class="f-back">Speech-to-Text: технологія, що перетворює мову на текст.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-cpu"/></svg> LLM</b><small>натисни</small></span><span class="f-back">Велика мовна модель: Gemini, Claude, GPT, Llama…</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-message"/></svg> Промпт</b><small>натисни</small></span><span class="f-back">Інструкція для ШІ. Що точніше промпт, то кращий результат.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-panel"/></svg> Embed</b><small>натисни</small></span><span class="f-back">Гарне повідомлення-картка в Discord: заголовок, поля, колір.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-users"/></svg> Діаризація</b><small>натисни</small></span><span class="f-back">Визначення, хто з людей говорить у кожен момент запису.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-lock"/></svg> .env</b><small>натисни</small></span><span class="f-back">Файл із секретами (токени, ключі). Ніколи не потрапляє на GitHub.</span></span></button>
     </div>
   </section>
 
@@ -824,27 +839,27 @@
     </div>
     <div class="faq reveal">
       <details>
-        <summary>🤖 Бот онлайн, але slash-команд не видно</summary>
+        <summary><svg class="i"><use href="#i-bot"/></svg> Бот онлайн, але slash-команд не видно</summary>
         <div class="faq-body">Чи додав ти scope <code>applications.commands</code> у посилання-запрошення? Глобальні команди можуть з’являтися не одразу — для тестів реєструй команди для конкретного сервера (guild). Перезапусти Discord (<kbd>Ctrl</kbd>+<kbd>R</kbd>).</div>
       </details>
       <details>
-        <summary>🔇 Бот не заходить у голосовий канал</summary>
+        <summary><svg class="i"><use href="#i-mic-off"/></svg> Бот не заходить у голосовий канал</summary>
         <div class="faq-body">Перевір право <b>Connect</b> на сервері й у каналі, інтент голосових станів у коді та «голосові» залежності бібліотеки (шифрування, Opus). Подивись, що пише термінал у момент команди.</div>
       </details>
       <details>
-        <summary>📼 Бот у каналі, але файл порожній або шипить</summary>
+        <summary><svg class="i"><use href="#i-file-audio"/></svg> Бот у каналі, але файл порожній або шипить</summary>
         <div class="faq-body">Чи правильно декодується Opus? Частота 48 000 Гц, 2 канали, 16 біт. Чи збігається порядок байтів? Чи свіжа версія бібліотеки (шифрування DAVE)? Чи говорить хтось насправді: у тиші пакети не приходять.</div>
       </details>
       <details>
-        <summary>📝 Розпізнавання видає нісенітницю</summary>
+        <summary><svg class="i"><use href="#i-file-text"/></svg> Розпізнавання видає нісенітницю</summary>
         <div class="faq-body">Явно вкажи мову (українська — <code>uk</code>). Перевір, чи файл відтворюється у звичайному плеєрі. Дуже короткі шматки (менше секунди) розпізнаються погано — склей їх.</div>
       </details>
       <details>
-        <summary>🧠 ШІ вигадує те, чого не було на зустрічі</summary>
+        <summary><svg class="i"><use href="#i-cpu"/></svg> ШІ вигадує те, чого не було на зустрічі</summary>
         <div class="faq-body">Попроси в промпті використовувати <b>тільки</b> транскрипт і писати «не визначено», якщо чогось немає. Дай чітку структуру відповіді. Зменш «температуру» (temperature).</div>
       </details>
       <details>
-        <summary>📦 API каже, що файл завеликий</summary>
+        <summary><svg class="i"><use href="#i-package"/></svg> API каже, що файл завеликий</summary>
         <div class="faq-body">У багатьох сервісів розпізнавання є ліміт на розмір файлу (часто близько 25 МБ). Стискай аудіо (MP3/OGG, моно, нижча частота — для мови вистачить 16 кГц) або ріж на шматки.</div>
       </details>
     </div>
@@ -853,12 +868,15 @@
   <!-- ============ ФІНАЛ ============ -->
   <section class="section container">
     <div class="final reveal">
-      <div class="final-glow" aria-hidden="true"></div>
-      <h2>Готовий? <span class="grad-text">Погнали!</span> 🚀</h2>
+      <div class="spin-badge final-badge" style="--sb:130px;--sb-bg:var(--pink)">
+        <svg viewBox="0 0 100 100"><defs><path id="finalCircle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#finalCircle">почни з /ping • почни з /ping • </textPath></text></svg>
+        <span><svg class="i"><use href="#i-rocket"/></svg></span>
+      </div>
+      <h2>Готовий? <span class="mark-box" style="--mc:var(--white);--mt:var(--ink);--r:2deg">Погнали!</span></h2>
       <p>Відкривай редактор, клич ШІ-напарника і починай з <code>/ping</code>. Кожен великий бот колись теж був одним рядком коду.</p>
       <div class="btn-row" style="justify-content:center">
-        <a class="btn btn-primary" href="#token">Почати з токена</a>
-        <a class="btn btn-ghost" href="#quest">До квесту</a>
+        <a class="btn btn-ghost" href="#token">Почати з токена <span class="arr">→</span></a>
+        <a class="btn btn-yellow" href="#quest">До квесту</a>
       </div>
     </div>
   </section>
