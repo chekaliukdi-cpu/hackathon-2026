@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Компоненти для авторів — Хакатон 2026</title>
+  <meta name="description" content="Готові блоки дизайну сайту хакатону: копіюй і вставляй.">
+  <meta name="theme-color" content="#06060f">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .demo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; margin-bottom: 40px; }
+    .demo > * { min-width: 0; }
+    .demo h3 { grid-column: 1 / -1; margin: 0; }
+    .demo .terminal pre { font-size: 12px; max-height: 340px; }
+    @media (max-width: 860px) { .demo { grid-template-columns: 1fr; } }
+  </style>
+  <script src="assets/js/main.js"></script>
+</head>
+<body data-page="home">
+<site-nav></site-nav>
+
+<main id="main" class="page">
+  <section class="page-hero container">
+    <span class="eyebrow reveal"><span class="dot"></span> Для авторів задач</span>
+    <h1 class="reveal">Набір <span class="grad-text">компонентів</span></h1>
+    <p class="lead reveal">Ліворуч — як блок виглядає, праворуч — код, який треба скопіювати у свою сторінку. Усі стилі вже підключені через <code>assets/css/style.css</code>.</p>
+  </section>
+
+  <section class="container">
+
+    <div class="demo">
+      <h3>Заголовок секції</h3>
+      <div class="section-head" style="margin:0">
+        <span class="kicker">Розділ 1</span>
+        <h2>Назва розділу</h2>
+        <p>Короткий підзаголовок, що пояснює, про що розділ.</p>
+      </div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;section class="section container" id="part1"&gt;
+  &lt;div class="section-head reveal"&gt;
+    &lt;span class="kicker"&gt;Розділ 1&lt;/span&gt;
+    &lt;h2&gt;Назва розділу&lt;/h2&gt;
+    &lt;p&gt;Короткий підзаголовок.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;!-- вміст розділу --&gt;
+&lt;/section&gt;</pre></div>
+    </div>
+
+    <div class="demo">
+      <h3>Картки в сітці</h3>
+      <div class="grid grid-2">
+        <div class="card" style="--c:#22d3ee"><div class="card-ico">⚡</div><h3>Картка</h3><p>Колір іконки задається через <code>--c</code>.</p></div>
+        <div class="card lift" style="--c:#f472b6"><div class="card-ico">🎯</div><h3>Ще картка</h3><p>Клас <code>lift</code> — підстрибує при наведенні.</p></div>
+      </div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;!-- grid-2 / grid-3 / grid-4 / grid-auto --&gt;
+&lt;div class="grid grid-3" data-stagger&gt;
+  &lt;div class="card lift reveal" style="--c:#22d3ee"&gt;
+    &lt;div class="card-ico"&gt;⚡&lt;/div&gt;
+    &lt;h3&gt;Картка&lt;/h3&gt;
+    &lt;p&gt;Текст картки.&lt;/p&gt;
+  &lt;/div&gt;
+  ...
+&lt;/div&gt;</pre></div>
+    </div>
+
+    <div class="demo">
+      <h3>Підказки (callout)</h3>
+      <div style="display:grid;gap:10px">
+        <div class="callout info"><span class="callout-ico">💡</span><p><b>info</b> — корисна інформація.</p></div>
+        <div class="callout tip"><span class="callout-ico">✅</span><p><b>tip</b> — порада.</p></div>
+        <div class="callout warn"><span class="callout-ico">⚠️</span><p><b>warn</b> — обережно.</p></div>
+        <div class="callout danger"><span class="callout-ico">🚨</span><p><b>danger</b> — небезпечно!</p></div>
+      </div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;!-- info / tip / warn / danger --&gt;
+&lt;div class="callout tip"&gt;
+  &lt;span class="callout-ico"&gt;✅&lt;/span&gt;
+  &lt;p&gt;&lt;b&gt;Порада.&lt;/b&gt; Текст підказки.&lt;/p&gt;
+&lt;/div&gt;</pre></div>
+    </div>
+
+    <div class="demo">
+      <h3>Кнопки й мітки</h3>
+      <div>
+        <div class="btn-row" style="margin-bottom:16px"><a class="btn btn-primary" href="#">Головна</a><a class="btn btn-ghost" href="#">Другорядна</a></div>
+        <div class="chip-row"><span class="chip">звичайна</span><span class="chip green">green</span><span class="chip amber">amber</span><span class="chip red">red</span><span class="chip cyan">cyan</span><span class="chip pink">pink</span><span class="chip violet">violet</span></div>
+      </div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;div class="btn-row"&gt;
+  &lt;a class="btn btn-primary" href="#"&gt;Головна&lt;/a&gt;
+  &lt;a class="btn btn-ghost" href="#"&gt;Другорядна&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div class="chip-row"&gt;
+  &lt;span class="chip green"&gt;безкоштовно&lt;/span&gt;
+&lt;/div&gt;</pre></div>
+    </div>
+
+    <div class="demo">
+      <h3>Термінал з кнопкою «Копіювати»</h3>
+      <div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>встановлення</div>
+<pre><span class="c"># коментар не копіюється</span>
+<span class="p">$ </span>pip install requests</pre></div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;div class="terminal"&gt;
+  &lt;div class="terminal-bar"&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;назва&lt;/div&gt;
+&lt;pre&gt;&lt;span class="c"&gt;# коментар&lt;/span&gt;
+&lt;span class="p"&gt;$ &lt;/span&gt;pip install requests&lt;/pre&gt;
+&lt;/div&gt;
+&lt;!-- кнопка «Копіювати» з'явиться сама --&gt;</pre></div>
+    </div>
+
+    <div class="demo">
+      <h3>Вкладки</h3>
+      <div class="tabs-ui">
+        <div class="tab-list" role="tablist">
+          <button class="tab-btn" role="tab" aria-selected="true" aria-controls="demo-a">Перша</button>
+          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="demo-b">Друга</button>
+        </div>
+        <div class="tab-panel card" role="tabpanel" id="demo-a"><p>Вміст першої вкладки.</p></div>
+        <div class="tab-panel card" role="tabpanel" id="demo-b" hidden><p>Вміст другої вкладки.</p></div>
+      </div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;div class="tabs-ui"&gt;
+  &lt;div class="tab-list" role="tablist"&gt;
+    &lt;button class="tab-btn" role="tab" aria-selected="true"
+            aria-controls="t-a"&gt;Перша&lt;/button&gt;
+    &lt;button class="tab-btn" role="tab" aria-selected="false"
+            aria-controls="t-b"&gt;Друга&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="tab-panel" role="tabpanel" id="t-a"&gt;...&lt;/div&gt;
+  &lt;div class="tab-panel" role="tabpanel" id="t-b" hidden&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre></div>
+    </div>
+
+    <div class="demo">
+      <h3>Питання-відповідь (FAQ)</h3>
+      <div class="faq">
+        <details><summary>Як це працює?</summary><div class="faq-body">Ось так.</div></details>
+        <details><summary>А якщо не працює?</summary><div class="faq-body">Спитай ШІ 🙂</div></details>
+      </div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;div class="faq"&gt;
+  &lt;details&gt;
+    &lt;summary&gt;Питання?&lt;/summary&gt;
+    &lt;div class="faq-body"&gt;Відповідь.&lt;/div&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</pre></div>
+    </div>
+
+    <div class="demo">
+      <h3>Анімація появи і липкий зміст</h3>
+      <div class="card"><p>Додай клас <code>reveal</code> будь-якому блоку — він плавно з’явиться під час прокрутки. <code>data-stagger</code> на батьківському блоці — діти з’являються по черзі.</p><p>Липка панель з розділами (як на сторінці Задачі 2) підсвічує поточний розділ сама.</p></div>
+<div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i>html</div><pre>&lt;nav class="toc-bar container"&gt;
+  &lt;div class="toc-inner"&gt;
+    &lt;a href="#part1"&gt;Розділ 1&lt;/a&gt;
+    &lt;a href="#part2"&gt;Розділ 2&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre></div>
+    </div>
+
+  </section>
+</main>
+
+<site-footer></site-footer>
+</body>
+</html>
