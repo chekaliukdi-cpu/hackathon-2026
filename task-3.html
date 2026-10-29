@@ -2,42 +2,823 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <meta name="site-version" content="14">
+  <meta name="site-version" content="15">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Задача 3 — Хакатон 2026</title>
-  <meta name="description" content="Задача 3 хакатону 2026">
+  <title>Задача 3 · Агент задач: Discord + Trello — Хакатон 2026</title>
+  <meta name="description" content="Створи ШІ-агента, який читає follow-up зустрічі, сам виділяє задачі з відповідальними і дедлайнами, надсилає їх у Discord і створює картки в Trello через API.">
   <meta name="theme-color" content="#fff4e0">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=14">
-  <!-- Свої стилі для цієї сторінки підключай тут, наприклад: <link rel="stylesheet" href="assets/css/task-3.css"> -->
-  <script src="assets/js/main.js?v=14"></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=15">
+  <!-- спільні блоки (flow, sim, квест, словник…) беремо з Задачі 2, свої — у task-3.css -->
+  <link rel="stylesheet" href="assets/css/task2.css?v=15">
+  <link rel="stylesheet" href="assets/css/task-3.css?v=15">
+  <script src="assets/js/main.js?v=15"></script>
+  <script src="assets/js/task-3.js?v=15" defer></script>
 </head>
 <body data-page="task-3">
 <site-nav></site-nav>
 
 <main id="main" class="page">
-  <!-- =====================================================================
-       >>> Задача 3 — ПИШІТЬ КОНТЕНТ ТУТ
-       Готові блоки (картки, підказки, термінал, вкладки, FAQ…) з прикладами
-       коду — на сторінці components.html. Просто копіюйте звідти.
-       Опис дизайну + промпт для Claude — assets/css/DESIGN.md
-       Великий приклад повної сторінки — task-2.html.
-       ===================================================================== -->
 
-  <section class="page-hero container">
-    <span class="eyebrow reveal"><span class="dot"></span> Задача 3</span>
-    <h1 class="reveal">Задача 3: <span class="grad-text">скоро тут</span></h1>
-    <p class="lead reveal">Короткий опис задачі: що треба зробити і навіщо. Один-два речення, які зачеплять.</p>
+  <!-- ============ HERO ============ -->
+  <section class="t2-hero container">
+    <div class="t2-hero-copy">
+      <span class="eyebrow reveal"><span class="dot"></span> Задача 03 · ШІ-агент + Trello</span>
+      <h1 class="reveal">Агент, що <span class="mark-box" style="--mc:var(--lime);--mt:var(--ink)">роздає</span> задачі після&nbsp;<span class="squiggle">зустрічі</span></h1>
+      <p class="lead reveal">Бот із Задачі 2 вже вміє писати follow-up. Тепер твій агент читає цей follow-up, сам знаходить у ньому задачі — хто, що і до коли — надсилає їх команді в Discord і створює картки в Trello через API.</p>
+      <div class="btn-row reveal">
+        <a class="btn btn-primary" href="#how">Як це працює <span class="arr">→</span></a>
+        <a class="btn btn-yellow" href="#quest">Квест</a>
+      </div>
+      <ul class="t2-stats reveal">
+        <li style="--c:var(--yellow);--r:-3deg"><b>4</b><span>поля в кожній задачі</span></li>
+        <li style="--c:var(--pink);--r:2deg"><b>2</b><span>сервіси: Discord і Trello</span></li>
+        <li style="--c:var(--cyan);--r:-1.5deg"><b>0</b><span>забутих задач</span></li>
+      </ul>
+    </div>
+
+    <div class="t3-stage reveal" aria-hidden="true">
+      <div class="spin-badge t3-badge" style="--sb:104px;--sb-bg:var(--yellow)">
+        <svg viewBox="0 0 100 100"><defs><path id="heroCircle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#heroCircle">читає • аналізує • роздає • </textPath></text></svg>
+        <span><svg class="i"><use href="#i-wand"/></svg></span>
+      </div>
+
+      <div class="fu-sheet">
+        <b><svg class="i"><use href="#i-clipboard"/></svg> Follow-up</b>
+        <span class="fu-line"></span>
+        <span class="fu-line short"></span>
+        <span class="fu-hl" style="--c:var(--pink);--d:0s">@Макс слайди до пт</span>
+        <span class="fu-hl" style="--c:var(--cyan);--d:.5s">@Даня тексти до ср</span>
+        <span class="fu-hl" style="--c:var(--yellow);--d:1s">@Оля демо до чт</span>
+      </div>
+
+      <div class="mini-dc">
+        <div class="mini-head"><svg class="i"><use href="#i-hash"/></svg> задачі</div>
+        <p style="--d:0s"><b>Слайди</b> <span class="mention">@Макс</span> · 06.11</p>
+        <p style="--d:.4s"><b>Тексти</b> <span class="mention">@Даня</span> · 04.11</p>
+        <p style="--d:.8s"><b>Демо</b> <span class="mention">@Оля</span> · 05.11</p>
+      </div>
+
+      <div class="mini-board">
+        <div class="mini-head"><svg class="i"><use href="#i-blocks"/></svg> Trello · Хакатон</div>
+        <div class="mini-lists">
+          <div class="mini-list">
+            <small>Треба зробити</small>
+            <div class="mini-card" style="--d:0s;--c:var(--pink)"><b>Зробити слайди</b><span><i>М</i> 06.11</span></div>
+            <div class="mini-card" style="--d:.35s;--c:var(--cyan)"><b>Написати тексти</b><span><i>Д</i> 04.11</span></div>
+            <div class="mini-card" style="--d:.7s;--c:var(--yellow)"><b>Демо бота</b><span><i>О</i> 05.11</span></div>
+          </div>
+          <div class="mini-list ghost"><small>В роботі</small><div class="mini-slot"></div></div>
+        </div>
+      </div>
+
+      <span class="sticker st1" style="--c:var(--white);--r:-7deg"><svg class="i"><use href="#i-pencil"/></svg> заголовок</span>
+      <span class="sticker st2" style="--c:var(--lime);--r:5deg"><svg class="i"><use href="#i-user"/></svg> хто</span>
+      <span class="sticker st3" style="--c:var(--orange);--r:-4deg"><svg class="i"><use href="#i-clock"/></svg> дедлайн</span>
+      <span class="sticker st4" style="--c:var(--lilac);--r:6deg"><svg class="i"><use href="#i-file-text"/></svg> зміст</span>
+    </div>
   </section>
 
-  <section class="section-tight container">
-    <div class="placeholder reveal">
-      <div class="ph-ico"><svg class="i"><use href="#i-wrench"/></svg></div>
-      <h3>Сторінка в розробці</h3>
-      <p>Тут з’явиться опис задачі. Автору: редагуй файл <code>task-3.html</code>, а готові блоки бери з <a class="link" href="components.html">components.html</a>.</p>
+  <div class="marquee-x" aria-hidden="true">
+    <div class="marquee" style="--mq-bg:var(--lime);--mq-r:-2.5deg"><div class="marquee-track"><span>follow-up → задачі → discord → trello ✦ хто ✦ що ✦ до коли ✦ follow-up → задачі → discord → trello ✦ хто ✦ що ✦ до коли ✦ </span><span>follow-up → задачі → discord → trello ✦ хто ✦ що ✦ до коли ✦ follow-up → задачі → discord → trello ✦ хто ✦ що ✦ до коли ✦ </span></div></div>
+    <div class="marquee reverse" style="--mq-bg:var(--blue);--mq-r:2deg;--mq-speed:34s;color:#fff"><div class="marquee-track"><span>json ✦ llm ✦ api key ✦ token ✦ POST /1/cards ✦ idList ✦ due ✦ embed ✦ json ✦ llm ✦ api key ✦ token ✦ POST /1/cards ✦ idList ✦ due ✦ embed ✦ </span><span>json ✦ llm ✦ api key ✦ token ✦ POST /1/cards ✦ idList ✦ due ✦ embed ✦ json ✦ llm ✦ api key ✦ token ✦ POST /1/cards ✦ idList ✦ due ✦ embed ✦ </span></div></div>
+  </div>
+
+  <!-- ============ ЗМІСТ СТОРІНКИ ============ -->
+  <nav class="toc-bar container" aria-label="Розділи задачі">
+    <div class="toc-inner">
+      <a href="#mission"><svg class="i"><use href="#i-target"/></svg> Суть</a>
+      <a href="#anatomy"><svg class="i"><use href="#i-clipboard"/></svg> Задача</a>
+      <a href="#how"><svg class="i"><use href="#i-cog"/></svg> Як працює</a>
+      <a href="#trello"><svg class="i"><use href="#i-key"/></svg> Trello API</a>
+      <a href="#discord"><svg class="i"><use href="#i-message"/></svg> Discord</a>
+      <a href="#langs"><svg class="i"><use href="#i-code"/></svg> Мови</a>
+      <a href="#quest"><svg class="i"><use href="#i-trophy"/></svg> Квест</a>
+      <a href="#vibe"><svg class="i"><use href="#i-wand"/></svg> Вайбкодинг</a>
+      <a href="#glossary"><svg class="i"><use href="#i-book"/></svg> Словник</a>
+      <a href="#faq"><svg class="i"><use href="#i-lifebuoy"/></svg> Допомога</a>
+    </div>
+  </nav>
+
+  <!-- ============ СУТЬ ЗАДАЧІ ============ -->
+  <section class="section container" id="mission">
+    <div class="section-head reveal">
+      <span class="kicker">Суть задачі</span>
+      <h2>Follow-up є. А хто це все зробить?</h2>
+      <p>Після зустрічі бот із Задачі 2 надсилає підсумок. Але текст у чаті швидко губиться. Твій агент перетворює його на справжні задачі: кожна має власника й дедлайн і живе на дошці Trello, поки її не виконають.</p>
+    </div>
+
+    <div class="mission-grid" data-stagger>
+      <article class="mcard reveal" style="--c:var(--lime);--r:-1.5deg">
+        <span class="mnum">01</span><span class="memoji"><svg class="i"><use href="#i-file-text"/></svg></span>
+        <h3>Читає</h3>
+        <p>Отримує follow-up зустрічі з кроку 2: підсумок, рішення і домовленості, хто що робить.</p>
+      </article>
+      <article class="mcard reveal" style="--c:var(--yellow);--r:1deg">
+        <span class="mnum">02</span><span class="memoji"><svg class="i"><use href="#i-cpu"/></svg></span>
+        <h3>Аналізує</h3>
+        <p>Мовна модель виділяє задачі. Кожна задача — це заголовок, відповідальний, дедлайн і короткий зміст.</p>
+      </article>
+      <article class="mcard reveal" style="--c:var(--blue);--t:#fff;--r:-.8deg">
+        <span class="mnum">03</span><span class="memoji"><svg class="i"><use href="#i-send"/></svg></span>
+        <h3>Роздає</h3>
+        <p>Надсилає список задач у Discord (коротко, без змісту) і створює для кожної картку в Trello через API.</p>
+      </article>
+    </div>
+
+    <div class="callout warn reveal" style="margin-top:30px">
+      <span class="callout-ico"><svg class="i"><use href="#i-bulb"/></svg></span>
+      <p><b>Готового коду тут немає — так задумано.</b> На сторінці є все, щоб зрозуміти, як працює агент, де взяти ключі Trello і які запити робити. Сам код ти напишеш разом із ШІ-асистентом.</p>
+    </div>
+  </section>
+
+  <!-- ============ АНАТОМІЯ ЗАДАЧІ ============ -->
+  <section class="section container" id="anatomy">
+    <div class="section-head reveal">
+      <span class="kicker">Анатомія задачі</span>
+      <h2>Чотири поля — і куди кожне йде</h2>
+      <p>Агент збирає кожну задачу з чотирьох полів. Trello отримує все. Discord — тільки три: повідомлення в чаті має бути коротким, а подробиці лежать у картці.</p>
+    </div>
+
+    <div class="anat reveal">
+      <div class="anat-row anat-head">
+        <span>Поле</span><span>Приклад</span>
+        <span class="anat-dest"><svg class="i"><use href="#i-discord"/></svg><em>Discord</em></span>
+        <span class="anat-dest"><svg class="i"><use href="#i-blocks"/></svg><em>Trello</em></span>
+      </div>
+      <div class="anat-row" style="--c:var(--yellow)">
+        <span class="anat-f"><i><svg class="i"><use href="#i-pencil"/></svg></i><b>Заголовок</b><small>title</small></span>
+        <span class="anat-ex">Зробити слайди презентації</span>
+        <span class="anat-ok yes" title="так">✓</span><span class="anat-ok yes" title="так">✓</span>
+      </div>
+      <div class="anat-row" style="--c:var(--lime)">
+        <span class="anat-f"><i><svg class="i"><use href="#i-user"/></svg></i><b>Відповідальний</b><small>assignee</small></span>
+        <span class="anat-ex">Макс</span>
+        <span class="anat-ok yes" title="так">✓</span><span class="anat-ok yes" title="так">✓</span>
+      </div>
+      <div class="anat-row" style="--c:var(--orange)">
+        <span class="anat-f"><i><svg class="i"><use href="#i-clock"/></svg></i><b>Дедлайн</b><small>due</small></span>
+        <span class="anat-ex">«до п’ятниці» → <code>2026-11-06</code></span>
+        <span class="anat-ok yes" title="так">✓</span><span class="anat-ok yes" title="так">✓</span>
+      </div>
+      <div class="anat-row" style="--c:var(--lilac)">
+        <span class="anat-f"><i><svg class="i"><use href="#i-file-text"/></svg></i><b>Короткий зміст</b><small>description</small></span>
+        <span class="anat-ex">Слайди для презентації проєкту. Тексти бере в Дані.</span>
+        <span class="anat-ok no" title="ні">✕</span><span class="anat-ok yes" title="так">✓</span>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:22px">
+      <div class="callout info reveal">
+        <span class="callout-ico"><svg class="i"><use href="#i-clock"/></svg></span>
+        <p><b>Дедлайн — це дата, а не слова.</b> У follow-up пишуть «до п’ятниці», а Trello чекає точну дату. Модель не знає, який сьогодні день, поки ти їй не скажеш.</p>
+      </div>
+      <div class="callout tip reveal" style="--i:1">
+        <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
+        <p><b>Не вигадуй.</b> Якщо у follow-up немає відповідального чи дедлайну, агент має чесно написати «не визначено», а не підставити першого-ліпшого.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ЯК ЦЕ ПРАЦЮЄ ============ -->
+  <section class="section container" id="how">
+    <div class="section-head reveal">
+      <span class="kicker">Логіка агента</span>
+      <h2>Шлях від follow-up до картки</h2>
+      <p>П’ять етапів. Натисни на будь-який, щоб дізнатися, що там відбувається і які слова гуглити.</p>
+    </div>
+
+    <div class="flow reveal" id="flow">
+      <div class="flow-track" role="tablist" aria-label="Етапи роботи агента">
+        <button class="flow-node" role="tab" data-i="0" style="--c:#ff6fb5"><span class="fn-ico"><svg class="i"><use href="#i-clipboard"/></svg></span><b>Follow-up</b><small>текст із кроку 2</small></button>
+        <span class="flow-link" style="--i:0"></span>
+        <button class="flow-node" role="tab" data-i="1" style="--c:#ffd23f"><span class="fn-ico"><svg class="i"><use href="#i-cpu"/></svg></span><b>Агент</b><small>LLM + промпт</small></button>
+        <span class="flow-link" style="--i:1"></span>
+        <button class="flow-node" role="tab" data-i="2" style="--c:#b4f04b"><span class="fn-ico"><svg class="i"><use href="#i-code"/></svg></span><b>Задачі</b><small>JSON-список</small></button>
+        <span class="flow-link" style="--i:2"></span>
+        <button class="flow-node" role="tab" data-i="3" style="--c:#5865f2"><span class="fn-ico"><svg class="i"><use href="#i-message"/></svg></span><b>Discord</b><small>без змісту</small></button>
+        <span class="flow-link" style="--i:3"></span>
+        <button class="flow-node" role="tab" data-i="4" style="--c:#3d6bff"><span class="fn-ico"><svg class="i"><use href="#i-blocks"/></svg></span><b>Trello</b><small>REST API</small></button>
+      </div>
+
+      <div class="flow-details">
+        <div class="flow-detail" data-for="0">
+          <h3><svg class="i"><use href="#i-clipboard"/></svg> Агент отримує follow-up</h3>
+          <p>Найпростіше — продовжити код бота із Задачі 2: щойно follow-up готовий, передай його текст агенту. Інші варіанти — дивись нижче, у блоці «Звідки агент бере follow-up».</p>
+          <div class="chip-row"><span class="chip">Pipeline</span><span class="chip">Message content</span><span class="chip">Slash command</span></div>
+        </div>
+        <div class="flow-detail" data-for="1" hidden>
+          <h3><svg class="i"><use href="#i-cpu"/></svg> Мовна модель шукає задачі</h3>
+          <p>Follow-up + твоя інструкція (промпт) йдуть у мовну модель. У промпті поясни, що таке задача, які поля потрібні, <b>яка сьогодні дата</b> і хто є в команді. Попроси не вигадувати того, чого немає в тексті.</p>
+          <div class="chip-row"><span class="chip">System prompt</span><span class="chip">Few-shot</span><span class="chip">Temperature</span></div>
+        </div>
+        <div class="flow-detail" data-for="2" hidden>
+          <h3><svg class="i"><use href="#i-code"/></svg> Відповідь — структурований список</h3>
+          <p>Звичайний текст код не розбере. Попроси модель відповісти у форматі <b>JSON</b>: список задач, у кожної — заголовок, відповідальний, дедлайн і зміст. Багато API вміють «Structured output»: ти даєш схему, а модель гарантовано відповідає за нею. Перевір відповідь у коді, перш ніж іти далі.</p>
+          <div class="chip-row"><span class="chip">JSON</span><span class="chip">Structured output</span><span class="chip">JSON Schema</span><span class="chip">Валідація</span></div>
+        </div>
+        <div class="flow-detail" data-for="3" hidden>
+          <h3><svg class="i"><use href="#i-message"/></svg> Короткий список у Discord</h3>
+          <p>Бот публікує в канал задачі: заголовок, відповідальний і дедлайн. <b>Без змісту</b> — його читатимуть у Trello. Щоб людина отримала сповіщення, потрібна справжня згадка — а для неї треба знати Discord ID учасника.</p>
+          <div class="chip-row"><span class="chip">Embed</span><span class="chip">Mentions</span><span class="chip">User ID</span></div>
+        </div>
+        <div class="flow-detail" data-for="4" hidden>
+          <h3><svg class="i"><use href="#i-blocks"/></svg> Картки в Trello через API</h3>
+          <p>Для кожної задачі — один HTTP-запит, який створює картку у потрібному списку дошки: назва, опис, дата і учасник. Trello пізнає твій код за <b>API-ключем і токеном</b>.</p>
+          <div class="chip-row"><span class="chip">REST API</span><span class="chip">HTTP POST</span><span class="chip">idList</span><span class="chip">idMembers</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Симуляція ===== -->
+    <div class="sim-intro reveal">
+      <h3><svg class="i"><use href="#i-clapper"/></svg> Симуляція: один follow-up — три задачі</h3>
+      <p class="muted">Так працюватиме твій агент. Можна ставити на паузу та гортати кроки.</p>
+    </div>
+
+    <div class="sim t3-sim reveal" id="sim3" data-no-swipe>
+      <div class="sim-titlebar"><i></i><i></i><i></i><span>task-agent.exe</span><em>● LIVE</em></div>
+      <div class="sim-bar">
+        <div class="sim-cap" aria-live="polite">
+          <span class="sim-count"><b id="s3Num">1</b><span>/5</span></span>
+          <div>
+            <h4 id="s3Title">Follow-up прийшов</h4>
+            <p id="s3Text">Бот із Задачі 2 щойно надіслав підсумок зустрічі.</p>
+          </div>
+        </div>
+        <div class="sim-ctrl">
+          <button class="icon-btn" type="button" data-sim="prev" aria-label="Попередній крок"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button class="icon-btn big" type="button" data-sim="toggle" aria-label="Пауза"><svg class="i-pause" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></svg><svg class="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button>
+          <button class="icon-btn" type="button" data-sim="next" aria-label="Наступний крок"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="sim-progress" id="s3Progress"></div>
+
+      <div class="sim-stage t3-stage-sim" id="s3Stage">
+        <!-- Колонка 1: follow-up -->
+        <section class="sim-col col-fu">
+          <header class="col-head">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/></svg>
+            <span>Текстовий канал</span><b>follow-up</b>
+          </header>
+          <div class="dc-empty t3-empty"><span><svg class="i"><use href="#i-moon"/></svg></span>Чекаємо, поки закінчиться зустріч…</div>
+          <div class="dc-msg t3-fu">
+            <div class="dc-ava"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="4" fill="currentColor"/><circle cx="9.5" cy="13" r="1.6" fill="#5865f2"/><circle cx="14.5" cy="13" r="1.6" fill="#5865f2"/><path d="M12 7V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="dc-body">
+              <div class="dc-meta"><b>FollowUp</b><em>БОТ</em><time>пн, 02.11 о 18:42</time></div>
+              <div class="dc-embed">
+                <h5><svg class="i"><use href="#i-clipboard"/></svg> Підсумок: командна зустріч</h5>
+                <div class="e-field"><b>Коротко</b><p>Розподілили роботу над презентацією проєкту до п’ятниці.</p></div>
+                <div class="e-field"><b><svg class="i"><use href="#i-check"/></svg> Рішення</b><p>Наступна зустріч — четвер, 18:00.</p></div>
+                <div class="e-field"><b><svg class="i"><use href="#i-pin"/></svg> Хто що робить</b>
+                  <ul>
+                    <li><mark class="hl" style="--c:var(--pink)"><span class="mention">@Макс</span> слайди презентації до пт, тексти бере в Дані</mark></li>
+                    <li><mark class="hl" style="--c:var(--cyan)"><span class="mention">@Даня</span> тексти для слайдів до ср, скинути Максу</mark></li>
+                    <li><mark class="hl" style="--c:var(--yellow)"><span class="mention">@Оля</span> демо бота і репетиція виступу до зустрічі в чт</mark></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Колонка 2: агент -->
+        <section class="sim-col col-agent">
+          <header class="col-head">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+            <span>Всередині агента</span>
+          </header>
+          <div class="node" data-node="llm" style="--c:#ffd23f">
+            <div class="node-top"><span class="node-ico"><svg class="i"><use href="#i-cpu"/></svg></span><div><b>ШІ шукає задачі</b><small>LLM · текст → задачі</small></div><span class="node-state"></span></div>
+            <div class="node-body">
+              <div class="llm-box">
+                <div class="llm-orb"><i></i><i></i><i></i><span>LLM</span></div>
+                <div class="llm-side"><div class="llm-prompt" id="s3Prompt"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="node" data-node="json" style="--c:#b4f04b">
+            <div class="node-top"><span class="node-ico"><svg class="i"><use href="#i-code"/></svg></span><div><b>Список задач</b><small>JSON · 4 поля</small></div><span class="node-state"></span></div>
+            <div class="node-body"><div class="tcards" id="s3Cards"></div></div>
+          </div>
+          <div class="node" data-node="send" style="--c:#4fd8e8">
+            <div class="node-top"><span class="node-ico"><svg class="i"><use href="#i-send"/></svg></span><div><b>Відправка</b><small>Discord + Trello API</small></div><span class="node-state"></span></div>
+            <div class="node-body"><div class="send-targets"><span># задачі</span><span>POST /1/cards ×3</span></div></div>
+          </div>
+        </section>
+
+        <!-- Колонка 3: результат -->
+        <section class="sim-col col-res">
+          <div class="res-dc">
+            <header class="col-head">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/></svg>
+              <span>Discord</span><b>задачі</b>
+            </header>
+            <div class="res-empty">Тут з’являться задачі…</div>
+            <div class="res-msg" id="s3Dc"></div>
+          </div>
+          <div class="res-trello">
+            <header class="col-head">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 7v8M12 7v5M17 7v10"/></svg>
+              <span>Trello</span><b>Хакатон</b>
+            </header>
+            <div class="tr-list">
+              <small>Треба зробити</small>
+              <div class="tr-cards" id="s3Trello"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="sim-fx" id="s3Fx" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- ===== Звідки follow-up ===== -->
+    <div class="sim-intro reveal">
+      <h3><svg class="i"><use href="#i-plug"/></svg> Звідки агент бере follow-up</h3>
+      <p class="muted">Обери один варіант. Почни з першого — він найпростіший.</p>
+    </div>
+    <div class="grid grid-3" data-stagger>
+      <article class="card lift reveal src-card" style="--c:var(--lime)">
+        <span class="chip green">радимо</span>
+        <div class="card-ico"><svg class="i"><use href="#i-refresh"/></svg></div>
+        <h3>Одним ланцюжком</h3>
+        <p>Той самий бот: після <code>/stop</code> зробив follow-up — одразу передав його текст агенту. Жодного копіювання, все в одній програмі.</p>
+      </article>
+      <article class="card lift reveal src-card" style="--c:var(--cyan)">
+        <span class="chip cyan">зручно</span>
+        <div class="card-ico"><svg class="i"><use href="#i-slash"/></svg></div>
+        <h3>Команда <code>/tasks</code></h3>
+        <p>Бот бере останній follow-up зі збережених (файл чи база) або з каналу і запускає агента. Зручно для тестів: не треба щоразу проводити зустріч.</p>
+      </article>
+      <article class="card lift reveal src-card" style="--c:var(--pink)">
+        <span class="chip pink">бонус</span>
+        <div class="card-ico"><svg class="i"><use href="#i-message"/></svg></div>
+        <h3>Меню повідомлення</h3>
+        <p>Правий клік на follow-up → <b>Застосунки → Створити задачі</b>. Це «context menu command»: бот отримує текст саме цього повідомлення.</p>
+      </article>
+    </div>
+    <div class="callout tip reveal" style="margin-top:22px">
+      <span class="callout-ico"><svg class="i"><use href="#i-bulb"/></svg></span>
+      <p><b>Задача 2 ще не готова?</b> Не чекай. Збережи приклад follow-up у текстовий файл і тестуй агента на ньому. Потім просто з’єднаєш дві частини.</p>
+    </div>
+  </section>
+
+  <!-- ============ TRELLO API ============ -->
+  <section class="section container" id="trello">
+    <div class="section-head reveal">
+      <span class="kicker">Trello API</span>
+      <h2>Як підключитися до Trello</h2>
+      <p>Trello — це дошка з колонками й картками. Твій код керує нею через REST API: надсилає HTTP-запити й отримує відповіді в JSON. Спершу розберімося, з чого складається дошка.</p>
+    </div>
+
+    <div class="tr-anat reveal">
+      <div class="tr-anat-board">
+        <span class="tr-tag" style="--c:var(--yellow)">Board · дошка</span>
+        <div class="tr-anat-lists">
+          <div class="tr-anat-list"><span class="tr-tag" style="--c:var(--pink)">List · список</span><i class="tr-anat-card"><span class="tr-tag" style="--c:var(--lime)">Card · картка</span></i><i class="tr-anat-card"></i></div>
+          <div class="tr-anat-list"><span class="tr-tag" style="--c:var(--pink)">List</span><i class="tr-anat-card"></i></div>
+          <div class="tr-anat-list"><span class="tr-tag" style="--c:var(--pink)">List</span></div>
+        </div>
+      </div>
+      <ul class="tr-anat-text">
+        <li><b>Дошка</b> — проєкт, наприклад «Хакатон». Має свій <code>id</code> і учасників (members).</li>
+        <li><b>Список</b> — колонка: «Треба зробити», «В роботі», «Готово». Картку створюють саме в списку, тому потрібен його <code>id</code>.</li>
+        <li><b>Картка</b> — одна задача: назва, опис, дата (due) і учасники.</li>
+      </ul>
+    </div>
+
+    <h3 class="t3-sub reveal">Ключ і токен — крок за кроком</h3>
+    <ol class="psteps" id="psteps">
+      <li class="pstep reveal">
+        <span class="pstep-num">1</span>
+        <div class="pstep-text">
+          <h3>Акаунт і тестова дошка</h3>
+          <p>Зареєструйся на <a class="link" href="https://trello.com" target="_blank" rel="noopener">trello.com</a> (безкоштовно). Створи дошку, наприклад <b>Хакатон</b>, зі списками «Треба зробити», «В роботі», «Готово». Запроси на дошку товаришів по команді.</p>
+        </div>
+        <div class="mock mock-tr mock-board">
+          <div class="mock-row"><b>Хакатон</b><span class="mock-btn">Поділитися</span></div>
+          <div class="mb-lists"><span>Треба зробити<i></i><i></i></span><span>В роботі<i></i></span><span>Готово</span></div>
+        </div>
+      </li>
+
+      <li class="pstep reveal">
+        <span class="pstep-num">2</span>
+        <div class="pstep-text">
+          <h3>Створи інтеграцію (Power-Up)</h3>
+          <p>Відкрий <a class="link" href="https://trello.com/power-ups/admin" target="_blank" rel="noopener">trello.com/power-ups/admin</a> і натисни <b>New</b>. Назва — наприклад, <b>Task Agent</b>, обери свій робочий простір (Workspace), заповни email і створи.</p>
+        </div>
+        <div class="mock mock-tr mock-modal">
+          <b>New Power-Up or Integration</b>
+          <label>NAME</label>
+          <div class="mock-input"><span class="type-css" style="--n:10">Task Agent</span></div>
+          <label>WORKSPACE</label>
+          <div class="mock-input"><span>Моя команда ▾</span></div>
+          <span class="mock-btn">Create</span>
+        </div>
+      </li>
+
+      <li class="pstep reveal">
+        <span class="pstep-num">3</span>
+        <div class="pstep-text">
+          <h3>API key → Generate</h3>
+          <p>У налаштуваннях інтеграції відкрий вкладку <b>API key</b> і натисни <b>Generate a new API key</b>. Скопіюй <b>API key</b>. Це «ім’я» твого застосунку. (Secret поруч для цієї задачі не потрібен.)</p>
+        </div>
+        <div class="mock mock-tr mock-token">
+          <div class="mock-side"><span>Basic information</span><span class="on">API key</span><span>Capabilities</span></div>
+          <div class="mock-main">
+            <label>API KEY</label>
+            <div class="mock-input token"><span>3f9a1c••••••••••••••••••</span></div>
+            <div class="mock-row"><span class="mock-btn ghost">Regenerate</span><span class="mock-btn">Copy</span></div>
+            <span class="mock-toast">Скопійовано ✓</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="pstep reveal">
+        <span class="pstep-num">4</span>
+        <div class="pstep-text">
+          <h3>Токен → Allow</h3>
+          <p>Праворуч від ключа є посилання <b>Token</b>. Воно відкриває сторінку дозволу: Trello питає, чи можна застосунку читати й змінювати твої дошки. Натисни <b>Allow</b> і скопіюй токен — це «пароль», з яким код діє від твого імені.</p>
+        </div>
+        <div class="mock mock-tr mock-allow">
+          <b>Task Agent</b>
+          <p>хоче отримати доступ до твого акаунта:</p>
+          <div class="checks">
+            <span class="ck" style="--i:0">читати дошки</span><span class="ck" style="--i:1">створювати картки</span>
+          </div>
+          <div class="mock-row"><span class="mock-btn ghost">Deny</span><span class="mock-btn pulse">Allow</span></div>
+        </div>
+      </li>
+
+      <li class="pstep reveal">
+        <span class="pstep-num">5</span>
+        <div class="pstep-text">
+          <h3>Усе в <code>.env</code></h3>
+          <p>Додай ключ і токен до того самого <code>.env</code>, що й у Задачі 2. Файл <code>.env</code> має бути в <code>.gitignore</code>.</p>
+          <div class="callout danger" style="margin-top:14px">
+            <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
+            <p><b>Токен Trello = доступ до всіх твоїх дошок.</b> Не публікуй його і не вставляй у чат із ШІ. Засвітився — відклич його в налаштуваннях акаунта Trello (розділ застосунків) і створи новий.</p>
+          </div>
+        </div>
+        <div class="mock mock-files">
+          <div class="file-tree">
+            <span><svg class="i"><use href="#i-folder"/></svg> my-meeting-bot</span>
+            <span class="f-env"><svg class="i"><use href="#i-lock"/></svg> .env</span>
+            <span><svg class="i"><use href="#i-file"/></svg> .gitignore</span>
+            <span><svg class="i"><use href="#i-file"/></svg> agent.py <small>або</small> agent.js</span>
+          </div>
+          <div class="file-code">
+            <div><small># .env</small></div>
+            <div><span class="k">DISCORD_TOKEN</span>=…</div>
+            <div><span class="k">AI_API_KEY</span>=…</div>
+            <div><span class="k">TRELLO_KEY</span>=…</div>
+            <div><span class="k">TRELLO_TOKEN</span>=…</div>
+            <div><span class="k">TRELLO_LIST_ID</span>=…</div>
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <h3 class="t3-sub reveal">Запити, які знадобляться</h3>
+    <p class="muted reveal" style="max-width:760px">Усі запити йдуть на <code>https://api.trello.com/1/…</code>, а ключ і токен додаються як параметри <code>key</code> і <code>token</code>. Перші три — щоб дізнатися <code>id</code>, четвертий — щоб створити картку.</p>
+    <div class="endpoints" data-stagger>
+      <div class="ep reveal"><span class="ep-m get">GET</span><code>/members/me/boards</code><p>Список твоїх дошок — знайди <code>id</code> потрібної.</p></div>
+      <div class="ep reveal"><span class="ep-m get">GET</span><code>/boards/{id}/lists</code><p>Списки дошки — знайди <code>id</code> списку «Треба зробити».</p></div>
+      <div class="ep reveal"><span class="ep-m get">GET</span><code>/boards/{id}/members</code><p>Учасники дошки та їхні <code>id</code> — щоб призначити відповідального.</p></div>
+      <div class="ep reveal"><span class="ep-m post">POST</span><code>/cards</code><p>Нова картка. Параметри: <code>idList</code>, <code>name</code>, <code>desc</code>, <code>due</code>, <code>idMembers</code>.</p></div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:22px;align-items:start">
+      <div class="terminal reveal">
+        <div class="terminal-bar"><i></i><i></i><i></i>перевірка ключа і токена</div>
+<pre><span class="c"># підстав свої значення; у відповідь має прийти JSON зі списком дошок</span>
+<span class="p">$ </span>curl "https://api.trello.com/1/members/me/boards?fields=name&amp;key=КЛЮЧ&amp;token=ТОКЕН"</pre>
+      </div>
+      <div class="callout info reveal" style="--i:1">
+        <span class="callout-ico"><svg class="i"><use href="#i-info"/></svg></span>
+        <p><b>Документація.</b> Повний опис усіх запитів — на <a class="link" href="https://developer.atlassian.com/cloud/trello/rest/" target="_blank" rel="noopener">developer.atlassian.com/cloud/trello</a>. Там же ліміти: приблизно 100 запитів за 10 секунд на один токен — для задач після зустрічі цього з головою.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DISCORD ============ -->
+  <section class="section container" id="discord">
+    <div class="section-head reveal">
+      <span class="kicker">Discord</span>
+      <h2>Повідомлення з задачами</h2>
+      <p>Бота й токен ти вже маєш із <a class="link" href="task-2.html#token">Задачі 2</a>. Новий тут лише формат: коротке повідомлення в канал — тільки хто, що і до коли.</p>
+    </div>
+
+    <div class="dc-split">
+      <div class="dc-demo reveal">
+        <div class="dc-msg">
+          <div class="dc-ava"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="4" fill="currentColor"/><circle cx="9.5" cy="13" r="1.6" fill="#5865f2"/><circle cx="14.5" cy="13" r="1.6" fill="#5865f2"/><path d="M12 7V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="dc-body">
+            <div class="dc-meta"><b>FollowUp</b><em>БОТ</em><time>пн, 02.11 о 18:43</time></div>
+            <div class="dc-embed t3-embed">
+              <h5><svg class="i"><use href="#i-pin"/></svg> Задачі після зустрічі · 3</h5>
+              <div class="t3-task"><b>Зробити слайди презентації</b><span><span class="mention">@Макс</span> · до пт, 06.11</span></div>
+              <div class="t3-task"><b>Написати тексти для слайдів</b><span><span class="mention">@Даня</span> · до ср, 04.11</span></div>
+              <div class="t3-task"><b>Підготувати демо бота</b><span><span class="mention">@Оля</span> · до чт, 05.11</span></div>
+            </div>
+          </div>
+        </div>
+        <span class="sticker dc-stk" style="--c:var(--lime);--r:-5deg"><svg class="i"><use href="#i-check"/></svg> без змісту</span>
+      </div>
+
+      <div class="reveal" style="--i:1">
+        <h3 class="t3-sub" style="margin-top:0">Хто є хто</h3>
+        <p class="muted">Модель знає тільки імена з тексту. А для згадки в Discord потрібен ID користувача, для учасника картки в Trello — ID учасника дошки. Тож у коді знадобиться маленька «таблиця команди».</p>
+        <div class="team-map">
+          <div class="tm-row tm-head"><span>Ім’я</span><span>Discord ID</span><span>Trello ID</span></div>
+          <div class="tm-row"><span><i style="--c:var(--pink)">М</i> Макс</span><code>4021…</code><code>65af…</code></div>
+          <div class="tm-row"><span><i style="--c:var(--cyan)">Д</i> Даня</span><code>3877…</code><code>65b0…</code></div>
+          <div class="tm-row"><span><i style="--c:var(--yellow)">О</i> Оля</span><code>5190…</code><code>65b3…</code></div>
+        </div>
+        <div class="callout tip" style="margin-top:16px">
+          <span class="callout-ico"><svg class="i"><use href="#i-bulb"/></svg></span>
+          <p><b>Де взяти ID.</b> Discord: увімкни режим розробника і клікни правою кнопкою на людину → «Копіювати ID». Trello: запит <code>GET /boards/{id}/members</code>. Справжня згадка в повідомленні виглядає як <code>&lt;@ID&gt;</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ МОВИ ============ -->
+  <section class="section container" id="langs">
+    <div class="section-head reveal">
+      <span class="kicker">Обери зброю</span>
+      <h2>На якій мові писати</h2>
+      <p>Пиши тією ж мовою, що й Задачу 2, — тоді агента легко «приєднати» до бота. Для Trello окрема бібліотека не потрібна: це звичайні HTTP-запити.</p>
+    </div>
+
+    <div class="tools-row reveal" data-stagger>
+      <div class="tool"><span><svg class="i"><use href="#i-code"/></svg></span><b>VS Code / Cursor</b><small>редактор коду</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-blocks"/></svg></span><b>Trello</b><small>+ тестова дошка</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-terminal"/></svg></span><b>curl / Postman</b><small>перевірка запитів</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-message"/></svg></span><b>Discord</b><small>бот із Задачі 2</small></div>
+      <div class="tool"><span><svg class="i"><use href="#i-bot"/></svg></span><b>Claude Free</b><small>ШІ-напарник для коду</small></div>
+    </div>
+
+    <div class="tabs-ui lang-tabs reveal">
+      <div class="tab-list" role="tablist" aria-label="Мова програмування">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="lang-py" id="tab-py"><span class="lang-dot" style="--c:#3b82f6"></span>Python</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="lang-js" id="tab-js"><span class="lang-dot" style="--c:#facc15"></span>JavaScript</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="lang-other" id="tab-other"><span class="lang-dot" style="--c:#a78bfa"></span>Інші</button>
+      </div>
+
+      <!-- Python -->
+      <div class="tab-panel lang-panel" role="tabpanel" id="lang-py" aria-labelledby="tab-py">
+        <div class="lang-grid">
+          <div>
+            <div class="lang-title"><h3>Python</h3><div class="meter" style="--v:2" title="Складність 2 з 5"><i></i><i></i><i></i><i></i><i></i></div><span class="chip green">найпростіший старт</span></div>
+            <h4>Що можна зробити</h4>
+            <ul class="checklist">
+              <li>HTTP-запит до Trello — кілька рядків з бібліотекою <b>requests</b>.</li>
+              <li><b>pydantic</b> перевіряє JSON від моделі: усі поля на місці, дата справжня.</li>
+              <li>SDK Gemini вміє приймати схему відповіді (structured output).</li>
+            </ul>
+            <h4>Бібліотеки</h4>
+            <dl class="libs">
+              <dt>py-cord <small>або</small> discord.py</dt><dd>бот із Задачі 2</dd>
+              <dt>requests <small>або</small> httpx</dt><dd>запити до Trello API</dd>
+              <dt>google-genai · groq · openai · anthropic</dt><dd>SDK для ШІ</dd>
+              <dt>pydantic</dt><dd>опис і перевірка структури задачі</dd>
+              <dt>python-dotenv</dt><dd>читає ключі з <code>.env</code></dd>
+            </dl>
+          </div>
+          <div>
+            <div class="terminal">
+              <div class="terminal-bar"><i></i><i></i><i></i>встановлення</div>
+<pre><span class="c"># у тій самій .venv, що й для Задачі 2</span>
+<span class="p">$ </span>pip install requests pydantic python-dotenv google-genai</pre>
+            </div>
+            <div class="callout info" style="margin-top:14px">
+              <span class="callout-ico"><svg class="i"><use href="#i-info"/></svg></span>
+              <p><b>Дати.</b> Модуль <code>datetime</code> вбудований. Передай моделі сьогоднішню дату, а дедлайн, який вона поверне, перевір у коді, перш ніж надсилати в Trello.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JavaScript -->
+      <div class="tab-panel lang-panel" role="tabpanel" id="lang-js" aria-labelledby="tab-js" hidden>
+        <div class="lang-grid">
+          <div>
+            <div class="lang-title"><h3>JavaScript · Node.js</h3><div class="meter" style="--v:2" title="Складність 2 з 5"><i></i><i></i><i></i><i></i><i></i></div><span class="chip cyan">fetch уже вбудований</span></div>
+            <h4>Що можна зробити</h4>
+            <ul class="checklist">
+              <li>У Node.js 18+ є вбудований <b>fetch</b> — для Trello нічого ставити не треба.</li>
+              <li><b>zod</b> описує схему задачі й перевіряє, що повернула модель.</li>
+              <li>JSON — рідний формат JavaScript: відповідь моделі розбирається одним рядком.</li>
+            </ul>
+            <h4>Бібліотеки</h4>
+            <dl class="libs">
+              <dt>discord.js</dt><dd>бот із Задачі 2</dd>
+              <dt>fetch (вбудований)</dt><dd>запити до Trello API</dd>
+              <dt>@google/genai · groq-sdk · openai · @anthropic-ai/sdk</dt><dd>SDK для ШІ</dd>
+              <dt>zod</dt><dd>схема і перевірка задачі</dd>
+              <dt>dotenv</dt><dd>читає ключі з <code>.env</code></dd>
+            </dl>
+          </div>
+          <div>
+            <div class="terminal">
+              <div class="terminal-bar"><i></i><i></i><i></i>встановлення</div>
+<pre><span class="c"># у папці проєкту Задачі 2</span>
+<span class="p">$ </span>npm install zod dotenv @google/genai</pre>
+            </div>
+            <div class="terminal" style="margin-top:12px">
+              <div class="terminal-bar"><i></i><i></i><i></i>перевірка</div>
+<pre><span class="c"># для вбудованого fetch потрібна версія 18 або новіша</span>
+<span class="p">$ </span>node -v</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Інші -->
+      <div class="tab-panel lang-panel" role="tabpanel" id="lang-other" aria-labelledby="tab-other" hidden>
+        <div class="lang-title"><h3>Інші мови</h3><div class="meter" style="--v:4" title="Складність 4 з 5"><i></i><i></i><i></i><i></i><i></i></div><span class="chip amber">якщо Задача 2 вже на них</span></div>
+        <p class="muted">Trello API — це звичайний HTTP + JSON, тож підійде будь-яка мова. Головне — щоб бот із Задачі 2 був тією ж мовою.</p>
+        <div class="grid grid-3" style="margin-top:18px">
+          <div class="card"><div class="card-ico" style="--c:#f97316">Jv</div><h3>Java</h3><p><b>JDA</b> для бота, <b>java.net.http.HttpClient</b> для Trello, <b>Jackson</b> чи <b>Gson</b> для JSON.</p></div>
+          <div class="card"><div class="card-ico" style="--c:#a78bfa">C#</div><h3>C# · .NET 8+</h3><p><b>Discord.Net</b> чи <b>NetCord</b>, вбудований <b>HttpClient</b> і <b>System.Text.Json</b>.</p></div>
+          <div class="card"><div class="card-ico" style="--c:#22d3ee">Go</div><h3>Go</h3><p><b>discordgo</b>, стандартні <b>net/http</b> і <b>encoding/json</b> — нічого зайвого.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout info reveal" style="margin-top:24px">
+      <span class="callout-ico"><svg class="i"><use href="#i-cpu"/></svg></span>
+      <p><b>Ключ ШІ — той самий.</b> Безкоштовний ключ Gemini із <a class="link" href="task-2.html#ai-keys">Задачі 2</a> підходить і тут. Шукай у документації свого сервісу розділ <b>Structured output</b> або <b>JSON mode</b>.</p>
+    </div>
+  </section>
+
+  <!-- ============ КВЕСТ ============ -->
+  <section class="section container" id="quest">
+    <div class="section-head reveal">
+      <span class="kicker">Квест</span>
+      <h2>Що треба зробити</h2>
+      <p>Проходь рівні по черзі. Відмічай виконане — прогрес збережеться в цьому браузері.</p>
+    </div>
+
+    <div class="xp reveal" id="xp">
+      <div class="xp-rank"><span class="xp-emoji" id="xpEmoji"><svg class="i"><use href="#i-eye"/></svg></span><div><small>Твій ранг</small><b id="xpRank">Глядач</b></div></div>
+      <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
+      <div class="xp-num"><b id="xpNum">0</b> / <span id="xpMax">250</span> XP</div>
+    </div>
+
+    <div class="levels" id="levels">
+      <div class="level reveal" style="--c:#22c55e">
+        <div class="level-head"><span class="level-badge">1</span><div><h3>Новачок</h3><small>мінімальна робоча версія</small></div><span class="level-pct">0%</span></div>
+        <ul class="quests">
+          <li><label><input type="checkbox" data-xp="10" data-id="l1-1"><span class="q-box"></span><span class="q-text">Є ключ і токен Trello, перевірочний запит повертає твої дошки</span><span class="q-xp">+10</span></label></li>
+          <li><label><input type="checkbox" data-xp="15" data-id="l1-2"><span class="q-box"></span><span class="q-text">Агент отримує текст follow-up із Задачі 2 (або з тестового файлу)</span><span class="q-xp">+15</span></label></li>
+          <li><label><input type="checkbox" data-xp="25" data-id="l1-3"><span class="q-box"></span><span class="q-text">ШІ повертає список задач у JSON: заголовок, відповідальний, дедлайн, зміст</span><span class="q-xp">+25</span></label></li>
+          <li><label><input type="checkbox" data-xp="20" data-id="l1-4"><span class="q-box"></span><span class="q-text">Бот надсилає задачі в Discord — без короткого змісту</span><span class="q-xp">+20</span></label></li>
+          <li><label><input type="checkbox" data-xp="25" data-id="l1-5"><span class="q-box"></span><span class="q-text">Для кожної задачі в Trello створюється картка з описом і дедлайном</span><span class="q-xp">+25</span></label></li>
+        </ul>
+      </div>
+      <div class="level reveal" style="--c:#22d3ee;--i:1">
+        <div class="level-head"><span class="level-badge">2</span><div><h3>Профі</h3><small>точно і зручно</small></div><span class="level-pct">0%</span></div>
+        <ul class="quests">
+          <li><label><input type="checkbox" data-xp="15" data-id="l2-1"><span class="q-box"></span><span class="q-text">Дедлайни — справжні дати: «до п’ятниці» перетворюється на правильне число</span><span class="q-xp">+15</span></label></li>
+          <li><label><input type="checkbox" data-xp="20" data-id="l2-2"><span class="q-box"></span><span class="q-text">У Discord — справжня @згадка, у Trello відповідальний доданий до картки</span><span class="q-xp">+20</span></label></li>
+          <li><label><input type="checkbox" data-xp="15" data-id="l2-3"><span class="q-box"></span><span class="q-text">Немає відповідального чи дедлайну — агент пише «не визначено», а не вигадує</span><span class="q-xp">+15</span></label></li>
+          <li><label><input type="checkbox" data-xp="10" data-id="l2-4"><span class="q-box"></span><span class="q-text">У повідомленні Discord є посилання на кожну картку Trello</span><span class="q-xp">+10</span></label></li>
+        </ul>
+      </div>
+      <div class="level reveal" style="--c:#f472b6;--i:2">
+        <div class="level-head"><span class="level-badge">3</span><div><h3>Бос</h3><small>для найсміливіших</small></div><span class="level-pct">0%</span></div>
+        <ul class="quests">
+          <li><label><input type="checkbox" data-xp="25" data-id="l3-1"><span class="q-box"></span><span class="q-text">Кнопки «Підтвердити / Скасувати» в Discord перед створенням карток</span><span class="q-xp">+25</span></label></li>
+          <li><label><input type="checkbox" data-xp="30" data-id="l3-2"><span class="q-box"></span><span class="q-text">Справжній агент: модель сама викликає інструменти «створити картку» і «надіслати повідомлення» (function calling)</span><span class="q-xp">+30</span></label></li>
+          <li><label><input type="checkbox" data-xp="20" data-id="l3-3"><span class="q-box"></span><span class="q-text"><code>/mytasks</code> — бот показує твої відкриті картки з Trello</span><span class="q-xp">+20</span></label></li>
+          <li><label><input type="checkbox" data-xp="20" data-id="l3-4"><span class="q-box"></span><span class="q-text">Нагадування в DM за день до дедлайну</span><span class="q-xp">+20</span></label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:24px" data-stagger>
+      <div class="card reveal" style="--c:#fbbf24"><div class="card-ico"><svg class="i"><use href="#i-video"/></svg></div><h3>Що здати</h3><p>Коротке відео (1–2 хв): follow-up → повідомлення з задачами в Discord → нові картки на дошці Trello.</p></div>
+      <div class="card reveal" style="--c:#8b5cf6"><div class="card-ico"><svg class="i"><use href="#i-github"/></svg></div><h3>Код на GitHub</h3><p>Репозиторій з README: що вміє агент і як його запустити. <b>Без токенів і ключів!</b></p></div>
+      <div class="card reveal" style="--c:#fb7185"><div class="card-ico"><svg class="i"><use href="#i-scale"/></svg></div><h3>Людина вирішує</h3><p>ШІ може помилитися з іменем чи датою. Покажи, як команда перевіряє й виправляє задачі, які створив агент.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ ВАЙБКОДИНГ ============ -->
+  <section class="section container" id="vibe">
+    <div class="section-head reveal">
+      <span class="kicker">Вайбкодинг</span>
+      <h2>Як працювати з ШІ над цією задачею</h2>
+      <p>Радимо робити задачу разом із <b>Claude</b>. Головний секрет цієї задачі — промпт для агента: що точніше опишеш формат відповіді, то менше доведеться виправляти.</p>
+    </div>
+
+    <div class="prompt-vs reveal">
+      <div class="pv bad">
+        <span class="pv-tag"><svg class="i"><use href="#i-x"/></svg> Так собі</span>
+        <p>«Витягни інгредієнти з рецепта»</p>
+        <small>Модель відповість звичайним текстом, щоразу по-різному. Програма таку відповідь не розбере.</small>
+      </div>
+      <div class="pv-arrow">→</div>
+      <div class="pv good">
+        <span class="pv-tag"><svg class="i"><use href="#i-check"/></svg> Набагато краще</span>
+        <p>«Ось текст рецепта. Поверни тільки JSON: список інгредієнтів, у кожного поля name (текст), amount (число) і unit (г, мл, шт). Якщо кількості в тексті немає — став null, нічого не вигадуй. Приклад: …»</p>
+        <small>Є точний формат, правило для пропусків і приклад. Цей самий прийом спрацює і для задач.</small>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:22px" data-stagger>
+      <div class="card tip-card reveal"><span class="tip-n">01</span><h3>Частини окремо</h3><p>Спершу картка в Trello вручну з коду. Потім JSON від моделі. Потім з’єднуй. Так одразу видно, яка частина зламалась.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">02</span><h3>Тестовий follow-up</h3><p>Збережи 2–3 різні follow-up у файли, зокрема «складний»: без дедлайну, з двома відповідальними. Ганяй агента на них.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">03</span><h3>Дата в промпті</h3><p>Модель не знає, яке сьогодні число. Передавай поточну дату в кожному запиті — інакше «до п’ятниці» стане випадковим днем.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">04</span><h3>Не давай ШІ ключі</h3><p>Ніколи не вставляй справжній токен Trello чи Discord у чат з ШІ. Пиши <code>TRELLO_TOKEN</code> замість значення.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">05</span><h3>Читай відповідь API</h3><p>Trello завжди пояснює помилку: код (400, 401, 404) і текст. Кидай ШІ і запит (без ключів!), і відповідь.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">06</span><h3>Проси пояснити</h3><p>«Поясни цей код рядок за рядком». Тебе спитають, як агент вирішує, що є задачею, — маєш уміти розповісти.</p></div>
+    </div>
+
+    <div class="kw reveal">
+      <h4><svg class="i"><use href="#i-search"/></svg> Слова, які варто гуглити або питати в ШІ</h4>
+      <div class="chip-row">
+        <span class="chip">Trello REST API</span><span class="chip">Trello API key and token</span><span class="chip">Create card Trello API</span><span class="chip">idList / idMembers</span><span class="chip">Structured output JSON</span><span class="chip">JSON Schema</span><span class="chip">Function calling</span><span class="chip">LLM agent tools</span><span class="chip">ISO 8601 date</span><span class="chip">Discord mention user id</span><span class="chip">Discord buttons</span><span class="chip">Context menu command</span><span class="chip">pydantic / zod</span><span class="chip">HTTP status codes</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ СЛОВНИК ============ -->
+  <section class="section container" id="glossary">
+    <div class="section-head reveal">
+      <span class="kicker">Словник</span>
+      <h2>Розумні слова простими словами</h2>
+      <p>Натисни на картку, щоб перевернути.</p>
+    </div>
+    <div class="flips" data-stagger>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-wand"/></svg> Агент</b><small>натисни</small></span><span class="f-back">Програма з ШІ, яка не тільки відповідає, а й діє: створює картки, шле повідомлення.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-plug"/></svg> API</b><small>натисни</small></span><span class="f-back">«Двері» в сервіс для програм: твій код просить — сервіс робить і відповідає.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-key"/></svg> Ключ і токен</b><small>натисни</small></span><span class="f-back">Ключ каже Trello, який це застосунок, токен — від імені якої людини він діє.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-send"/></svg> Endpoint</b><small>натисни</small></span><span class="f-back">Конкретна адреса в API, наприклад <code>/1/cards</code>, куди йде запит.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-zap"/></svg> GET / POST</b><small>натисни</small></span><span class="f-back">GET — «дай мені дані», POST — «створи нове». Два найпопулярніші типи запитів.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-code"/></svg> JSON</b><small>натисни</small></span><span class="f-back">Текстовий формат даних з полями й значеннями. Його розуміють і люди, і програми.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-clipboard"/></svg> Structured output</b><small>натисни</small></span><span class="f-back">Режим, у якому модель відповідає строго за твоєю схемою JSON.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-wrench"/></svg> Function calling</b><small>натисни</small></span><span class="f-back">Модель сама вирішує викликати твою функцію, наприклад «створити картку», і дає їй аргументи.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-blocks"/></svg> Board · List · Card</b><small>натисни</small></span><span class="f-back">Дошка, колонка і картка в Trello. Картка завжди живе в якомусь списку.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-clock"/></svg> ISO 8601</b><small>натисни</small></span><span class="f-back">Стандартний запис дати: <code>2026-11-06</code>. Саме так дату чекає Trello.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-hash"/></svg> ID</b><small>натисни</small></span><span class="f-back">Унікальний номер людини, дошки чи списку. Імена можуть повторюватись, ID — ні.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-signal"/></svg> Rate limit</b><small>натисни</small></span><span class="f-back">Обмеження кількості запитів за час. Перевищив — сервіс відповідає помилкою 429.</span></span></button>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section container" id="faq">
+    <div class="section-head reveal">
+      <span class="kicker">SOS</span>
+      <h2>Якщо щось не працює</h2>
+      <p>Не готові відповіді, а підказки, куди копати.</p>
+    </div>
+    <div class="faq reveal">
+      <details>
+        <summary><svg class="i"><use href="#i-lock"/></svg> Trello відповідає 401 «invalid key» або «unauthorized»</summary>
+        <div class="faq-body">Чи не переплутав ти ключ і токен місцями? Чи немає зайвих пробілів чи лапок у <code>.env</code>? Чи токен створений саме для цього ключа? Перевір тим самим запитом через <code>curl</code> — якщо там працює, проблема в коді.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-search"/></svg> Картка не створюється: 400 або 404</summary>
+        <div class="faq-body">Подивись текст відповіді. 404 часто означає неправильний <code>idList</code> — це id <b>списку</b>, а не дошки. 400 — щось не так із параметрами: перевір назви полів і формат дати.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-code"/></svg> Програма падає, коли розбирає відповідь моделі</summary>
+        <div class="faq-body">Виведи сиру відповідь на екран. Модель могла загорнути JSON у <code>```</code> або дописати пояснення. Допоможе режим structured output / JSON mode і чітка фраза в промпті «відповідай тільки JSON». І завжди перевіряй відповідь перед використанням.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-clock"/></svg> Дедлайн не той день чи навіть не той рік</summary>
+        <div class="faq-body">Чи передаєш ти моделі сьогоднішню дату і день тижня? Чи просиш формат <code>РРРР-ММ-ДД</code>? Зверни увагу на часовий пояс: дата без часу може «з’їхати» на день. Перевір дату в коді, перш ніж надсилати.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-users"/></svg> ШІ призначає задачу людині, якої не було на зустрічі</summary>
+        <div class="faq-body">Дай моделі список учасників і попроси обирати тільки з нього, а якщо відповідального немає — писати «не визначено». Зменш temperature. Перевір у коді, що ім’я є в «таблиці команди».</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-message"/></svg> У Discord видно просто текст «@Макс», сповіщення не приходить</summary>
+        <div class="faq-body">Справжня згадка пишеться через ID користувача, а не через ім’я. Подивись, як твоя бібліотека формує mention. Також перевір налаштування allowed mentions у повідомленні.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ ФІНАЛ ============ -->
+  <section class="section container">
+    <div class="final t3-final reveal">
+      <div class="spin-badge final-badge" style="--sb:130px;--sb-bg:var(--yellow)">
+        <svg viewBox="0 0 100 100"><defs><path id="finalCircle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#finalCircle">почни з однієї картки • почни • </textPath></text></svg>
+        <span><svg class="i"><use href="#i-rocket"/></svg></span>
+      </div>
+      <h2>Готовий? <span class="mark-box" style="--mc:var(--white);--mt:var(--ink);--r:2deg">Погнали!</span></h2>
+      <p>Отримай ключ Trello, створи з коду одну картку — і ти вже на півдорозі. Далі агент навчиться робити це сам.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn-ghost" href="#trello">Почати з Trello <span class="arr">→</span></a>
+        <a class="btn btn-yellow" href="#quest">До квесту</a>
+      </div>
     </div>
   </section>
 
