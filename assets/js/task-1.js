@@ -1126,7 +1126,9 @@ onmessage = async (e) => {
     setEmotion(name) {
       if (name == null) { engine.autoEmotion = true; engine.updateMood(); return; }
       if (!Zrazok.EMOTIONS.includes(name)) { lab.log("warn", `Емоції «${name}» немає. Є: ${EMO_LIST}.`); return; }
-      engine.autoEmotion = false; engine.creature.setEmotion(name); markEffect();
+      engine.autoEmotion = false;
+      engine.creature.temp = null; // постійна емоція одразу перебиває тимчасову
+      engine.creature.setEmotion(name); markEffect();
     },
     fx(name, n) { if (!engine.creature.fx(name, clamp(+n || 3, 1, 12))) lab.log("warn", `Частинок «${name}» немає. Є: ${Zrazok.FX.join(", ")}.`); markEffect(); },
     animate(kind) {
