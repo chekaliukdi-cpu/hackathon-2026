@@ -2,42 +2,576 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <meta name="site-version" content="15">
+  <meta name="site-version" content="16">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Задача 1 — Хакатон 2026</title>
-  <meta name="description" content="Задача 1 хакатону 2026">
+  <title>Задача 1 · ШІ-зразок — Хакатон 2026</title>
+  <meta name="description" content="Виведи власну ШІ-істоту: підключи їй мозок Gemini, напиши характер і навчи нових вмінь кодом у лабораторії — разом із Claude.">
   <meta name="theme-color" content="#fff4e0">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=15">
-  <!-- Свої стилі для цієї сторінки підключай тут, наприклад: <link rel="stylesheet" href="assets/css/task-1.css"> -->
-  <script src="assets/js/main.js?v=15"></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=16">
+  <link rel="stylesheet" href="assets/css/task2.css?v=16">
+  <link rel="stylesheet" href="assets/css/task-1.css?v=16">
+  <script src="assets/js/main.js?v=16"></script>
+  <script src="assets/js/task-1-pet.js?v=16" defer></script>
+  <script src="assets/js/task-1-hints.js?v=16" defer></script>
+  <script src="assets/js/task-1.js?v=16" defer></script>
 </head>
 <body data-page="task-1">
 <site-nav></site-nav>
 
 <main id="main" class="page">
-  <!-- =====================================================================
-       >>> Задача 1 — ПИШІТЬ КОНТЕНТ ТУТ
-       Готові блоки (картки, підказки, термінал, вкладки, FAQ…) з прикладами
-       коду — на сторінці components.html. Просто копіюйте звідти.
-       Опис дизайну + промпт для Claude — assets/css/DESIGN.md
-       Великий приклад повної сторінки — task-2.html.
-       ===================================================================== -->
 
-  <section class="page-hero container">
-    <span class="eyebrow reveal"><span class="dot"></span> Задача 1</span>
-    <h1 class="reveal">Задача 1: <span class="grad-text">скоро тут</span></h1>
-    <p class="lead reveal">Короткий опис задачі: що треба зробити і навіщо. Один-два речення, які зачеплять.</p>
+  <!-- ============ HERO ============ -->
+  <section class="t2-hero container">
+    <div class="t2-hero-copy">
+      <span class="eyebrow reveal"><span class="dot"></span> Задача 01 · ШІ-зразок</span>
+      <h1 class="reveal">Зразок <span class="mark-box" style="--mc:var(--pink);--mt:var(--ink)">втік</span> і живе у твоєму <span class="squiggle">браузері</span></h1>
+      <p class="lead reveal">Цифрова істота з унікальною ДНК, емоціями й настроєм. Тіло вже готове: графіка, анімації, показники. Мозок, характер і вміння даєш ти — ключ Gemini, системний промпт і трохи JavaScript, який пишеш разом із Claude.</p>
+      <div class="btn-row reveal">
+        <a class="btn btn-primary" href="#lab">До лабораторії <span class="arr">→</span></a>
+        <a class="btn btn-yellow" href="#anatomy">Як це працює</a>
+      </div>
+      <ul class="t2-stats reveal">
+        <li style="--c:var(--yellow);--r:-3deg"><b>11</b><span>емоцій на обличчі</span></li>
+        <li style="--c:var(--cyan);--r:2deg"><b>8</b><span>подій, на які він реагує</span></li>
+        <li style="--c:var(--lime);--r:-1.5deg"><b>∞</b><span>вмінь, які допишеш ти</span></li>
+      </ul>
+    </div>
+
+    <div class="t1-hero-stage reveal" aria-hidden="true">
+      <div class="spin-badge t1-badge" style="--sb:104px;--sb-bg:var(--yellow)">
+        <svg viewBox="0 0 100 100"><defs><path id="t1HeroCircle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#t1HeroCircle">втік з лаби • живе тут • </textPath></text></svg>
+        <span><svg class="i"><use href="#i-sparkles"/></svg></span>
+      </div>
+
+      <div class="t1-hero-pet" id="heroPet"></div>
+
+      <span class="sticker st1" style="--c:var(--white);--r:-7deg"><svg class="i"><use href="#i-dna"/></svg> ДНК <span id="heroDna">A7F3-9C2E</span></span>
+      <span class="sticker st2" style="--c:var(--lime);--r:5deg"><svg class="i"><use href="#i-heart"/></svg> емоції</span>
+      <span class="sticker st3" style="--c:var(--lilac);--r:-4deg"><svg class="i"><use href="#i-message"/></svg> характер</span>
+      <span class="sticker st4" style="--c:var(--cyan);--r:6deg"><svg class="i"><use href="#i-code"/></svg> твій код</span>
+    </div>
   </section>
 
-  <section class="section-tight container">
-    <div class="placeholder reveal">
-      <div class="ph-ico"><svg class="i"><use href="#i-blocks"/></svg></div>
-      <h3>Сторінка в розробці</h3>
-      <p>Тут з’явиться опис задачі. Автору: редагуй файл <code>task-1.html</code>, а готові блоки бери з <a class="link" href="components.html">components.html</a>.</p>
+  <div class="marquee-x" aria-hidden="true">
+    <div class="marquee" style="--mq-bg:var(--pink);--mq-r:-2.5deg"><div class="marquee-track"><span>ДНК ✦ емоції ✦ характер ✦ системний промпт ✦ мозок ✦ вміння ✦ вайбкодинг ✦ ДНК ✦ емоції ✦ характер ✦ системний промпт ✦ мозок ✦ вміння ✦ вайбкодинг ✦ </span><span>ДНК ✦ емоції ✦ характер ✦ системний промпт ✦ мозок ✦ вміння ✦ вайбкодинг ✦ ДНК ✦ емоції ✦ характер ✦ системний промпт ✦ мозок ✦ вміння ✦ вайбкодинг ✦ </span></div></div>
+    <div class="marquee reverse" style="--mq-bg:var(--yellow);--mq-r:2deg;--mq-speed:34s"><div class="marquee-track"><span>pet.on("click") ✦ ai.ask() ✦ pet.say() ✦ pet.emote("smug") ✦ memory.set() ✦ localStorage ✦ tick ✦ JSON ✦ pet.on("click") ✦ ai.ask() ✦ pet.say() ✦ pet.emote("smug") ✦ memory.set() ✦ localStorage ✦ tick ✦ JSON ✦ </span><span>pet.on("click") ✦ ai.ask() ✦ pet.say() ✦ pet.emote("smug") ✦ memory.set() ✦ localStorage ✦ tick ✦ JSON ✦ pet.on("click") ✦ ai.ask() ✦ pet.say() ✦ pet.emote("smug") ✦ memory.set() ✦ localStorage ✦ tick ✦ JSON ✦ </span></div></div>
+  </div>
+
+  <!-- ============ ЗМІСТ СТОРІНКИ ============ -->
+  <nav class="toc-bar container" aria-label="Розділи задачі">
+    <div class="toc-inner">
+      <a href="#mission"><svg class="i"><use href="#i-target"/></svg> Суть</a>
+      <a href="#anatomy"><svg class="i"><use href="#i-cog"/></svg> Як влаштований</a>
+      <a href="#prep"><svg class="i"><use href="#i-key"/></svg> Підготовка</a>
+      <a href="#lab"><svg class="i"><use href="#i-code"/></svg> Лабораторія</a>
+      <a href="#quest"><svg class="i"><use href="#i-trophy"/></svg> Квест</a>
+      <a href="#vibe"><svg class="i"><use href="#i-wand"/></svg> Вайбкодинг</a>
+      <a href="#glossary"><svg class="i"><use href="#i-book"/></svg> Словник</a>
+      <a href="#faq"><svg class="i"><use href="#i-lifebuoy"/></svg> Допомога</a>
+    </div>
+  </nav>
+
+  <!-- ============ СУТЬ ЗАДАЧІ ============ -->
+  <section class="section container" id="mission">
+    <div class="section-head reveal">
+      <span class="kicker">Суть задачі</span>
+      <h2>Тіло є. Решта — від тебе</h2>
+      <p>Кожен отримує власний зразок: форма, колір, очі, ріжки й візерунок залежать від ДНК-коду на кшталт <code>A7F3-9C2E</code>. Він дихає, кліпає і має настрій. Але поки що це гарна оболонка — без мозку, характеру й умінь.</p>
+    </div>
+
+    <div class="mission-grid" data-stagger>
+      <article class="mcard reveal" style="--c:var(--yellow);--r:-1.5deg">
+        <span class="mnum">01</span><span class="memoji"><svg class="i"><use href="#i-sparkles"/></svg></span>
+        <h3>Тіло</h3>
+        <p><b>Готове, від нас.</b> Графіка за ДНК, 11 емоцій, анімації, показники (їжа, енергія, настрій, стабільність) і таймер, який їх повільно змінює.</p>
+      </article>
+      <article class="mcard reveal" style="--c:var(--pink);--r:1deg">
+        <span class="mnum">02</span><span class="memoji"><svg class="i"><use href="#i-cpu"/></svg></span>
+        <h3>Мозок</h3>
+        <p><b>Твій ключ і характер.</b> Безкоштовний ключ Gemini дає зразку мову. Системний промпт вирішує, хто він: бурчун, філософ, драматичний актор чи кіт, що вдає з себе вченого.</p>
+      </article>
+      <article class="mcard reveal" style="--c:var(--cyan);--r:-.8deg">
+        <span class="mnum">03</span><span class="memoji"><svg class="i"><use href="#i-code"/></svg></span>
+        <h3>Вміння</h3>
+        <p><b>Твій код.</b> Нові кнопки, показники, реакції, міні-ігри, аксесуари. Пишеш маленькі шматки JavaScript у Лабораторії — разом із Claude.</p>
+      </article>
+    </div>
+
+    <div class="callout warn reveal" style="margin-top:30px">
+      <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
+      <p><b>Готових рішень квесту тут немає — так задумано.</b> Є опис рушія, підказки і шпаргалка для Claude. Що саме вміє твій зразок, вирішуєш ти. ШІ — напарник, а не автор.</p>
+    </div>
+  </section>
+
+  <!-- ============ ЯК ВЛАШТОВАНИЙ ============ -->
+  <section class="section container" id="anatomy">
+    <div class="section-head reveal">
+      <span class="kicker">Як влаштований зразок</span>
+      <h2>Подія → код → реакція</h2>
+      <p>Зразок весь час чекає, що станеться. Щойно щось відбулося — запускається твій код, за потреби питає Gemini і показує реакцію. Уся «магія» — це такий цикл.</p>
+    </div>
+
+    <div class="t1-loop reveal">
+      <div class="t1-loop-track">
+        <div class="t1-step" style="--c:var(--pink);--i:0">
+          <span class="t1-step-n">01</span>
+          <span class="t1-step-ico"><svg class="i"><use href="#i-zap"/></svg></span>
+          <b>Подія</b>
+          <p>Ти натиснув кнопку, минуло 5 секунд, написав у чат.</p>
+          <span class="t1-step-code"><code>click</code><code>tick</code><code>chat</code></span>
+        </div>
+        <span class="t1-arrow" style="--i:0" aria-hidden="true"><i></i></span>
+        <div class="t1-step" style="--c:var(--yellow);--i:1">
+          <span class="t1-step-n">02</span>
+          <span class="t1-step-ico"><svg class="i"><use href="#i-code"/></svg></span>
+          <b>Твій код</b>
+          <p>Функція, яку ти «підписав» на цю подію в Лабораторії.</p>
+          <span class="t1-step-code"><code>pet.on("click", …)</code></span>
+        </div>
+        <span class="t1-arrow" style="--i:1" aria-hidden="true"><i></i></span>
+        <div class="t1-step opt" style="--c:var(--cyan);--i:2">
+          <span class="t1-step-n">03</span>
+          <span class="t1-opt">за бажанням</span>
+          <span class="t1-step-ico"><svg class="i"><use href="#i-cpu"/></svg></span>
+          <b>Gemini</b>
+          <p>Треба придумати слова чи рішення — код питає модель і чекає.</p>
+          <span class="t1-step-code"><code>await ai.ask(…)</code></span>
+        </div>
+        <span class="t1-arrow" style="--i:2" aria-hidden="true"><i></i></span>
+        <div class="t1-step" style="--c:var(--lime);--i:3">
+          <span class="t1-step-n">04</span>
+          <span class="t1-step-ico"><svg class="i"><use href="#i-heart"/></svg></span>
+          <b>Реакція</b>
+          <p>Зразок говорить, міняє емоцію чи показники.</p>
+          <span class="t1-step-code"><code>pet.say</code><code>pet.emote</code><code>pet.change</code></span>
+        </div>
+      </div>
+
+      <div class="t1-loop-back"><span>↺ і знову чекає наступної події</span></div>
+
+      <ol class="t1-loop-caps" aria-label="Приклад одного циклу">
+        <li style="--i:0"><b>01</b><span>Ти тицяєш у зразок мишкою.</span></li>
+        <li style="--i:1"><b>02</b><span>Спрацьовує твоя функція на подію <code>click</code>.</span></li>
+        <li style="--i:2"><b>03</b><span>Вона питає Gemini: «що б він сказав, якщо його штрикнули?»</span></li>
+        <li style="--i:3"><b>04</b><span>Зразок ображено каже «Ей, я не кнопка!» і супиться.</span></li>
+      </ol>
+    </div>
+
+    <div class="callout tip reveal" style="margin-top:22px">
+      <span class="callout-ico"><svg class="i"><use href="#i-clock"/></svg></span>
+      <p><b>Gemini — не на кожен чих.</b> Безкоштовна модель дає приблизно 10 запитів на хвилину і 500 на день. Подія <code>tick</code> приходить кожні 5 секунд — ШІ в ній вичерпає ліміт за хвилину. Питай модель тільки у відповідь на дії людини.</p>
+    </div>
+
+    <h3 class="t1-sub reveal">Як він поводиться</h3>
+    <div class="grid grid-3" data-stagger>
+      <article class="card lift reveal" style="--c:var(--yellow)">
+        <div class="card-ico"><svg class="i"><use href="#i-clock"/></svg></div>
+        <h3>Показники падають повільно</h3>
+        <p>Це не улюбленець, що помирає за ніч. Пішов на урок — повернувся, а він живий, просто скучив. Подія <code>return</code> навіть скаже, скільки хвилин тебе не було.</p>
+      </article>
+      <article class="card lift reveal" style="--c:var(--lilac)">
+        <div class="card-ico"><svg class="i"><use href="#i-moon"/></svg></div>
+        <h3>Не заважає, коли ти кодиш</h3>
+        <p>Поки ти пишеш у Лабораторії, він мовчки спостерігає. Сам заговорює рідко і тільки коли ти нічого не робиш. А якщо й це забагато — є перемикач «Не турбувати».</p>
+      </article>
+      <article class="card lift reveal" style="--c:var(--pink)">
+        <div class="card-ico"><svg class="i"><use href="#i-heart"/></svg></div>
+        <h3>Емоції — від стану</h3>
+        <p>Голодний — сумний, виспався — щасливий, стабільність упала — глючить. Але останнє слово за тобою: <code>pet.emote()</code> перебиває автоматику.</p>
+      </article>
+    </div>
+
+    <h3 class="t1-sub reveal">Усі 11 емоцій</h3>
+    <p class="muted reveal" style="max-width:760px">Підписи під картками — це назви, які ти передаєш у <code>pet.emote("назва", мс)</code>. Натисни на картку, щоб побачити емоцію в русі.</p>
+    <div class="t1-emo-grid reveal" id="emoGrid"></div>
+  </section>
+
+  <!-- ============ ПІДГОТОВКА ============ -->
+  <section class="section container" id="prep">
+    <div class="section-head reveal">
+      <span class="kicker">Підготовка</span>
+      <h2>Три кроки до старту</h2>
+      <p>Хвилин десять — і зразок оживе. Усе безкоштовно, нічого встановлювати не треба: працюєш просто в браузері.</p>
+    </div>
+
+    <div class="grid grid-3 t1-prep" data-stagger>
+      <article class="card reveal t1-prep-card" style="--c:var(--yellow)">
+        <span class="t1-num">1</span>
+        <div class="card-ico"><svg class="i"><use href="#i-key"/></svg></div>
+        <h3>Ключ Gemini</h3>
+        <p>Безкоштовний ключ із Google AI Studio — це мозок зразка. Що це за ключ і які в нього ліміти, розповідаємо на <a class="link" href="index.html#api">головній</a>.</p>
+        <button class="more" type="button" data-drawer="d-key" data-title="Ключ Gemini">Як отримати <svg class="i"><use href="#i-arrow"/></svg></button>
+      </article>
+      <article class="card reveal t1-prep-card" style="--c:var(--pink)">
+        <span class="t1-num">2</span>
+        <div class="card-ico"><svg class="i"><use href="#i-bot"/></svg></div>
+        <h3>Акаунт Claude</h3>
+        <p>Зареєструйся на <a class="link" href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> — безкоштовного тарифу вистачить. У Лабораторії натисни «Шпаргалка для Claude»: вона пояснює Claude усі команди зразка й містить твій поточний код і стан. Встав її в новий чат і в кінці опиши, що має вміти зразок.</p>
+      </article>
+      <article class="card reveal t1-prep-card" style="--c:var(--cyan)">
+        <span class="t1-num">3</span>
+        <div class="card-ico"><svg class="i"><use href="#i-code"/></svg></div>
+        <h3>Відкрий Лабораторію</h3>
+        <p>Вона трохи нижче, на цій же сторінці. Встав ключ у вкладку «Мозок», напиши характер — і привітайся. Твій код і прогрес зберігаються в цьому браузері.</p>
+        <a class="more" href="#lab">До лабораторії <svg class="i"><use href="#i-arrow"/></svg></a>
+      </article>
+    </div>
+
+    <div class="callout info reveal" style="margin-top:26px">
+      <span class="callout-ico"><svg class="i"><use href="#i-lock"/></svg></span>
+      <p><b>Де живе твій ключ.</b> Тільки в цьому браузері, у <code>localStorage</code>, і йде лише на сервери Google. Чому не в cookies? Cookies браузер сам відправляє на сервер сайту з кожним запитом, а <code>localStorage</code> лишається на твоєму пристрої. Не вставляй ключ у чати з ШІ, а на чужому комп’ютері в кінці натисни «Забути ключ».</p>
+    </div>
+  </section>
+
+  <template id="d-key">
+    <h3>Ключ Gemini за 2 хвилини</h3>
+    <ol>
+      <li>Відкрий <a class="link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> і увійди в Google-акаунт.</li>
+      <li>Натисни <b>Create API key</b> — створиться ключ і проєкт.</li>
+      <li>Натисни <b>Copy</b>. Ключ — це довгий рядок, що зазвичай починається з <code>AIza</code>.</li>
+      <li>У Лабораторії відкрий вкладку <b>«Мозок»</b> і встав ключ туди.</li>
+    </ol>
+    <div class="callout info">
+      <span class="callout-ico"><svg class="i"><use href="#i-clock"/></svg></span>
+      <p><b>Ліміти.</b> Модель <code>gemini-3.5-flash-lite</code>: приблизно 10 запитів на хвилину і 500 на день. Денний ліміт оновлюється близько 9–10 ранку за Києвом.</p>
+    </div>
+    <p>Більше про безкоштовні ключі й моделі — <a class="link" href="index.html#api">на головній</a>.</p>
+  </template>
+
+  <!-- ============ ЛАБОРАТОРІЯ ============ -->
+  <section class="section container" id="lab">
+    <div class="section-head reveal">
+      <span class="kicker">Лабораторія</span>
+      <h2>Тут живе <span class="mark">твій зразок</span></h2>
+      <p>Зліва — зразок. Справа — усе для роботи: мозок, характер, чат, код, квест і довідник. Розгорни лабораторію на весь екран, щоб не гортати сторінку туди-сюди.</p>
+      <div class="chip-row t1-lab-tips">
+        <span class="chip"><svg class="i"><use href="#i-wand"/></svg> підказки з'являються, поки пишеш (Ctrl+Space)</span>
+        <span class="chip"><svg class="i"><use href="#i-file"/></svg> код можна розкласти по файлах</span>
+        <span class="chip"><svg class="i"><use href="#i-volume"/></svg> зразок уміє говорити вголос</span>
+        <span class="chip"><svg class="i"><use href="#i-panel"/></svg> кілька вкладок — той самий зразок</span>
+      </div>
+    </div>
+
+    <div class="lab" id="labApp" data-no-swipe>
+      <div class="lab-bar">
+        <span class="lab-title"><svg class="i"><use href="#i-flask"/></svg> Лабораторія</span>
+        <span class="lab-chip brain-none" id="labBrain"><i></i>без мозку</span>
+        <span class="lab-chip lab-think" id="labThink" hidden><b></b><b></b><b></b>ШІ думає</span>
+        <span class="lab-chip lab-quota" title="Запитів до Gemini сьогодні (безкоштовно ~500 на день)"><svg class="i"><use href="#i-signal"/></svg> <b data-usage>0</b>&nbsp;/ ~500</span>
+        <span class="lab-spacer"></span>
+        <button class="lab-btn" id="labQuiet" type="button" aria-pressed="false"><svg class="i"><use href="#i-bell"/></svg><span>Не турбувати</span></button>
+        <button class="lab-btn lab-btn-main" id="labFull" type="button" aria-pressed="false"><svg class="i"><use href="#i-expand"/></svg><span>На весь екран</span></button>
+      </div>
+
+      <div class="lab-body">
+        <!-- Зразок -->
+        <div class="lab-stage">
+          <div class="stage-head">
+            <b id="petName">Зразок</b>
+            <code id="petDna" title="ДНК зразка">0000-0000</code>
+          </div>
+          <div class="stage-view"><div class="stage-pet" id="labPet"></div></div>
+          <div class="stage-stats" id="petStats"></div>
+          <div class="stage-actions" id="petActions"></div>
+          <div class="stage-boxes" id="petBoxes"></div>
+          <form class="stage-chat" id="petChat" autocomplete="off">
+            <p class="chat-last" id="petChatLast" hidden></p>
+            <input id="petChatInput" type="text" maxlength="300" placeholder="Скажи щось зразку…" aria-label="Повідомлення зразку">
+            <button type="submit" aria-label="Надіслати"><svg class="i"><use href="#i-send"/></svg></button>
+          </form>
+        </div>
+
+        <!-- Панель роботи -->
+        <div class="lab-panel tabs-ui">
+          <div class="tab-list" role="tablist" aria-label="Розділи лабораторії">
+            <button class="tab-btn" role="tab" id="lab-tab-brain" aria-selected="true" aria-controls="lt-brain"><svg class="i"><use href="#i-brain"/></svg> Мозок</button>
+            <button class="tab-btn" role="tab" id="lab-tab-char" aria-selected="false" aria-controls="lt-char"><svg class="i"><use href="#i-user"/></svg> Характер</button>
+            <button class="tab-btn" role="tab" id="lab-tab-chat" aria-selected="false" aria-controls="lt-chat"><svg class="i"><use href="#i-message"/></svg> Чат</button>
+            <button class="tab-btn" role="tab" id="lab-tab-code" aria-selected="false" aria-controls="lt-code"><svg class="i"><use href="#i-code"/></svg> Код</button>
+            <button class="tab-btn" role="tab" id="lab-tab-quest" aria-selected="false" aria-controls="lt-quest"><svg class="i"><use href="#i-trophy"/></svg> Квест</button>
+            <button class="tab-btn" role="tab" id="lab-tab-docs" aria-selected="false" aria-controls="lt-docs"><svg class="i"><use href="#i-book"/></svg> Довідник</button>
+          </div>
+
+          <!-- МОЗОК -->
+          <div class="tab-panel lp" role="tabpanel" id="lt-brain">
+            <h3>Мозок: ключ Gemini</h3>
+            <p class="muted">Без ключа зразок живе, їсть і спить, але не говорить. Ключ безкоштовний — <a class="link" href="index.html#api">як його отримати</a>.</p>
+            <form class="lab-form" id="keyForm" autocomplete="off">
+              <label for="keyInput">API-ключ</label>
+              <div class="lab-row">
+                <input id="keyInput" type="password" spellcheck="false" placeholder="Встав ключ з AI Studio">
+                <button class="lab-btn icon" id="keyShow" type="button" aria-label="Показати ключ" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg></button>
+              </div>
+              <div class="lab-row">
+                <button class="btn btn-primary btn-sm" type="submit">Зберегти і перевірити</button>
+                <button class="lab-btn" id="keyForget" type="button"><svg class="i"><use href="#i-trash"/></svg><span>Забути ключ</span></button>
+              </div>
+              <p class="lab-status" id="keyStatus" aria-live="polite"></p>
+            </form>
+            <label for="modelSel">Модель</label>
+            <div class="lab-row">
+              <select id="modelSel"></select>
+            </div>
+            <div class="lab-row">
+              <input id="modelCustom" type="text" spellcheck="false" placeholder="або впиши іншу назву моделі і натисни Enter">
+            </div>
+            <label for="voiceSel">Голос зразка <small>(для pet.speak)</small></label>
+            <div class="lab-row">
+              <select id="voiceSel"></select>
+              <button class="lab-btn" id="voiceTest" type="button"><svg class="i"><use href="#i-volume"/></svg><span>Прослухати</span></button>
+            </div>
+            <p class="lab-status lab-voice" id="voiceStatus"></p>
+            <div class="callout info">
+              <span class="callout-ico"><svg class="i"><use href="#i-lock"/></svg></span>
+              <p>Ключ зберігається <b>тільки в цьому браузері</b> і йде лише в Google. Не вставляй його в чати з ШІ і не показуй на скриншотах. На чужому комп’ютері натисни «Забути ключ».</p>
+            </div>
+            <p class="lab-note"><svg class="i"><use href="#i-signal"/></svg> Запитів сьогодні: <b data-usage>0</b> з ~500. Ліміт хвилини — близько 10 запитів.</p>
+          </div>
+
+          <!-- ХАРАКТЕР -->
+          <div class="tab-panel lp" role="tabpanel" id="lt-char" hidden>
+            <div class="lab-grid2">
+              <div>
+                <label for="charName">Ім’я</label>
+                <input id="charName" type="text" maxlength="24" placeholder="Як звати зразка?">
+              </div>
+              <div>
+                <label for="charDna">ДНК</label>
+                <div class="lab-row">
+                  <input id="charDna" class="mono" type="text" maxlength="9" spellcheck="false" placeholder="A7F3-9C2E">
+                  <button class="lab-btn icon" id="dnaRandom" type="button" title="Нова випадкова ДНК" aria-label="Нова випадкова ДНК"><svg class="i"><use href="#i-dice"/></svg></button>
+                  <button class="lab-btn" id="dnaName" type="button" title="ДНК, виведена з імені"><span>З імені</span></button>
+                </div>
+              </div>
+            </div>
+            <label for="charText">Характер <small>(системний промпт)</small> <span class="saved" id="charSaved">збережено</span></label>
+            <textarea id="charText" rows="7" maxlength="3000" placeholder="Хто він? Як говорить? Що любить і чого боїться? Чого ніколи не робить?"></textarea>
+            <p class="char-meter" id="charMeter"></p>
+            <div class="lab-presets">
+              <small>Заготовки для старту:</small>
+              <div class="chip-row" id="charPresets"></div>
+            </div>
+            <div class="callout tip">
+              <span class="callout-ico"><svg class="i"><use href="#i-bulb"/></svg></span>
+              <p>Заготовка — лише початок. Допиши, <b>як</b> він говорить (слівця, манера, довжина), що любить, чого боїться і чого не робить ніколи. Потім постав йому кілька різних питань у чаті й перевір, чи впізнаєш його.</p>
+            </div>
+          </div>
+
+          <!-- ЧАТ -->
+          <div class="tab-panel lp lp-chat" role="tabpanel" id="lt-chat" hidden>
+            <div class="chat-head"><b>Переписка</b><span class="muted">зберігається в цьому браузері</span><span class="lab-spacer"></span><button class="lab-btn" id="chatClear" type="button"><svg class="i"><use href="#i-trash"/></svg><span>Очистити</span></button></div>
+            <div class="chat-log" id="chatLog" aria-live="polite"></div>
+            <form class="chat-form" id="chatForm" autocomplete="off">
+              <input id="chatInput" type="text" maxlength="300" placeholder="Напиши зразку…" aria-label="Повідомлення зразку">
+              <button class="btn btn-primary btn-sm" type="submit"><svg class="i"><use href="#i-send"/></svg> Надіслати</button>
+            </form>
+          </div>
+
+          <!-- КОД -->
+          <div class="tab-panel lp lp-code" role="tabpanel" id="lt-code" hidden>
+            <div class="code-bar">
+              <button class="btn btn-primary btn-sm" id="codeRun" type="button" title="Ctrl + Enter"><svg class="i"><use href="#i-play"/></svg> Запустити</button>
+              <button class="lab-btn" id="codeReset" type="button"><svg class="i"><use href="#i-refresh"/></svg><span>Скинути до шаблону</span></button>
+              <span class="saved" id="codeSaved">збережено</span>
+              <span class="lab-spacer"></span>
+              <button class="lab-btn" type="button" data-copy-cheat><svg class="i"><use href="#i-copy"/></svg><span>Шпаргалка для Claude</span></button>
+            </div>
+            <p class="file-hint" id="fileHint" hidden></p>
+            <div class="file-tabs" id="fileTabs" aria-label="Файли коду"></div>
+            <div class="code-editor" id="labEditor"><p class="muted" style="padding:14px">Завантажую редактор…</p></div>
+            <div class="code-console">
+              <div class="console-bar"><svg class="i"><use href="#i-terminal"/></svg> Консоль <span class="lab-spacer"></span><button type="button" id="consoleClear">Очистити</button></div>
+              <div class="console-out" id="labConsole" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <!-- КВЕСТ -->
+          <div class="tab-panel lp" role="tabpanel" id="lt-quest" hidden>
+            <div class="lab-xp">
+              <span class="xp-emoji" data-xp-icon></span>
+              <div><small>Ранг</small><b data-xp-rank>Стажер</b></div>
+              <div class="xp-bar"><div class="xp-fill" data-xp-fill></div></div>
+              <span class="xp-num"><b data-xp-num>0</b>/<span data-xp-max>300</span></span>
+            </div>
+            <p class="muted lab-small">Старт, Новачок і Профі (<span class="q-auto">авто</span>) лабораторія зараховує сама, коли бачить, що все працює. Бос відмічаєш сам. На Старті й Новачку є покрокові гайди, на Профі — підказки, а Бос — тільки завдання. Сині посилання відкривають довідник.</p>
+            <div class="levels lab-levels" data-quest-list="hints"></div>
+          </div>
+
+          <!-- ДОВІДНИК -->
+          <div class="tab-panel lp" role="tabpanel" id="lt-docs" hidden>
+            <div class="docs-top">
+              <p><b>Усі команди двигуна.</b> Натисни на команду, щоб побачити пояснення і приклад. Шпаргалка для Claude містить усе це, а ще твій поточний код і стан зразка: встав її в новий чат і в кінці опиши, що хочеш зробити.</p>
+              <button class="btn btn-yellow btn-sm" type="button" data-copy-cheat><svg class="i"><use href="#i-copy"/></svg> Скопіювати шпаргалку для Claude</button>
+            </div>
+            <div class="docs" id="labDocs"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ КВЕСТ ============ -->
+  <section class="section container" id="quest">
+    <div class="section-head reveal">
+      <span class="kicker">Квест</span>
+      <h2>Що треба зробити</h2>
+      <p>Чотири рівні: від першої розмови до еволюції. За день реально пройти Старт і Новачка, а далі — скільки встигнеш. Гайди й підказки до кожного пункту — у лабораторії, вкладка «Квест». Перші три рівні зараховуються автоматично, Бос — вручну.</p>
+    </div>
+
+    <div class="xp reveal">
+      <div class="xp-rank"><span class="xp-emoji" data-xp-icon></span><div><small>Твій ранг</small><b data-xp-rank>Стажер</b></div></div>
+      <div class="xp-bar"><div class="xp-fill" data-xp-fill></div></div>
+      <div class="xp-num"><b data-xp-num>0</b> / <span data-xp-max>300</span> XP</div>
+    </div>
+
+    <div class="levels t1-levels reveal" data-quest-list="plain"></div>
+
+    <div class="btn-row t1-quest-cta reveal">
+      <a class="btn btn-primary" href="#lab" data-open-lab="quest">Квест із гайдами в лабораторії <span class="arr">→</span></a>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:28px" data-stagger>
+      <div class="card reveal" style="--c:var(--yellow)"><div class="card-ico"><svg class="i"><use href="#i-video"/></svg></div><h3>Що показати</h3><p>Коротке відео (1–2 хв): твій зразок, його характер і всі вміння, які ти додав. Покажи, як він реагує.</p></div>
+      <div class="card reveal" style="--c:var(--lilac)"><div class="card-ico"><svg class="i"><use href="#i-code"/></svg></div><h3>Свій код</h3><p>Скопіюй усі файли з лабораторії (main.js і свої) і збережи — наприклад, на GitHub. <b>Без ключа Gemini!</b></p></div>
+      <div class="card reveal" style="--c:var(--cyan)"><div class="card-ico"><svg class="i"><use href="#i-message"/></svg></div><h3>Поясни</h3><p>Тебе спитають, як працює одне з вмінь. Розкажи своїми словами — що відбувається, коли натискаєш кнопку.</p></div>
+    </div>
+  </section>
+
+
+  <!-- ============ ВАЙБКОДИНГ ============ -->
+  <section class="section container" id="vibe">
+    <div class="section-head reveal">
+      <span class="kicker">Вайбкодинг</span>
+      <h2>Вайбкодинг з безкоштовним Claude</h2>
+      <p>У безкоштовного Claude є ліміт повідомлень, який відновлюється через кілька годин. І що довший чат, то швидше ліміт тане: Claude щоразу перечитує всю розмову. Тож працюй коротко й точно.</p>
+    </div>
+
+    <div class="prompt-vs reveal">
+      <div class="pv bad">
+        <span class="pv-tag"><svg class="i"><use href="#i-x"/></svg> Так собі</span>
+        <p>«Зроби таймер помодоро»</p>
+        <small>Claude не знає, що в тебе вже є, де це має працювати і як виглядати. Отримаєш цілу сторінку, яку не вставиш у свій проєкт.</small>
+      </div>
+      <div class="pv-arrow">→</div>
+      <div class="pv good">
+        <span class="pv-tag"><svg class="i"><use href="#i-check"/></svg> Набагато краще</span>
+        <p>«На сторінці є кнопка #start і текст #time. Хочу: натиснув — пішов відлік 25:00, кожну секунду оновлюється, а кнопка стає “Пауза”. На нулі — звук і напис “Перерва!”. Чистий JS, без бібліотек. Після коду коротко поясни, що робить кожна частина.»</p>
+        <small>Що вже є, яка поведінка, обмеження і прохання пояснити. Так само описуй і вміння зразка.</small>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-top:22px" data-stagger>
+      <div class="card tip-card reveal"><span class="tip-n">01</span><h3>Спершу шпаргалка</h3><p>Почни кожен чат зі шпаргалки з Лабораторії. Без неї Claude вигадає функції, яких у рушії немає.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">02</span><h3>Одне вміння — один чат</h3><p>Кнопка «Погодувати» — окремий чат, міні-гра — окремий. Короткий чат точніший і економить ліміт.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">03</span><h3>Поведінка, а не код</h3><p>Пиши, що має статися: «коли енергія нижче 20, він позіхає і просить спати». Як це закодити — справа Claude.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">04</span><h3>Помилка — дослівно</h3><p>Скопіюй текст помилки з консолі Лабораторії разом із назвою файлу й номером рядка і встав код. «Не працює» Claude не допоможе.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">05</span><h3>Проси пояснити</h3><p>«Поясни цей код рядок за рядком». На захисті спитають, як працює твоє вміння, — маєш розповісти сам.</p></div>
+      <div class="card tip-card reveal"><span class="tip-n">06</span><h3>Довгий чат — новий чат</h3><p>Чат розрісся і Claude плутається? Відкрий новий і встав свіжу шпаргалку — у ній уже є твій поточний код. Допиши одне речення, що робимо далі.</p></div>
+    </div>
+
+    <div class="kw reveal">
+      <h4><svg class="i"><use href="#i-search"/></svg> Слова, які варто гуглити або питати в ШІ</h4>
+      <div class="chip-row">
+        <span class="chip">JavaScript events</span><span class="chip">callback function</span><span class="chip">arrow function</span><span class="chip">async / await</span><span class="chip">Promise</span><span class="chip">JSON.parse</span><span class="chip">try / catch</span><span class="chip">localStorage</span><span class="chip">setInterval / setTimeout</span><span class="chip">Date.now()</span><span class="chip">system prompt</span><span class="chip">structured output</span><span class="chip">rate limit 429</span><span class="chip">SVG path</span><span class="chip">SVG viewBox</span><span class="chip">Math.random</span><span class="chip">fetch API</span><span class="chip">Web Speech API</span><span class="chip">scope (область видимості)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ СЛОВНИК ============ -->
+  <section class="section container" id="glossary">
+    <div class="section-head reveal">
+      <span class="kicker">Словник</span>
+      <h2>Розумні слова простими словами</h2>
+      <p>Натисни на картку, щоб перевернути.</p>
+    </div>
+    <div class="flips" data-stagger>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-key"/></svg> API-ключ</b><small>натисни</small></span><span class="f-back">Твій персональний «пропуск» до Gemini. За ним Google рахує ліміти. Секрет — як пароль.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-message"/></svg> Системний промпт</b><small>натисни</small></span><span class="f-back">Інструкція, яку модель бачить перед кожною розмовою: хто вона, як говорить, чого не робить.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-zap"/></svg> Подія</b><small>натисни</small></span><span class="f-back">Сигнал «щось сталося»: клік, тік таймера, повідомлення в чаті. Код може на нього відреагувати.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-code"/></svg> Функція / callback</b><small>натисни</small></span><span class="f-back">Шматок коду з назвою. Callback — функція, яку ти віддаєш рушію: «виклич її, коли станеться подія».</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-clock"/></svg> async / await</b><small>натисни</small></span><span class="f-back">Як чекати на повільне (відповідь ШІ), не заморожуючи сторінку. <code>await</code> = «почекай результат тут».</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-blocks"/></svg> JSON</b><small>натисни</small></span><span class="f-back">Текстовий формат даних з полями й значеннями: <code>{"mood": 10}</code>. Його розуміють і люди, і код.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-folder"/></svg> localStorage</b><small>натисни</small></span><span class="f-back">Маленьке сховище в браузері. Дані переживають перезавантаження, але живуть тільки на цьому пристрої.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-pin"/></svg> Стан (state)</b><small>натисни</small></span><span class="f-back">Усе, що програма пам’ятає саме зараз: голод, настрій, ім’я, рівень. Змінив стан — змінилась поведінка.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-signal"/></svg> Rate limit</b><small>натисни</small></span><span class="f-back">Обмеження кількості запитів за час. Перевищив — сервер відповідає помилкою 429 і просить почекати.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-cpu"/></svg> Модель / LLM</b><small>натисни</small></span><span class="f-back">Велика мовна модель: програма, яка вгадує наступні слова так добре, що з нею можна говорити.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-eye"/></svg> Область видимості</b><small>натисни</small></span><span class="f-back">Де змінну «видно». Оголошена у функції — живе тільки в ній. На верхньому рівні — видно всюди, навіть в інших файлах лабораторії.</span></span></button>
+      <button class="flip reveal" type="button"><span class="flip-in"><span class="f-front"><b><svg class="i"><use href="#i-pencil"/></svg> SVG</b><small>натисни</small></span><span class="f-back">Картинка, записана кодом: кола, лінії, контури. Не розмивається при збільшенні. Зі SVG намальований і твій зразок.</span></span></button>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section container" id="faq">
+    <div class="section-head reveal">
+      <span class="kicker">SOS</span>
+      <h2>Якщо щось не працює</h2>
+      <p>Не готові відповіді, а підказки, куди копати.</p>
+    </div>
+    <div class="faq reveal">
+      <details>
+        <summary><svg class="i"><use href="#i-key"/></svg> Зразок мовчить, а в консолі помилка 400 або 403</summary>
+        <div class="faq-body">Справа майже завжди в ключі. Чи скопіював ти його повністю, без пробілів на початку чи в кінці? Чи не вимкнений він в AI Studio? Чи не вставив ти випадково щось інше замість ключа? Спробуй створити новий ключ і вставити ще раз.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-coins"/></svg> 402 — «prepayment credits are depleted»</summary>
+        <div class="faq-body">Ключ належить проєкту в AI Studio, де ввімкнена оплата, а кредити на ньому закінчились. Безкоштовні ліміти діють для проєктів без оплати. Зайди на <code>ai.studio/projects</code>, створи новий проєкт без прив’язаної картки, зроби в ньому ключ і встав його у вкладку «Мозок».</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-signal"/></svg> 429 — забагато запитів</summary>
+        <div class="faq-body">Ти вперся в ліміт: близько 10 запитів на хвилину або 500 на день. Пошукай, де код питає ШІ занадто часто: у <code>tick</code>? у циклі? на кожен рух мишки? Зачекай хвилину. Якщо закінчився денний ліміт — він оновиться наступного ранку.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-terminal"/></svg> У консолі червона помилка з номером рядка</summary>
+        <div class="faq-body">Це підказка, а не вирок. Знайди цей рядок у редакторі. Найчастіше винні: зайва чи пропущена дужка, опечатка в назві (<code>pet.emot</code>), лапки різного типу. Не бачиш сам — скопіюй помилку дослівно разом із кодом і віддай Claude.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-target"/></svg> Натискаю свою кнопку — нічого не відбувається</summary>
+        <div class="faq-body">Чи запустив ти код після змін? Додай <code>log("тут")</code> на початок функції кнопки: з’явилось у консолі — функція працює, проблема далі; не з’явилось — кнопка не прив’язана до функції. Перевір, що ти передаєш саму функцію, а не результат її виклику.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-blocks"/></svg> <code>ai.json</code> не може розібрати відповідь</summary>
+        <div class="faq-body">Виведи сиру відповідь через <code>log</code>. Модель могла дописати пояснення чи загорнути JSON у <code>```</code>. Чи дав ти приклад потрібної структури? Чи він простий — кілька полів, без вкладень? Пам’ятай: модель може помилитися, тож обгорни виклик у <code>try / catch</code> і перевір поля перед використанням.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-message"/></svg> Зразок ігнорує характер або говорить дивно</summary>
+        <div class="faq-body">Перечитай системний промпт: чи він конкретний? «Будь смішним» — слабко; «відповідаєш одним-двома реченнями, бурчиш, але турбуєшся» — краще. Додай кілька прикладів реплік і чого він ніколи не робить. Перевір, чи твій <code>ai.ask</code> не перебиває характер власною інструкцією.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-refresh"/></svg> Я все зламав</summary>
+        <div class="faq-body">Видихни. Код зберігається автоматично, тож нічого не зникне, поки ти сам не зітреш. Скопіюй свій код у чат із Claude і спитай, що не так. Якщо хочеш почати з чистого аркуша — у Лабораторії є кнопка «Скинути до шаблону».</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-alert"/></svg> Після мого коду сторінка зависла</summary>
+        <div class="faq-body">Скоріш за все, нескінченний цикл: <code>while</code>, умова якого ніколи не стає хибною, або функція, що викликає сама себе. Перезавантаж сторінку — Лабораторія не запустить автоматично код, який минулого разу підвісив сторінку. Знайди цикл і перевір, коли саме він має зупинитися.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-volume"/></svg> Зразок не говорить вголос</summary>
+        <div class="faq-body">Чи клацнув ти хоч раз по сторінці? Браузер вмикає звук лише після дії людини. Чи не вимкнений звук на пристрої? У вкладці «Мозок» під «Голос зразка» написано, що саме звучатиме, — натисни «Прослухати». Голос Piper перший раз завантажує ~77 МБ: зачекай кілька секунд. Чи викликаєш ти <code>pet.speak()</code>, а не лише <code>pet.say()</code>?</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-file"/></svg> Функція з іншого файлу «is not defined»</summary>
+        <div class="faq-body">Подивись порядок запуску над вкладками файлів: main.js виконується останнім. Функцію чи змінну треба оголосити на верхньому рівні файлу, а не всередині іншої функції чи блоку <code>{ }</code> — інакше її не видно ззовні. Підказки в редакторі показують лише те, що доступне в цьому місці.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ ФІНАЛ ============ -->
+  <section class="section container">
+    <div class="final t1-final reveal">
+      <div class="spin-badge final-badge" style="--sb:130px;--sb-bg:var(--yellow)">
+        <svg viewBox="0 0 100 100"><defs><path id="t1FinalCircle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#t1FinalCircle">не забудь погодувати • оживи • </textPath></text></svg>
+        <span><svg class="i"><use href="#i-heart"/></svg></span>
+      </div>
+      <h2>Зразок <span class="mark-box" style="--mc:var(--white);--mt:var(--ink);--r:2deg">чекає</span></h2>
+      <p>Встав ключ, дай йому характер і перше вміння — і він уже не просто картинка. А далі — квест, еволюція і твої власні ідеї.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn-ghost" href="#lab">До лабораторії <span class="arr">→</span></a>
+        <a class="btn btn-yellow" href="#quest">До квесту</a>
+      </div>
     </div>
   </section>
 
