@@ -258,11 +258,12 @@
 
     <div class="lab" id="labApp" data-no-swipe>
       <div class="lab-bar">
-        <span class="lab-title"><svg class="i"><use href="#i-flask"/></svg> Лабораторія</span>
+        <span class="lab-title"><svg class="i"><use href="#i-flask"/></svg> <span class="lab-title-txt">Лабораторія</span></span>
         <span class="lab-chip brain-none" id="labBrain"><i></i>без мозку</span>
         <span class="lab-chip lab-think" id="labThink" hidden><b></b><b></b><b></b>ШІ думає</span>
         <span class="lab-chip lab-quota" title="Запитів до Gemini сьогодні (безкоштовно ~500 на день)"><svg class="i"><use href="#i-signal"/></svg> <b data-usage>0</b>&nbsp;/ ~500</span>
         <span class="lab-spacer"></span>
+        <button class="lab-btn" id="labFile" type="button" title="Зберегти лабораторію у файл або відкрити з файлу"><svg class="i"><use href="#i-folder"/></svg><span>Файл</span></button>
         <button class="lab-btn" id="labQuiet" type="button" aria-pressed="false"><svg class="i"><use href="#i-bell"/></svg><span>Не турбувати</span></button>
         <button class="lab-btn lab-btn-main" id="labFull" type="button" aria-pressed="false"><svg class="i"><use href="#i-expand"/></svg><span>На весь екран</span></button>
       </div>
@@ -411,6 +412,45 @@
           </div>
         </div>
       </div>
+      <!-- Файл лабораторії: експорт і імпорт -->
+      <dialog class="lab-dialog" id="fileDialog" aria-label="Файл лабораторії">
+        <div class="ld-head"><b><svg class="i"><use href="#i-folder"/></svg> Файл лабораторії</b><button type="button" class="ld-x" data-close aria-label="Закрити">×</button></div>
+        <div class="ld-body">
+          <section class="ld-sec">
+            <h4><svg class="i"><use href="#i-download"/></svg> Зберегти у файл</h4>
+            <p class="muted">Усе в одному файлі: зразок (ім’я, ДНК, показники, характер), усі файли коду, виконані квести, пам’ять і чат. Цей файл можна надіслати вчителю — він побачить точно те саме, що й ти.</p>
+            <label class="ld-check"><input type="checkbox" id="expChat" checked> Додати переписку з чату</label>
+            <label class="ld-check"><input type="checkbox" id="expKey"> Додати ключ Gemini, зашифрований паролем<span id="expKeyNote"></span></label>
+            <div class="ld-pass" id="expPassBox" hidden>
+              <input type="password" id="expPass" placeholder="Пароль (мінімум 6 символів)" autocomplete="new-password">
+              <input type="password" id="expPass2" placeholder="Повтори пароль" autocomplete="new-password">
+              <small>Без пароля ключ із файлу не прочитати. Скажи пароль тому, кому надсилаєш файл, або візьми пароль хакатону від організаторів.</small>
+            </div>
+            <button class="btn btn-primary btn-sm" id="expGo" type="button"><svg class="i"><use href="#i-download"/></svg> Завантажити файл</button>
+            <p class="lab-status" id="expStatus"></p>
+          </section>
+          <section class="ld-sec">
+            <h4><svg class="i"><use href="#i-folder"/></svg> Відкрити файл</h4>
+            <p class="muted">Обери файл лабораторії — спершу побачиш, що в ньому, а потім зможеш завантажити собі точно таку саму.</p>
+            <input type="file" id="impFile" accept=".json,application/json">
+            <div id="impPreview" hidden></div>
+            <div class="ld-pass" id="impPassBox" hidden>
+              <input type="password" id="impPass" placeholder="Пароль від ключа Gemini" autocomplete="off">
+              <small>Не знаєш пароля — натисни «Відкрити без ключа».</small>
+            </div>
+            <label class="ld-check" id="impBackupRow" hidden><input type="checkbox" id="impBackup" checked> Спершу зберегти файлом мою поточну лабораторію</label>
+            <div class="callout warn ld-warn" id="impWarn" hidden>
+              <span class="callout-ico"><svg class="i"><use href="#i-alert"/></svg></span>
+              <p>Файл замінить поточну лабораторію. Код із файлу не запуститься сам — переглянь його й натисни «Запустити». Відкривай лише файли від людей, яким довіряєш.</p>
+            </div>
+            <div class="lab-row" id="impBtns" hidden>
+              <button class="btn btn-primary btn-sm" id="impGo" type="button">Відкрити</button>
+              <button class="lab-btn" id="impNoKey" type="button">Відкрити без ключа</button>
+            </div>
+            <p class="lab-status" id="impStatus"></p>
+          </section>
+        </div>
+      </dialog>
     </div>
   </section>
 
@@ -436,7 +476,7 @@
 
     <div class="grid grid-3" style="margin-top:28px" data-stagger>
       <div class="card reveal" style="--c:var(--yellow)"><div class="card-ico"><svg class="i"><use href="#i-video"/></svg></div><h3>Що показати</h3><p>Коротке відео (1–2 хв): твій зразок, його характер і всі вміння, які ти додав. Покажи, як він реагує.</p></div>
-      <div class="card reveal" style="--c:var(--lilac)"><div class="card-ico"><svg class="i"><use href="#i-code"/></svg></div><h3>Свій код</h3><p>Скопіюй усі файли з лабораторії (main.js і свої) і збережи — наприклад, на GitHub. <b>Без ключа Gemini!</b></p></div>
+      <div class="card reveal" style="--c:var(--lilac)"><div class="card-ico"><svg class="i"><use href="#i-code"/></svg></div><h3>Файл лабораторії</h3><p>Кнопка «Файл» у лабораторії зберігає все: зразка, код, квест, пам’ять. Надішли цей файл — ми відкриємо точно таку саму лабораторію. Ключ Gemini — тільки з паролем.</p></div>
       <div class="card reveal" style="--c:var(--cyan)"><div class="card-ico"><svg class="i"><use href="#i-message"/></svg></div><h3>Поясни</h3><p>Тебе спитають, як працює одне з вмінь. Розкажи своїми словами — що відбувається, коли натискаєш кнопку.</p></div>
     </div>
   </section>
@@ -547,6 +587,10 @@
       <details>
         <summary><svg class="i"><use href="#i-alert"/></svg> Після мого коду сторінка зависла</summary>
         <div class="faq-body">Скоріш за все, нескінченний цикл: <code>while</code>, умова якого ніколи не стає хибною, або функція, що викликає сама себе. Перезавантаж сторінку — Лабораторія не запустить автоматично код, який минулого разу підвісив сторінку. Знайди цикл і перевір, коли саме він має зупинитися.</div>
+      </details>
+      <details>
+        <summary><svg class="i"><use href="#i-folder"/></svg> Як надіслати свою роботу або перенести на інший комп’ютер</summary>
+        <div class="faq-body">У лабораторії натисни «Файл» → «Завантажити файл». У ньому все: зразок, код, квести, пам’ять і чат. Надішли файл учителю або відкрий його на іншому комп’ютері через «Файл» → «Відкрити файл». Ключ Gemini потрапляє у файл, лише якщо ти сам це обрав, і тільки зашифрованим твоїм паролем.</div>
       </details>
       <details>
         <summary><svg class="i"><use href="#i-volume"/></svg> Зразок не говорить вголос</summary>

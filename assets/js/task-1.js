@@ -21,7 +21,7 @@
 
   const LS = {
     state: "hk26-t1-pet", key: "hk26-t1-key", code: "hk26-t1-code", quest: "hk26-t1-quest",
-    usage: "hk26-t1-usage", guard: "hk26-t1-guard", memory: "hk26-t1-memory", chat: "hk26-t1-chat", files: "hk26-t1-files",
+    usage: "hk26-t1-usage", guard: "hk26-t1-guard", memory: "hk26-t1-memory", chat: "hk26-t1-chat", files: "hk26-t1-files", noAutorun: "hk26-t1-noautorun",
   };
   const load = (k, def) => { try { const v = localStorage.getItem(k); return v == null ? def : JSON.parse(v); } catch (e) { return def; } };
   /* ---------- Синхронізація між вкладками ----------
@@ -1723,6 +1723,7 @@ onmessage = async (e) => {
       this.initCodeTab();
       this.initDocs();
       this.initChatTab();
+      this.initTransfer();
       this.initBar();
       $("#petChat").addEventListener("submit", (e) => {
         e.preventDefault();
@@ -2301,6 +2302,87 @@ onmessage = async (e) => {
       $("#lab-tab-chat").addEventListener("click", () => setTimeout(() => this.renderChat(true), 30));
     },
 
+    /* --- файл лабораторії: експорт і імпорт --- */
+    initTransfer() {
+      const dlg = $("#fileDialog");
+      if (!dlg) return;
+      const st = (id, text, kind) => { const el = $(id); el.textContent = text; el.className = "lab-status " + (kind || ""); };
+      $("#labFile").addEventListener("click", () => {
+        $("#expKey").disabled = !apiKey;
+        $("#expKeyNote").textContent = apiKey ? "" : " (ключа ще немає)";
+        if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+      });
+      dlg.addEventListener("click", (e) => { if (e.target === dlg || e.target.closest("[data-close]")) dlg.close(); });
+      $("#expKey").addEventListener("change", (e) => { $("#expPassBox").hidden = !e.target.checked; });
+
+      // експорт
+      $("#expGo").addEventListener("click", async () => {
+        let keyPassword = null;
+        if ($("#expKey").checked) {
+          const p1 = $("#expPass").value, p2 = $("#expPass2").value;
+          if (p1.length < 6) { st("#expStatus", "Пароль — мінімум 6 символів.", "err"); return; }
+          if (p1 !== p2) { st("#expStatus", "Паролі не збігаються.", "err"); return; }
+          keyPassword = p1;
+        }
+        try {
+          st("#expStatus", "Пакую…");
+          const pack = await buildExport({ withChat: $("#expChat").checked, keyPassword });
+          downloadJson(pack, packName(state.name));
+          st("#expStatus", `Готово: ${packName(state.name)}${pack.key ? " (ключ зашифровано паролем)" : ""}. Надішли цей файл.`, "ok");
+        } catch (e) { st("#expStatus", "Не вдалося: " + e.message, "err"); }
+      });
+
+      // імпорт: прочитати файл і показати, що в ньому
+      let pack = null;
+      const resetImport = () => { ["#impPreview", "#impPassBox", "#impBackupRow", "#impWarn", "#impBtns"].forEach((s) => { $(s).hidden = true; }); pack = null; };
+      $("#impFile").addEventListener("change", async (e) => {
+        resetImport();
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        try {
+          pack = readPack(await f.text());
+        } catch (err) { st("#impStatus", err.message, "err"); return; }
+        const q = pack.quest && pack.quest.done ? Object.keys(pack.quest.done).filter((k) => pack.quest.done[k]) : [];
+        const xp = QUESTS.filter((x) => q.includes(x.id)).reduce((s, x) => s + x.xp, 0);
+        const fileList = pack.files.order.map((n) => `${n} (${String(pack.files.src[n] || "").split("\n").length} р.)`).join(", ");
+        const when = new Date(pack.exportedAt);
+        $("#impPreview").innerHTML = `<div class="imp-card"><div class="imp-pet" id="impPet"></div><div>
+          <b>${esc(pack.pet.name || "Зразок")}</b> <code>${esc(pack.pet.dna || "")}</code>
+          <ul>
+            <li>Збережено: ${isNaN(when) ? "?" : when.toLocaleString("uk-UA")}</li>
+            <li>Код: ${esc(fileList)}</li>
+            <li>Квест: ${q.length} з ${QUESTS.length} пунктів, ${xp} XP</li>
+            <li>Пам'ять: ${Object.keys(pack.memory || {}).length} записів · чат: ${(pack.chat || []).length} повідомлень</li>
+            <li>Характер: ${pack.pet.character ? esc(String(pack.pet.character).slice(0, 90)) + (pack.pet.character.length > 90 ? "…" : "") : "не написаний"}</li>
+            <li>Ключ Gemini: ${pack.key ? "є, зашифрований паролем" : "немає"}</li>
+          </ul></div></div>`;
+        $("#impPreview").hidden = false;
+        try { const c = new Zrazok.Creature($("#impPet"), { dna: pack.pet.dna, bubble: false, clickable: false, idle: false }); c.setEmotion("happy"); } catch (er) { /* ignore */ }
+        $("#impPassBox").hidden = !pack.key;
+        $("#impNoKey").hidden = !pack.key;
+        $("#impBackupRow").hidden = false; $("#impWarn").hidden = false; $("#impBtns").hidden = false;
+        st("#impStatus", "");
+      });
+
+      const doImport = async (useKey) => {
+        if (!pack) return;
+        let key = null;
+        if (useKey && pack.key) {
+          const pass = $("#impPass").value;
+          if (!pass) { st("#impStatus", "Введи пароль від ключа або натисни «Імпортувати без ключа».", "err"); return; }
+          try { key = await decryptSecret(pack.key, pass); }
+          catch (e) { st("#impStatus", "Неправильний пароль — ключ не розшифровано.", "err"); return; }
+        }
+        if ($("#impBackup").checked) {
+          try { downloadJson(await buildExport({ withChat: true, keyPassword: null }), packName(state.name + "-копія")); } catch (e) { /* ignore */ }
+        }
+        st("#impStatus", "Імпортую…", "ok");
+        setTimeout(() => applyPack(pack, key), 400);
+      };
+      $("#impGo").addEventListener("click", () => doImport(true));
+      $("#impNoKey").addEventListener("click", () => doImport(false));
+    },
+
     toast(html, kind) {
       $$(".lab-toast", this.el).forEach((x) => x.remove());
       const t = document.createElement("div");
@@ -2340,6 +2422,85 @@ onmessage = async (e) => {
     } finally { mark.clear(); }
   }
 
+  /* ==========================================================================
+     ФАЙЛ ЛАБОРАТОРІЇ — повний експорт і імпорт
+     Зразок, код (усі файли), квест, пам'ять, чат. Ключ Gemini — за бажанням,
+     зашифрований паролем: AES-256-GCM, ключ шифрування з пароля через
+     PBKDF2-SHA256 (WebCrypto, без бібліотек). Без пароля ключ не прочитати.
+     Імпортований код не запускається сам — його спершу переглядають.
+     ========================================================================== */
+  const LAB_FORMAT = "zrazok-lab";
+  const KDF_ITER = 250000;
+  const toB64 = (buf) => { let s = ""; new Uint8Array(buf).forEach((b) => { s += String.fromCharCode(b); }); return btoa(s); };
+  const fromB64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+
+  async function passKey(password, salt, iter) {
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
+    return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+  }
+  async function encryptSecret(text, password) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await passKey(password, salt, KDF_ITER);
+    const data = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, new TextEncoder().encode(text));
+    return { alg: "AES-256-GCM", kdf: "PBKDF2-SHA256", iter: KDF_ITER, salt: toB64(salt), iv: toB64(iv), data: toB64(data) };
+  }
+  async function decryptSecret(box, password) {
+    const key = await passKey(password, fromB64(box.salt), box.iter || KDF_ITER);
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: fromB64(box.iv) }, key, fromB64(box.data));
+    return new TextDecoder().decode(plain);
+  }
+
+  async function buildExport({ withChat, keyPassword }) {
+    lab.flushFile();
+    const pack = {
+      format: LAB_FORMAT, version: 1,
+      exportedAt: new Date().toISOString(),
+      site: location.origin + location.pathname,
+      pet: JSON.parse(JSON.stringify(state)),
+      files: JSON.parse(JSON.stringify(files.data)),
+      quest: JSON.parse(JSON.stringify(questState)),
+      memory: JSON.parse(JSON.stringify(memStore)),
+      chat: withChat ? JSON.parse(JSON.stringify(chatLog)) : [],
+      key: null,
+    };
+    if (keyPassword && apiKey) pack.key = await encryptSecret(apiKey, keyPassword);
+    return pack;
+  }
+
+  function readPack(text) {
+    let p;
+    try { p = JSON.parse(text); } catch (e) { throw new Error("Це не файл лабораторії (не JSON)."); }
+    if (!p || p.format !== LAB_FORMAT) throw new Error("Це не файл лабораторії зразка.");
+    if ((p.version || 1) > 1) throw new Error("Файл з новішої версії сайту. Онови сторінку (Ctrl+F5) і спробуй ще раз.");
+    if (!p.pet || !p.files || !Array.isArray(p.files.order) || !p.files.src) throw new Error("Файл пошкоджений: немає зразка або коду.");
+    return p;
+  }
+
+  function applyPack(p, key) {
+    const pet = Object.assign({}, p.pet, { lastSeen: Date.now() }); // показники — точно як у файлі, без «часу відсутності»
+    const raw = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ignore */ } };
+    raw(LS.state, pet);
+    raw(LS.files, Object.assign({}, p.files, { active: "main.js" }));
+    raw(LS.quest, p.quest || { done: {}, hints: {}, flags: {} });
+    raw(LS.memory, p.memory || {});
+    raw(LS.chat, p.chat || []);
+    if (key) raw(LS.key, key);
+    drop(LS.code); drop(LS.guard);
+    raw(LS.noAutorun, 1); // імпортований код не запускаємо, доки його не переглянули
+    sync.send({ t: "reload" });
+    location.reload();
+  }
+
+  function downloadJson(obj, name) {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" }));
+    const a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+  const packName = (name) => `zrazok-${String(name || "zrazok").trim().replace(/[^\p{L}\p{N}_-]+/gu, "-").slice(0, 24) || "zrazok"}-${new Date().toISOString().slice(0, 10)}.json`;
+
   function copyText(text, btn, cb) {
     const done = () => {
       if (cb) cb();
@@ -2367,6 +2528,12 @@ onmessage = async (e) => {
       drop(LS.guard);
       lab.log("warn", "Минулого разу твій код завис або впав — тому зараз я його не запускаю. Виправ код і натисни «Запустити».");
       fireReturn();
+      return;
+    }
+    if (load(LS.noAutorun, null)) {
+      drop(LS.noAutorun);
+      lab.log("info", "Лабораторію відкрито з файлу. Код не запущено автоматично: переглянь файли й натисни «Запустити».");
+      lab.toast("Лабораторію імпортовано. Переглянь код і натисни «Запустити».", "info");
       return;
     }
     if (!files.isDefault() && files.combined().code.trim()) {
@@ -2507,6 +2674,7 @@ onmessage = async (e) => {
     sync.remote = true;
     try {
       if (m.t === "fx" && typeof c[m.m] === "function") { c[m.m](...(m.a || [])); return; }
+      if (m.t === "reload") { location.reload(); return; }
       if (m.t === "run") { if (files.data) lab.runAll({ remote: true }); return; }
       if (m.t !== "ls") return;
       const val = (def) => (m.v === undefined ? load(m.k, def) : m.v ?? def);
